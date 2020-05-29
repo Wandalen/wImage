@@ -1,6 +1,6 @@
 {
   "name" : "wimage",
-  "version" : "0.3.1",
+  "version" : "0.3.2",
   "description" : "___",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
@@ -12,7 +12,7 @@
   {
     "url" : "https://github.com/Wandalen/wImage/issues"
   },
-  "dependencies" : { "wTools" : "" },
-  "devDependencies" : { "wTesting" : "", "wimage" : "file:." },
+  "dependencies" : { "wTools" : "alpha" },
+  "devDependencies" : { "wimage" : "file:.", "wTesting" : "alpha" },
   "keywords" : [ "wTools" ]
 }
