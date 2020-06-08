@@ -6,8 +6,8 @@ consistency:
     hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
     size: 1732
   ../.im.will.yml: &ref_1
-    hash: ff9a9a607af1f9b76e1a76dd5ea78968
-    size: 4983
+    hash: 23c30d3adc97ad778466cf1aa99dacba
+    size: 4982
 module:
   wImage.out:
     about:
@@ -172,7 +172,7 @@ module:
           - ../proto/dwtools/amid/l3/image/l7_namespace
           - ../proto/dwtools/amid/l3/image/l7_namespace/Reader.s
           - ../proto/dwtools/amid/l3/image.test
-          - ../proto/dwtools/amid/l3/image.test/Reader.test.s
+          - ../proto/dwtools/amid/l3/image.test/Reader.test.ss
           - ../proto/dwtools/amid/l3/image.test/_assets
           - ../proto/dwtools/amid/l3/image.test/_assets/basic
           - ../proto/dwtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
@@ -1540,5 +1540,5 @@ module:
         hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
         size: 1732
       ../.im.will.yml:
-        hash: ff9a9a607af1f9b76e1a76dd5ea78968
-        size: 4983
+        hash: 23c30d3adc97ad778466cf1aa99dacba
+        size: 4982
