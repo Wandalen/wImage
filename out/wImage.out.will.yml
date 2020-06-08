@@ -6,8 +6,8 @@ consistency:
     hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
     size: 1732
   ../.im.will.yml: &ref_1
-    hash: 7c195f1bcf067a692406f501b79e91da
-    size: 4881
+    hash: ff9a9a607af1f9b76e1a76dd5ea78968
+    size: 4983
 module:
   wImage.out:
     about:
@@ -150,6 +150,7 @@ module:
           export: 1
         path:
           - ../proto
+          - ../proto/Integration.test.s
           - ../proto/dwtools
           - ../proto/dwtools/Tools.s
           - ../proto/dwtools/abase
@@ -197,6 +198,12 @@ module:
         path: 'npm:///pngjs'
         autoExporting: 0
         enabled: 0
+      eslint:
+        path: 'npm:///eslint#7.1.0'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          debug: 1
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -965,6 +972,12 @@ module:
         path: 'npm:///pngjs'
         autoExporting: 0
         enabled: 0
+      eslint:
+        path: 'npm:///eslint#7.1.0'
+        autoExporting: 0
+        enabled: 0
+        criterion:
+          debug: 1
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -1527,5 +1540,5 @@ module:
         hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
         size: 1732
       ../.im.will.yml:
-        hash: 7c195f1bcf067a692406f501b79e91da
-        size: 4881
+        hash: ff9a9a607af1f9b76e1a76dd5ea78968
+        size: 4983
