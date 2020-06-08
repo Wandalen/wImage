@@ -1,4 +1,5 @@
-( function _Reader_s_() {
+( function _Reader_s_()
+{
 
 'use strict';
 
@@ -11,7 +12,8 @@
 
 let _ = _global_.wTools;
 let Parent = null;
-let Self = function wImageReaderAbstract()
+let Self = wImageReaderAbstract;
+function wImageReaderAbstract()
 {
   return _.workpiece.construct( Self, this, arguments );
 }
@@ -124,6 +126,10 @@ function Supports( o )
   let cls = this.Self;
 
   o = _.routineOptions( Supports, arguments );
+
+  if( o.format )
+  if( _.longHas( cls.Formats, o.format ) )
+  console.log();
 
   if( o.format )
   if( _.longHas( cls.Formats, o.format ) )

@@ -20,6 +20,6 @@
     "wConsequence" : "",
     "pngjs" : ""
   },
-  "devDependencies" : { "wTesting" : "", "wimage" : "file:." },
+  "devDependencies" : { "wTesting" : "", "eslint" : "7.1.0", "wimage" : "file:." },
   "keywords" : [ "wTools" ]
 }

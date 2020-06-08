@@ -1,4 +1,5 @@
-( function _Reader_test_s_( ) {
+( function _Reader_test_s_( )
+{
 
 'use strict';
 
@@ -19,7 +20,7 @@ function onSuiteBegin( test )
 {
   let context = this;
 
-  context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '../..'  ), 'ImageRead' );
+  context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
   context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
 
 }

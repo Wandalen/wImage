@@ -1,4 +1,5 @@
-( function _Pngjs_s_() {
+( function _Pngjs_s_()
+{
 
 'use strict';
 
@@ -12,7 +13,8 @@
 let _ = _global_.wTools;
 let Backend = require( 'pngjs' );
 let Parent = _.image.reader.Abstract;
-let Self = function wImageReaderPngjs()
+let Self = wImageReaderPngjs;
+function wImageReaderPngjs()
 {
   return _.workpiece.construct( Self, this, arguments );
 }

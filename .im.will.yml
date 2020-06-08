@@ -17,6 +17,11 @@ submodule :
   pngjs :
     path : npm:///pngjs
     enabled : 0 # submodule
+  eslint :
+    path : npm:///eslint#7.1.0
+    enabled : 0 # submodule
+    criterion :
+      debug : 1
 
 path :
 

@@ -21,11 +21,12 @@
     "url": "https://github.com/Wandalen/wImage/issues"
   },
   "dependencies": {
-    "wTools": "alpha",
+    "express": "^4.17.1",
+    "pngjs": "5.0.0",
+    "wConsequence": "alpha",
     "wCopyable": "alpha",
     "wFiles": "alpha",
-    "wConsequence": "alpha",
-    "pngjs": "5.0.0"
+    "wTools": "alpha"
   },
   "devDependencies": {
     "wimage": "file:.",

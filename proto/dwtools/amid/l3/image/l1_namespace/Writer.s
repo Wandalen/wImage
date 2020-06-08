@@ -1,4 +1,5 @@
-( function _Writer_s_( ) {
+( function _Writer_s_( )
+{
 
 'use strict';
 
@@ -12,8 +13,6 @@ _.image.writer = _.image.writer || Object.create( null );
 
 function write( o )
 {
-
-
 
 }
 

@@ -1,4 +1,5 @@
-( function _Reader_s_( ) {
+( function _Reader_s_( )
+{
 
 'use strict';
 
