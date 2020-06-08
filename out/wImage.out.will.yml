@@ -2,36 +2,35 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  wImage.out.will.yml: &ref_0
-    hash: f62a9cd90fbaf651e9c659af71fdb48e
-    size: 37508
-  ../.ex.will.yml: &ref_1
-    hash: 7e58a949ebde773b3546faa40e27678b
-    size: 1648
-  ../.im.will.yml: &ref_2
-    hash: 3e9ed02b9bd469d6f46477d5db587d2f
-    size: 4560
+  ../.ex.will.yml: &ref_0
+    hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
+    size: 1732
+  ../.im.will.yml: &ref_1
+    hash: 7c195f1bcf067a692406f501b79e91da
+    size: 4881
 module:
   wImage.out:
     about:
       name: wImage
       org: noorg
-      description: ___
+      description: >-
+        Standardized abstract interface to open / read / parse image with
+        collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - tools
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -109,7 +108,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/___
+        path: ../proto/dwtools/amid/l3/image/entry/Reader.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -119,13 +118,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/___'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/___'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -155,10 +154,47 @@ module:
           - ../proto/dwtools/Tools.s
           - ../proto/dwtools/abase
           - ../proto/dwtools/amid
+          - ../proto/dwtools/amid/l3
+          - ../proto/dwtools/amid/l3/image
+          - ../proto/dwtools/amid/l3/image/entry
+          - ../proto/dwtools/amid/l3/image/entry/Reader.s
+          - ../proto/dwtools/amid/l3/image/include
+          - ../proto/dwtools/amid/l3/image/include/Basic.s
+          - ../proto/dwtools/amid/l3/image/include/Reader.s
+          - ../proto/dwtools/amid/l3/image/l1_namespace
+          - ../proto/dwtools/amid/l3/image/l1_namespace/Reader.s
+          - ../proto/dwtools/amid/l3/image/l1_namespace/Writer.s
+          - ../proto/dwtools/amid/l3/image/l3
+          - ../proto/dwtools/amid/l3/image/l3/Reader.s
+          - ../proto/dwtools/amid/l3/image/l5_reader
+          - ../proto/dwtools/amid/l3/image/l5_reader/Pngjs.s
+          - ../proto/dwtools/amid/l3/image/l7_namespace
+          - ../proto/dwtools/amid/l3/image/l7_namespace/Reader.s
+          - ../proto/dwtools/amid/l3/image.test
+          - ../proto/dwtools/amid/l3/image.test/Reader.test.s
+          - ../proto/dwtools/amid/l3/image.test/_assets
+          - ../proto/dwtools/amid/l3/image.test/_assets/basic
+          - ../proto/dwtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
           - ../proto/dwtools/atop
     submodule:
       wTools:
         path: 'npm:///wTools'
+        autoExporting: 0
+        enabled: 0
+      wCopyable:
+        path: 'npm:///wCopyable'
+        autoExporting: 0
+        enabled: 0
+      wFiles:
+        path: 'npm:///wFiles'
+        autoExporting: 0
+        enabled: 0
+      wConsequence:
+        path: 'npm:///wConsequence'
+        autoExporting: 0
+        enabled: 0
+      pngjs:
+        path: 'npm:///pngjs'
         autoExporting: 0
         enabled: 0
     reflector:
@@ -171,6 +207,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -187,6 +224,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -203,6 +241,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -219,6 +258,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -235,6 +275,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           raw: raw
           debug: release
@@ -252,6 +293,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -270,6 +312,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -287,6 +330,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -304,6 +348,7 @@ module:
           prefixPath: ''
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -318,6 +363,7 @@ module:
           prefixPath: ../proto
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           generated: 1
           content: proto
@@ -332,6 +378,7 @@ module:
         recursive: 0
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           generated: 1
           content: proto
@@ -687,24 +734,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -793,31 +822,24 @@ module:
           content: proto
           export: 1
     consistency:
-      wImage.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wImage
       org: noorg
-      description: ___
+      description: >-
+        Standardized abstract interface to open / read / parse image with
+        collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 8.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - tools
-        - wTools
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wimage
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -893,7 +915,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/___
+        path: proto/dwtools/amid/l3/image/entry/Reader.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -903,13 +925,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/___'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/___'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -927,6 +949,22 @@ module:
         path: 'npm:///wTools'
         autoExporting: 0
         enabled: 0
+      wCopyable:
+        path: 'npm:///wCopyable'
+        autoExporting: 0
+        enabled: 0
+      wFiles:
+        path: 'npm:///wFiles'
+        autoExporting: 0
+        enabled: 0
+      wConsequence:
+        path: 'npm:///wConsequence'
+        autoExporting: 0
+        enabled: 0
+      pngjs:
+        path: 'npm:///pngjs'
+        autoExporting: 0
+        enabled: 0
     reflector:
       reflect.proto.debug.raw:
         src:
@@ -934,6 +972,7 @@ module:
             'path::proto': '{path::out.*=1}/source'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -947,6 +986,7 @@ module:
             'path::proto': '{path::out.*=1}/source'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -960,6 +1000,7 @@ module:
             'path::proto': '{path::out.*=1}/source'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -973,6 +1014,7 @@ module:
             'path::proto': '{path::out.*=1}/source'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -986,6 +1028,7 @@ module:
             'path::proto': '{path::out.raw.release}'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           raw: raw
           debug: release
@@ -1000,6 +1043,7 @@ module:
             'path::proto': '{path::out.*=1}/Main.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -1015,6 +1059,7 @@ module:
             'path::proto': '{path::out.*=1}/Main.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -1029,6 +1074,7 @@ module:
             'path::proto': '{path::out.*=1}/Tests.test.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -1043,6 +1089,7 @@ module:
             'path::proto': '{path::out.*=1}/Tests.test.s'
         mandatory: 1
         dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -1477,11 +1524,8 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: 7e58a949ebde773b3546faa40e27678b
-        size: 1648
+        hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
+        size: 1732
       ../.im.will.yml:
-        hash: 3e9ed02b9bd469d6f46477d5db587d2f
-        size: 4560
-      wImage.out.will.yml:
-        hash: f62a9cd90fbaf651e9c659af71fdb48e
-        size: 37508
+        hash: 7c195f1bcf067a692406f501b79e91da
+        size: 4881
