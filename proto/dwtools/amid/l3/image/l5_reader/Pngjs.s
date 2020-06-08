@@ -62,9 +62,9 @@ function _read( o )
 
   function handle( os )
   {
-    o.buffer = _.bufferRawFrom( os.data );
     o.originalStructure = os;
-    o.dims = [ os.width, os.height ];
+    o.structure.buffer = _.bufferRawFrom( os.data );
+    o.structure.dims = [ os.width, os.height ];
 
     metadata = os._parser ? os._parser._metaData : os;
 
@@ -72,7 +72,7 @@ function _read( o )
 
     if( metadata.color )
     {
-      _.assert( o.channelsArray.length === 0 );
+      _.assert( o.structure.channelsArray.length === 0 );
       channelAdd( 'red' );
       channelAdd( 'green' );
       channelAdd( 'blue' );
@@ -80,7 +80,7 @@ function _read( o )
 
     if( metadata.colorType === 4 )
     {
-      _.assert( o.channelsArray.length === 0 );
+      _.assert( o.structure.channelsArray.length === 0 );
       channelAdd( 'gray' );
     }
 
@@ -89,22 +89,22 @@ function _read( o )
       channelAdd( 'alpha' );
     }
 
-    o.bytesPerPixel = metadata.bpp;
-    o.bitsPerPixel = _.mapVals( o.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+    o.structure.bytesPerPixel = metadata.bpp;
+    o.structure.bitsPerPixel = _.mapVals( o.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
 
-    o.special.interlaced = metadata.interlace;
-    o.hasPalette = metadata.palette;
+    o.structure.special.interlaced = metadata.interlace;
+    o.structure.hasPalette = metadata.palette;
 
-    // o.special.hasIhdr = os._hasIHDR
-    // o.special.hasIend = os._hasIEND
+    // o.structure.special.hasIhdr = os._hasIHDR
+    // o.structure.special.hasIend = os._hasIEND
 
     return o;
   }
 
   function channelAdd( name )
   {
-    o.channelsMap[ name ] = { name, bits : metadata.depth, order : o.channelsArray.length };
-    o.channelsArray.push( name );
+    o.structure.channelsMap[ name ] = { name, bits : metadata.depth, order : o.structure.channelsArray.length };
+    o.structure.channelsArray.push( name );
   }
 
 }

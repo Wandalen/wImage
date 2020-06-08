@@ -74,12 +74,15 @@ function read( o )
 
   o = _.routineOptions( read, o );
 
-  if( !o.special )
-  o.special = Object.create( null );
-  if( !o.channelsMap )
-  o.channelsMap = Object.create( null );
-  if( !o.channelsArray )
-  o.channelsArray = [];
+  if( !o.structure )
+  o.structure = Object.create( null );
+
+  if( !o.structure.special )
+  o.structure.special = Object.create( null );
+  if( !o.structure.channelsMap )
+  o.structure.channelsMap = Object.create( null );
+  if( !o.structure.channelsArray )
+  o.structure.channelsArray = [];
 
   ready.then( () => self._read( o ) );
   ready.then( () => end() );
@@ -95,14 +98,14 @@ function read( o )
 
   function end()
   {
-    _.assert( _.longIs( o.dims ), 'Expects {- o.dims -}' );
-    _.assert( !!o.buffer, 'Expects {- o.buffer -}' );
-    _.assert( _.mapIs( o.channelsMap ), 'Expects {- o.channelsMap -}' );
-    _.assert( _.longIs( o.channelsArray ), 'Expects {- o.channelsArray -}' );
+    _.assert( _.longIs( o.structure.dims ), 'Expects {- o.dims -}' );
+    _.assert( !!o.structure.buffer, 'Expects {- o.buffer -}' );
+    _.assert( _.mapIs( o.structure.channelsMap ), 'Expects {- o.channelsMap -}' );
+    _.assert( _.longIs( o.structure.channelsArray ), 'Expects {- o.channelsArray -}' );
     _.assert
     (
-      o.bytesPerPixel === Math.ceil( o.bitsPerPixel / 8 ),
-      `Mismatch of {- o.bytesPerPixel=${o.bytesPerPixel} -} and {- o.bitsPerPixel=${o.bitsPerPixel} -}`
+      o.structure.bytesPerPixel === Math.ceil( o.structure.bitsPerPixel / 8 ),
+      `Mismatch of {- o.bytesPerPixel=${o.structure.bytesPerPixel} -} and {- o.bitsPerPixel=${o.structure.bitsPerPixel} -}`
     );
     return o;
   }

@@ -64,21 +64,24 @@ function fileReadSync( test )
     'filePath' : a.abs( 'Pixels-2x2.png' ),
     'format' : 'png',
     'ext' : 'png',
-    'special' : { 'interlaced' : false },
-    'channelsMap' :
-    {
-      'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-      'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-      'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-      'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-    },
-    'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-    'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-    'dims' : [ 2, 2 ],
-    'bytesPerPixel' : 4,
-    'bitsPerPixel' : 32,
-    'hasPalette' : false,
     'readerClass' : _.image.reader.Pngjs,
+    'structure' :
+    {
+      'special' : { 'interlaced' : false },
+      'channelsMap' :
+      {
+        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+      },
+      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+      'dims' : [ 2, 2 ],
+      'bytesPerPixel' : 4,
+      'bitsPerPixel' : 32,
+      'hasPalette' : false,
+    }
   }
 
   test.identical( op, exp );
@@ -103,24 +106,27 @@ function fileReadSync( test )
     'filePath' : a.abs( 'Pixels-2x2.png' ),
     'format' : 'png',
     'ext' : 'png',
-    'special' : { 'interlaced' : false },
-    'channelsMap' :
-    {
-      'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-      'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-      'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-      'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-    },
-    'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-    'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-    'dims' : [ 2, 2 ],
-    'bytesPerPixel' : 4,
-    'bitsPerPixel' : 32,
-    'hasPalette' : false,
     'readerClass' : _.image.reader.Pngjs,
+    'structure' :
+    {
+      'special' : { 'interlaced' : false },
+      'channelsMap' :
+      {
+        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+      },
+      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+      'dims' : [ 2, 2 ],
+      'bytesPerPixel' : 4,
+      'bitsPerPixel' : 32,
+      'hasPalette' : false,
+    }
   }
 
-  test.identical( op, exp );
+  test.identical( op, exp ); debugger;
 
   /* */
 
@@ -162,21 +168,24 @@ function fileReadAsync( test )
       'filePath' : a.abs( 'Pixels-2x2.png' ),
       'format' : 'png',
       'ext' : 'png',
-      'special' : { 'interlaced' : false },
-      'channelsMap' :
-      {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-      },
-      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-      'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
-      'hasPalette' : false,
       'readerClass' : _.image.reader.Pngjs,
+      'structure' :
+      {
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
+      }
     }
 
     test.identical( op, exp );
