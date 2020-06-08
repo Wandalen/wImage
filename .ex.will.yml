@@ -3,7 +3,7 @@
 about :
 
   name : 'wImage'
-  description : '___'
+  description : 'Standardized abstract interface to open / read / parse image with collection of plugins.'
   version : '0.4.0'
   enabled : 1
   interpreters :
@@ -92,4 +92,3 @@ build :
       # - build::npm
       - build::proto.export
       # - build::doc.export
-
