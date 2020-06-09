@@ -2,10 +2,13 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wImage.out.will.yml: &ref_0
+    hash: 470e512cb362021fbc2bddb876354ea5
+    size: 40711
+  ../.ex.will.yml: &ref_1
     hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
     size: 1732
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: 23c30d3adc97ad778466cf1aa99dacba
     size: 4982
 module:
@@ -18,19 +21,19 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 8.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - tools
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -156,6 +159,21 @@ module:
           - ../proto/dwtools/abase
           - ../proto/dwtools/amid
           - ../proto/dwtools/amid/l3
+          - ../proto/dwtools/amid/l3/-image
+          - ../proto/dwtools/amid/l3/-image/entry
+          - ../proto/dwtools/amid/l3/-image/entry/Reader.s
+          - ../proto/dwtools/amid/l3/-image/include
+          - ../proto/dwtools/amid/l3/-image/include/Basic.s
+          - ../proto/dwtools/amid/l3/-image/include/Reader.s
+          - ../proto/dwtools/amid/l3/-image/l1_namespace
+          - ../proto/dwtools/amid/l3/-image/l1_namespace/Reader.s
+          - ../proto/dwtools/amid/l3/-image/l1_namespace/Writer.s
+          - ../proto/dwtools/amid/l3/-image/l3
+          - ../proto/dwtools/amid/l3/-image/l3/Reader.s
+          - ../proto/dwtools/amid/l3/-image/l5_reader
+          - ../proto/dwtools/amid/l3/-image/l5_reader/Pngjs.s
+          - ../proto/dwtools/amid/l3/-image/l7_namespace
+          - ../proto/dwtools/amid/l3/-image/l7_namespace/Reader.s
           - ../proto/dwtools/amid/l3/image
           - ../proto/dwtools/amid/l3/image/entry
           - ../proto/dwtools/amid/l3/image/entry/Reader.s
@@ -164,6 +182,7 @@ module:
           - ../proto/dwtools/amid/l3/image/include/Reader.s
           - ../proto/dwtools/amid/l3/image/l1_namespace
           - ../proto/dwtools/amid/l3/image/l1_namespace/Reader.s
+          - ../proto/dwtools/amid/l3/image/l1_namespace/ReaderStructure.s
           - ../proto/dwtools/amid/l3/image/l1_namespace/Writer.s
           - ../proto/dwtools/amid/l3/image/l3
           - ../proto/dwtools/amid/l3/image/l3/Reader.s
@@ -383,9 +402,6 @@ module:
           prefixPath: 'path::exported.dir.proto.export'
           recursive: 0
         recursive: 0
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           generated: 1
           content: proto
@@ -741,6 +757,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export*'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -829,8 +863,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wImage.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wImage
@@ -840,13 +875,21 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 8.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - tools
+        - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -983,9 +1026,6 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -997,9 +1037,6 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -1011,9 +1048,6 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -1025,9 +1059,6 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.*=1}/source'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -1039,9 +1070,6 @@ module:
         src:
           filePath:
             'path::proto': '{path::out.raw.release}'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           raw: raw
           debug: release
@@ -1054,9 +1082,6 @@ module:
             '**.test*': 0
             '**.test/**': 0
             'path::proto': '{path::out.*=1}/Main.s'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -1070,9 +1095,6 @@ module:
             '**.test*': 0
             '**.test/**': 0
             'path::proto': '{path::out.*=1}/Main.s'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -1085,9 +1107,6 @@ module:
           filePath:
             '**.test*': 1
             'path::proto': '{path::out.*=1}/Tests.test.s'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -1100,9 +1119,6 @@ module:
           filePath:
             '**.test*': 1
             'path::proto': '{path::out.*=1}/Tests.test.s'
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -1542,3 +1558,6 @@ module:
       ../.im.will.yml:
         hash: 23c30d3adc97ad778466cf1aa99dacba
         size: 4982
+      wImage.out.will.yml:
+        hash: 470e512cb362021fbc2bddb876354ea5
+        size: 40711
