@@ -59,13 +59,15 @@ let _readHead = Object.create( null );
 
 _readHead.defaults =
 {
-  data : null,
-  filePath : null,
-  format : null,
-  ext : null,
+  ... _.mapBut( _.image.read.defaults, [ 'mode' ] ),
   structure : null,
-  onHead : null,
-  sync : 1,
+  // data : null,
+  // filePath : null,
+  // format : null,
+  // ext : null,
+  // structure : null,
+  // onHead : null,
+  // sync : 1,
 }
 
 //
@@ -77,7 +79,6 @@ function readHead( o )
   let result;
 
   o = _.routineOptions( readHead, o );
-
   o.structure = _.image.rstructure.from( o.structure );
 
   ready.then( () => self._readHead( o ) );
@@ -114,8 +115,6 @@ function read( o )
   let self = this;
   let ready = new _.Consequence().take( null );
   let result;
-
-  debugger; zzz
 
   o = _.routineOptions( read, o );
   o.structure = _.image.rstructure.from( o.structure );

@@ -80,7 +80,7 @@ function fileRead_body( o )
   .then( ( data ) =>
   {
     o.data = data;
-    return self[ o.methodName ]( o );
+    return self.read( o );
   });
 
   if( o.sync )
@@ -92,7 +92,6 @@ fileRead_body.defaults =
 {
   ... _.image.read.defaults,
   filePath : null,
-  // methodName : null,
 }
 
 _.assert( _.image.read.defaults.methodName === undefined );
@@ -100,13 +99,7 @@ _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
-// let fileReadHead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
-// fileReadHead.defaults.methodName = 'readHead';
-
-//
-
 let fileRead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
-fileRead.defaults.methodName = 'read';
 
 // --
 // declare

@@ -41,7 +41,7 @@ function validate( o )
   o = _.routineOptions( validate, arguments );
 
   _.assert( _.longIs( o.dims ), 'Expects {- o.dims -}' );
-  _.assert( o.buffer === null || _.buferIs( o.buffer ), 'Expects {- o.buffer -}' );
+  _.assert( o.buffer === null || _.bufferAnyIs( o.buffer ), 'Expects {- o.buffer -}' );
   _.assert( _.mapIs( o.channelsMap ), 'Expects {- o.channelsMap -}' );
   _.assert( _.longIs( o.channelsArray ), 'Expects {- o.channelsArray -}' );
   _.assert

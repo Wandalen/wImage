@@ -25,140 +25,105 @@ Self.shortName = 'Pngjs';
 // implementation
 // --
 
-function _readGeneral( o )
+function _structureHandle( o )
 {
   let self = this;
-  let metadata;
+  let os = o.originalStructure;
 
-  _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _readGeneral, o );
-  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
+  logger.log( '_structureHandle', o.mode ); debugger;
+  _.assertRoutineOptions( _structureHandle, arguments );
 
-  if( _.streamIs( o.data ) )
-  {
-    if( o.sync )
-    return readStreamSync();
-    else
-    return readStreamAsync();
-  }
+  if( o.mode === 'full' )
+  o.op.structure.buffer = _.bufferRawFrom( os.data );
   else
+  o.op.structure.buffer = null;
+
+  if( o.op.headGot )
+  return o.op;
+
+  o.op.structure.dims = [ os.width, os.height ];
+
+  os = os._parser ? os._parser._metaData : os;
+
+  o.op.originalStructure = os;
+
+  _.assert( !os.palette, 'not implemented' );
+
+  if( os.color )
   {
-    if( o.sync )
-    return readBufferSync();
-    else
-    return readBufferAsync();
+    _.assert( o.op.structure.channelsArray.length === 0 );
+    channelAdd( 'red' );
+    channelAdd( 'green' );
+    channelAdd( 'blue' );
   }
 
-  /* */
-
-  function readStreamAsync()
+  if( os.colorType === 4 )
   {
-    let ready = new _.Consequence();
-    let backend = new Backend.PNG();
-
-    _.assert( o.mode === 'head' );
-
-    o.data.pipe( backend )
-    .on( 'metadata', function ( _metadata )
-    {
-      o.data.close();
-      backend._parser._paused = true;
-      backend._parser._buffered = 0;
-      handle( _metadata )
-      if( o.onHead )
-      o.onHead( o );
-      ready.take( o );
-    });
-
-    return ready;
+    _.assert( o.op.structure.channelsArray.length === 0 );
+    channelAdd( 'gray' );
   }
 
-  /* */
-
-  function readBufferSync()
+  if( os.alpha )
   {
-    try
-    {
-      let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
-      metadata = os;
-      handle( os );
-    }
-    catch( err )
-    {
-      throw _.err( err );
-    }
-    return o;
+    channelAdd( 'alpha' );
   }
 
-  /* */
+  o.op.structure.bytesPerPixel = os.bpp;
+  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
 
-  function readBufferAsync()
-  {
-    let ready = new _.Consequence();
+  o.op.structure.special.interlaced = os.interlace;
+  o.op.structure.hasPalette = os.palette;
 
-    let stream = new Backend.PNG({}).parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
-    {
-      if( err )
-      return ready.error( _.err( err ) );
-      ready.take( handle( os ) );
-    });
+  o.op.headGot = true;
 
-    return ready;
-  }
+  if( o.op.onHead )
+  o.op.onHead( o.op );
 
-  /* */
-
-  function handle( os )
-  {
-    if( o.mode === 'full' )
-    o.structure.buffer = _.bufferRawFrom( os.data );
-    else
-    o.structure.buffer = null;
-    o.structure.dims = [ os.width, os.height ];
-
-    metadata = os._parser ? os._parser._metaData : os;
-
-    o.originalStructure = metadata;
-
-    _.assert( !metadata.palette, 'not implemented' );
-
-    if( metadata.color )
-    {
-      _.assert( o.structure.channelsArray.length === 0 );
-      channelAdd( 'red' );
-      channelAdd( 'green' );
-      channelAdd( 'blue' );
-    }
-
-    if( metadata.colorType === 4 )
-    {
-      _.assert( o.structure.channelsArray.length === 0 );
-      channelAdd( 'gray' );
-    }
-
-    if( metadata.alpha )
-    {
-      channelAdd( 'alpha' );
-    }
-
-    o.structure.bytesPerPixel = metadata.bpp;
-    o.structure.bitsPerPixel = _.mapVals( o.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-
-    o.structure.special.interlaced = metadata.interlace;
-    o.structure.hasPalette = metadata.palette;
-
-    return o;
-  }
+  return o.op;
 
   /* */
 
   function channelAdd( name )
   {
-    o.structure.channelsMap[ name ] = { name, bits : metadata.depth, order : o.structure.channelsArray.length };
-    o.structure.channelsArray.push( name );
+    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
+    o.op.structure.channelsArray.push( name );
   }
 
-  /* */
+}
+
+_structureHandle.defaults =
+{
+  op : null,
+  originalStructure : null,
+  mode : null,
+}
+
+//
+
+function _readGeneral( o )
+{
+  let self = this;
+
+  _.assertRoutineOptions( _readGeneral, o );
+  _.assert( arguments.length === 1 );
+  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
+
+  o.headGot = false;
+
+  if( _.streamIs( o.data ) )
+  {
+    if( o.sync )
+    return self._readGeneralStreamSync( o );
+    else
+    return self._readGeneralStreamAsync( o );
+  }
+  else
+  {
+    if( o.sync )
+    return self._readGeneralBufferSync( o );
+    else
+    return self._readGeneralBufferAsync( o );
+  }
 
 }
 
@@ -166,6 +131,121 @@ _readGeneral.defaults =
 {
   ... Parent.prototype._read.defaults,
   mode : 'full',
+}
+
+//
+
+function _readGeneralStreamSync( o )
+{
+  let self = this;
+  let ready = self._readGeneralStreamAsync( o );
+  ready.deasync();
+  return ready.sync();
+}
+
+//
+
+function _readGeneralStreamAsync( o )
+{
+  let self = this;
+  let ready = new _.Consequence();
+  let backend = new Backend.PNG();
+
+  _.assert( o.mode === 'head' );
+
+  backend
+  .on( 'error', ( err ) => ready.error( _.err( err ) ) )
+  .on( 'metadata', function ( os )
+  {
+    if( o.mode === 'head' )
+    {
+      o.data.close();
+      backend._parser._paused = true;
+      backend._parser._buffered = 0;
+    }
+    self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+    if( o.mode === 'head' )
+    ready.take( o );
+  })
+  .on( 'end', function ( os )
+  {
+    xxx
+    if( o.mode === 'head' )
+    return;
+    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+    ready.take( o );
+  })
+
+  o.data.pipe( backend );
+
+  return ready;
+}
+
+//
+
+function _readGeneralBufferSync( o )
+{
+  let self = this;
+  /* qqq : write proper code for mode : head */
+  try
+  {
+    let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
+    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+  }
+  catch( err )
+  {
+    throw _.err( err );
+  }
+  return o;
+}
+
+//
+
+function _readGeneralBufferAsync( o )
+{
+  let self = this;
+  let ready = new _.Consequence();
+  let stream = new Backend.PNG({})
+  let error;
+
+  stream
+  .on( 'error', ( err ) =>
+  {
+    if( error )
+    return;
+    err = _.err( err )
+    error = err;
+    ready.error( err );
+  })
+  .on( 'metadata', ( os ) =>
+  {
+    if( o.mode === 'head' )
+    {
+      backend._parser._paused = true;
+      backend._parser._buffered = 0;
+    }
+    self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+    if( o.mode === 'head' )
+    ready.take( o );
+  })
+
+  stream.parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
+  {
+    if( err )
+    {
+      if( error )
+      return;
+      err = _.err( err )
+      error = err;
+      ready.error( err );
+    }
+    if( o.mode === 'head' )
+    return;
+    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+    ready.take( o );
+  });
+
+  return ready;
 }
 
 //
@@ -248,7 +328,13 @@ let Medials =
 let Extension =
 {
 
+  _structureHandle,
+  _readGeneralStreamSync,
+  _readGeneralStreamAsync,
+  _readGeneralBufferSync,
+  _readGeneralBufferAsync,
   _readGeneral,
+
   _readHead,
   _read,
 
