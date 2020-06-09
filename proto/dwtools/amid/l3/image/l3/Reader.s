@@ -63,6 +63,8 @@ _readHead.defaults =
   filePath : null,
   format : null,
   ext : null,
+  structure : null,
+  onHead : null,
   sync : 1,
 }
 
@@ -79,7 +81,7 @@ function readHead( o )
   o.structure = _.image.rstructure.from( o.structure );
 
   ready.then( () => self._readHead( o ) );
-  ready.then( () => _.image.rstructure.validate( o.structure ) );
+  ready.then( () => _.image.rstructure.validate( o.structure ) && o );
   ready.catch( ( err ) =>
   {
     o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
@@ -102,11 +104,7 @@ let _read = Object.create( null );
 
 _read.defaults =
 {
-  data : null,
-  filePath : null,
-  format : null,
-  ext : null,
-  sync : 1,
+  ... _readHead.defaults,
 }
 
 //
@@ -116,6 +114,8 @@ function read( o )
   let self = this;
   let ready = new _.Consequence().take( null );
   let result;
+
+  debugger; zzz
 
   o = _.routineOptions( read, o );
   o.structure = _.image.rstructure.from( o.structure );

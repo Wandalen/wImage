@@ -13,7 +13,9 @@ let Self = _.image.rstructure = _.image.rstructure || Object.create( null );
 function from( o )
 {
 
-  o = _.routineOptions( from, arguments );
+  o = o || Object.create( null );
+  o = _.routineOptions( from, o );
+  _.assert( arguments.length === 0 || arguments.length === 1 );
 
   if( !o.special )
   o.special = Object.create( null );
@@ -39,7 +41,7 @@ function validate( o )
   o = _.routineOptions( validate, arguments );
 
   _.assert( _.longIs( o.dims ), 'Expects {- o.dims -}' );
-  _.assert( !!o.buffer, 'Expects {- o.buffer -}' );
+  _.assert( o.buffer === null || _.buferIs( o.buffer ), 'Expects {- o.buffer -}' );
   _.assert( _.mapIs( o.channelsMap ), 'Expects {- o.channelsMap -}' );
   _.assert( _.longIs( o.channelsArray ), 'Expects {- o.channelsArray -}' );
   _.assert

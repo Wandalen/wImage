@@ -25,6 +25,41 @@ function fileRead_pre( routine, args )
 
 //
 
+function fileReadHead_body( o )
+{
+  let self = this;
+  let ready = new _.Consequence().take( null );
+
+  o = _.assertRoutineOptions( fileReadHead_body, arguments );
+
+  let stream = _.fileProvider.streamRead
+  ({
+    filePath : o.filePath,
+    encoding : 'buffer.raw',
+  });
+
+  o.data = stream;
+
+  ready.then( () => self.readHead( o ) );
+
+  if( o.sync )
+  return ready.sync();
+  return ready;
+}
+
+fileReadHead_body.defaults =
+{
+  ... _.image.readHead.defaults,
+  filePath : null,
+}
+
+_.assert( _.image.readHead.defaults.methodName === undefined );
+_.assert( _.image.readHead.defaults.sync !== undefined );
+
+let fileReadHead = _.routineFromPreAndBody( fileRead_pre, fileReadHead_body );
+
+//
+
 function fileRead_body( o )
 {
   let self = this;
@@ -57,15 +92,16 @@ fileRead_body.defaults =
 {
   ... _.image.read.defaults,
   filePath : null,
-  methodName : null,
+  // methodName : null,
 }
 
+_.assert( _.image.read.defaults.methodName === undefined );
 _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
-let fileReadHead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
-fileReadHead.defaults.methodName = 'readHead';
+// let fileReadHead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
+// fileReadHead.defaults.methodName = 'readHead';
 
 //
 

@@ -44,6 +44,7 @@ function fileReadHeadAsync( test )
 {
   let context = this;
   let a = test.assetFor( 'basic' );
+  let callbacks = [];
 
   /* */
 
@@ -51,7 +52,7 @@ function fileReadHeadAsync( test )
   {
     test.case = 'basic';
     a.reflect();
-    var op = _.image.fileReadHead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 0 });
+    var op = _.image.fileReadHead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 0, onHead });
     test.is( _.consequenceIs( op ) );
     return op;
   })
@@ -59,9 +60,9 @@ function fileReadHeadAsync( test )
   a.ready.then( ( op ) =>
   {
 
-    test.is( _.bufferRawIs( op.data ) );
+    test.description = 'operation';
 
-    test.is( _.bufferRawIs( op.data ) );
+    test.is( _.streamIs( op.data ) );
     test.is( op.reader instanceof op.readerClass );
     test.is( _.objectIs( op.originalStructure ) );
 
@@ -74,11 +75,13 @@ function fileReadHeadAsync( test )
       'filePath' : a.abs( 'Pixels-2x2.png' ),
       'format' : 'png',
       'ext' : 'png',
+      'mode' : 'head',
+      'sync' : 0,
       'readerClass' : _.image.reader.Pngjs,
-      'methodName' : 'read',
-      'sync' : 1,
+      'onHead' : onHead,
       'structure' :
       {
+        'buffer' : null,
         'special' : { 'interlaced' : false },
         'channelsMap' :
         {
@@ -97,12 +100,22 @@ function fileReadHeadAsync( test )
 
     test.identical( op, exp );
 
+    test.description = 'onHead';
+    test.is( callbacks[ 0 ] === op ); debugger;
+    test.identical( callbacks.length, 1 );
+
     return op;
   });
 
   /* */
 
   return a.ready;
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
 }
 
 //
@@ -134,7 +147,7 @@ function fileReadSync( test )
     'format' : 'png',
     'ext' : 'png',
     'readerClass' : _.image.reader.Pngjs,
-    'methodName' : 'read',
+    'mode' : 'full',
     'sync' : 1,
     'structure' :
     {
@@ -179,7 +192,7 @@ function fileReadSync( test )
     'format' : 'png',
     'ext' : 'png',
     'readerClass' : _.image.reader.Pngjs,
-    'methodName' : 'read',
+    'mode' : 'full',
     'sync' : 1,
     'structure' :
     {
@@ -244,7 +257,7 @@ function fileReadAsync( test )
       'format' : 'png',
       'ext' : 'png',
       'readerClass' : _.image.reader.Pngjs,
-      'methodName' : 'read',
+      'mode' : 'full',
       'sync' : 0,
       'structure' :
       {
@@ -301,10 +314,10 @@ var Proto =
   tests :
   {
 
-    // fileReadHeadAsync,
+    fileReadHeadAsync,
 
-    fileReadSync,
-    fileReadAsync
+    // fileReadSync,
+    // fileReadAsync
 
   },
 

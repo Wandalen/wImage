@@ -16,6 +16,7 @@ function reader_pre( routine, args )
   let o = _.routineOptions( routine, args );
 
   _.assert( arguments.length === 2 );
+  _.assert( _.longHas( [ 'full', 'head' ],  o.mode ) );
 
   return o;
 }
@@ -38,8 +39,9 @@ function read_body( o )
     o.reader = new o.readerClass();
   }
 
-  let o2 = _.mapOnly( o, o.reader[ o.methodName ].defaults );
-  let result = o.reader[ o.methodName ]( o2 )
+  let methodName = o.mode === 'full' ? 'read' : 'readHead';
+  let o2 = _.mapOnly( o, o.reader[ methodName ].defaults );
+  let result = o.reader[ methodName ]( o2 );
 
   if( o.sync )
   return end( result );
@@ -60,106 +62,19 @@ read_body.defaults =
   format : null,
   ext : null,
   sync : 1,
-  methodName : null,
+  mode : null,
+  onHead : null,
 }
 
 //
 
 let readHead = _.routineFromPreAndBody( reader_pre, read_body );
-readHead.defaults.methodName = 'readHead';
+readHead.defaults.mode = 'head';
 
 //
 
 let read = _.routineFromPreAndBody( reader_pre, read_body );
-read.defaults.methodName = 'read';
-
-// //
-//
-// function readHead( o )
-// {
-//   let self = this;
-//
-//   o = _.routineOptions( read, arguments );
-//
-//   if( o.filePath && !o.ext )
-//   o.ext = _.path.ext( o.filePath );
-//
-//   if( o.reader === null )
-//   {
-//     let o2 = _.mapOnly( o, self.readerSelect.defaults );
-//     o2.single = 1;
-//     let selected = self.readerSelect( o2 );
-//     _.mapExtend( o, selected );
-//     o.reader = new o.readerClass();
-//   }
-//
-//   let o2 = _.mapOnly( o, o.reader.readHead.defaults );
-//
-//   let result = o.reader.readHead( o2 )
-//
-//   if( o.sync )
-//   return end( result );
-//
-//   result.then( end );
-//
-//   return result;
-//
-//   // function end( result )
-//   // {
-//   //   return _.mapExtend( o, result );
-//   // }
-// }
-//
-// readHead.defaults =
-// {
-//   reader : null,
-//   data : null,
-//   filePath : null,
-//   format : null,
-//   ext : null,
-//   sync : 1,
-// }
-//
-// //
-//
-// function read( o )
-// {
-//   let self = this;
-//
-//   o = _.routineOptions( read, arguments );
-//
-//   if( o.filePath && !o.ext )
-//   o.ext = _.path.ext( o.filePath );
-//
-//   if( o.reader === null )
-//   {
-//     let o2 = _.mapOnly( o, self.readerSelect.defaults );
-//     o2.single = 1;
-//     let selected = self.readerSelect( o2 );
-//     _.mapExtend( o, selected );
-//     o.reader = new o.readerClass();
-//   }
-//
-//   let o2 = _.mapOnly( o, o.reader.read.defaults );
-//   let result = o.reader.read( o2 )
-//
-//   if( o.sync )
-//   return result;
-//
-//   result.then( end );
-//
-//   return result;
-//
-//   function end( result )
-//   {
-//     return _.mapExtend( o, result );
-//   }
-// }
-//
-// read.defaults =
-// {
-//   ... readHead.defaults,
-// }
+read.defaults.mode = 'full';
 
 //
 
