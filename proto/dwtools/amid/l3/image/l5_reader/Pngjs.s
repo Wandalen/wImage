@@ -22,8 +22,106 @@ function wImageReaderPngjs()
 Self.shortName = 'Pngjs';
 
 // --
-//
+// implementation
 // --
+
+function _readHead( o )
+{
+  let self = this;
+  let metadata;
+
+  _.assert( arguments.length === 1 );
+  _.assertMapHasAll( o, _readHead.defaults );
+
+  debugger;
+
+  if( o.sync )
+  try
+  {
+    let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
+    metadata = os;
+    handle( os );
+  }
+  catch( err )
+  {
+    throw _.err( err );
+  }
+  else
+  {
+    let ready = new _.Consequence();
+
+    debugger;
+    let stream = new Backend.PNG({}).parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
+    {
+      debugger;
+      if( err )
+      return ready.error( _.err( err ) );
+      ready.take( handle( os ) );
+    });
+    debugger;
+
+    return ready;
+  }
+
+  return o;
+
+  /* */
+
+  function handle( os )
+  {
+    o.originalStructure = os;
+    // o.structure.buffer = _.bufferRawFrom( os.data );
+    o.structure.dims = [ os.width, os.height ];
+
+    metadata = os._parser ? os._parser._metaData : os;
+
+    _.assert( !metadata.palette, 'not implemented' );
+
+    if( metadata.color )
+    {
+      _.assert( o.structure.channelsArray.length === 0 );
+      channelAdd( 'red' );
+      channelAdd( 'green' );
+      channelAdd( 'blue' );
+    }
+
+    if( metadata.colorType === 4 )
+    {
+      _.assert( o.structure.channelsArray.length === 0 );
+      channelAdd( 'gray' );
+    }
+
+    if( metadata.alpha )
+    {
+      channelAdd( 'alpha' );
+    }
+
+    o.structure.bytesPerPixel = metadata.bpp;
+    o.structure.bitsPerPixel = _.mapVals( o.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+
+    o.structure.special.interlaced = metadata.interlace;
+    o.structure.hasPalette = metadata.palette;
+
+    // o.structure.special.hasIhdr = os._hasIHDR
+    // o.structure.special.hasIend = os._hasIEND
+
+    return o;
+  }
+
+  function channelAdd( name )
+  {
+    o.structure.channelsMap[ name ] = { name, bits : metadata.depth, order : o.structure.channelsArray.length };
+    o.structure.channelsArray.push( name );
+  }
+
+}
+
+_readHead.defaults =
+{
+  ... Parent.prototype._readHead.defaults,
+}
+
+//
 
 function _read( o )
 {
@@ -164,6 +262,7 @@ let Medials =
 let Extension =
 {
 
+  _readHead,
   _read,
 
   //

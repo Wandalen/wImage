@@ -40,6 +40,73 @@ function onSuiteEnd( test )
 // tests
 // --
 
+function fileReadHeadAsync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+
+  /* */
+
+  a.ready.then( () =>
+  {
+    test.case = 'basic';
+    a.reflect();
+    var op = _.image.fileReadHead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 0 });
+    test.is( _.consequenceIs( op ) );
+    return op;
+  })
+
+  a.ready.then( ( op ) =>
+  {
+
+    test.is( _.bufferRawIs( op.data ) );
+
+    test.is( _.bufferRawIs( op.data ) );
+    test.is( op.reader instanceof op.readerClass );
+    test.is( _.objectIs( op.originalStructure ) );
+
+    delete op.data;
+    delete op.originalStructure;
+    delete op.reader;
+
+    var exp =
+    {
+      'filePath' : a.abs( 'Pixels-2x2.png' ),
+      'format' : 'png',
+      'ext' : 'png',
+      'readerClass' : _.image.reader.Pngjs,
+      'methodName' : 'read',
+      'sync' : 1,
+      'structure' :
+      {
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
+      }
+    }
+
+    test.identical( op, exp );
+
+    return op;
+  });
+
+  /* */
+
+  return a.ready;
+}
+
+//
+
 function fileReadSync( test )
 {
   let context = this;
@@ -54,11 +121,12 @@ function fileReadSync( test )
   var op = _.image.fileRead( a.abs( 'Pixels-2x2.png' ) );
 
   test.is( _.bufferRawIs( op.data ) );
+  test.is( op.reader instanceof op.readerClass );
+  test.is( _.objectIs( op.originalStructure ) );
 
   delete op.data;
   delete op.originalStructure;
   delete op.reader;
-  delete op.sync;
 
   var exp =
   {
@@ -66,6 +134,8 @@ function fileReadSync( test )
     'format' : 'png',
     'ext' : 'png',
     'readerClass' : _.image.reader.Pngjs,
+    'methodName' : 'read',
+    'sync' : 1,
     'structure' :
     {
       'special' : { 'interlaced' : false },
@@ -96,11 +166,12 @@ function fileReadSync( test )
   var op = _.image.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 1 });
 
   test.is( _.bufferRawIs( op.data ) );
+  test.is( op.reader instanceof op.readerClass );
+  test.is( _.objectIs( op.originalStructure ) );
 
   delete op.data;
   delete op.originalStructure;
   delete op.reader;
-  delete op.sync;
 
   var exp =
   {
@@ -108,6 +179,8 @@ function fileReadSync( test )
     'format' : 'png',
     'ext' : 'png',
     'readerClass' : _.image.reader.Pngjs,
+    'methodName' : 'read',
+    'sync' : 1,
     'structure' :
     {
       'special' : { 'interlaced' : false },
@@ -127,7 +200,7 @@ function fileReadSync( test )
     }
   }
 
-  test.identical( op, exp ); debugger;
+  test.identical( op, exp );
 
   /* */
 
@@ -158,11 +231,12 @@ function fileReadAsync( test )
   {
 
     test.is( _.bufferRawIs( op.data ) );
+    test.is( op.reader instanceof op.readerClass );
+    test.is( _.objectIs( op.originalStructure ) );
 
     delete op.data;
     delete op.originalStructure;
     delete op.reader;
-    delete op.sync;
 
     var exp =
     {
@@ -170,6 +244,8 @@ function fileReadAsync( test )
       'format' : 'png',
       'ext' : 'png',
       'readerClass' : _.image.reader.Pngjs,
+      'methodName' : 'read',
+      'sync' : 0,
       'structure' :
       {
         'special' : { 'interlaced' : false },
@@ -224,8 +300,12 @@ var Proto =
 
   tests :
   {
+
+    // fileReadHeadAsync,
+
     fileReadSync,
     fileReadAsync
+
   },
 
 }

@@ -10,14 +10,27 @@ let Self = _.image;
 // inter
 // --
 
-function fileRead( o )
+function fileRead_pre( routine, args )
+{
+
+  let o = args[ 0 ]
+  if( _.strIs( args[ 0 ] ) )
+  o = { filePath : o }
+  o = _.routineOptions( routine, o );
+  _.assert( args.length === 1 );
+  _.assert( arguments.length === 2 );
+
+  return o;
+}
+
+//
+
+function fileRead_body( o )
 {
   let self = this;
   let ready = new _.Consequence().take( null );
 
-  if( _.strIs( arguments[ 0 ] ) )
-  o = { filePath : o }
-  o = _.routineOptions( fileRead, o );
+  o = _.assertRoutineOptions( fileRead_body, arguments );
 
   ready
   .then( () =>
@@ -32,7 +45,7 @@ function fileRead( o )
   .then( ( data ) =>
   {
     o.data = data;
-    return self.read( o );
+    return self[ o.methodName ]( o );
   });
 
   if( o.sync )
@@ -40,11 +53,24 @@ function fileRead( o )
   return ready;
 }
 
-fileRead.defaults =
+fileRead_body.defaults =
 {
   ... _.image.read.defaults,
   filePath : null,
+  methodName : null,
 }
+
+_.assert( _.image.read.defaults.sync !== undefined );
+
+//
+
+let fileReadHead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
+fileReadHead.defaults.methodName = 'readHead';
+
+//
+
+let fileRead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
+fileRead.defaults.methodName = 'read';
 
 // --
 // declare
@@ -53,6 +79,7 @@ fileRead.defaults =
 let Extension =
 {
 
+  fileReadHead,
   fileRead,
 
 }

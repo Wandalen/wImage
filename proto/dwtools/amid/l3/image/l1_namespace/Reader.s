@@ -11,11 +11,20 @@ _.image.reader = _.image.reader || Object.create( null );
 // inter
 // --
 
-function read( o )
+function reader_pre( routine, args )
+{
+  let o = _.routineOptions( routine, args );
+
+  _.assert( arguments.length === 2 );
+
+  return o;
+}
+
+//
+
+function read_body( o )
 {
   let self = this;
-
-  o = _.routineOptions( read, arguments );
 
   if( o.filePath && !o.ext )
   o.ext = _.path.ext( o.filePath );
@@ -29,15 +38,12 @@ function read( o )
     o.reader = new o.readerClass();
   }
 
-  let o2 = _.mapOnly( o, o.reader.read.defaults );
-
-  let result = o.reader.read( o2 )
+  let o2 = _.mapOnly( o, o.reader[ o.methodName ].defaults );
+  let result = o.reader[ o.methodName ]( o2 )
 
   if( o.sync )
   return end( result );
-
   result.then( end );
-
   return result;
 
   function end( result )
@@ -46,7 +52,7 @@ function read( o )
   }
 }
 
-read.defaults =
+read_body.defaults =
 {
   reader : null,
   data : null,
@@ -54,7 +60,106 @@ read.defaults =
   format : null,
   ext : null,
   sync : 1,
+  methodName : null,
 }
+
+//
+
+let readHead = _.routineFromPreAndBody( reader_pre, read_body );
+readHead.defaults.methodName = 'readHead';
+
+//
+
+let read = _.routineFromPreAndBody( reader_pre, read_body );
+read.defaults.methodName = 'read';
+
+// //
+//
+// function readHead( o )
+// {
+//   let self = this;
+//
+//   o = _.routineOptions( read, arguments );
+//
+//   if( o.filePath && !o.ext )
+//   o.ext = _.path.ext( o.filePath );
+//
+//   if( o.reader === null )
+//   {
+//     let o2 = _.mapOnly( o, self.readerSelect.defaults );
+//     o2.single = 1;
+//     let selected = self.readerSelect( o2 );
+//     _.mapExtend( o, selected );
+//     o.reader = new o.readerClass();
+//   }
+//
+//   let o2 = _.mapOnly( o, o.reader.readHead.defaults );
+//
+//   let result = o.reader.readHead( o2 )
+//
+//   if( o.sync )
+//   return end( result );
+//
+//   result.then( end );
+//
+//   return result;
+//
+//   // function end( result )
+//   // {
+//   //   return _.mapExtend( o, result );
+//   // }
+// }
+//
+// readHead.defaults =
+// {
+//   reader : null,
+//   data : null,
+//   filePath : null,
+//   format : null,
+//   ext : null,
+//   sync : 1,
+// }
+//
+// //
+//
+// function read( o )
+// {
+//   let self = this;
+//
+//   o = _.routineOptions( read, arguments );
+//
+//   if( o.filePath && !o.ext )
+//   o.ext = _.path.ext( o.filePath );
+//
+//   if( o.reader === null )
+//   {
+//     let o2 = _.mapOnly( o, self.readerSelect.defaults );
+//     o2.single = 1;
+//     let selected = self.readerSelect( o2 );
+//     _.mapExtend( o, selected );
+//     o.reader = new o.readerClass();
+//   }
+//
+//   let o2 = _.mapOnly( o, o.reader.read.defaults );
+//   let result = o.reader.read( o2 )
+//
+//   if( o.sync )
+//   return result;
+//
+//   result.then( end );
+//
+//   return result;
+//
+//   function end( result )
+//   {
+//     return _.mapExtend( o, result );
+//   }
+// }
+//
+// read.defaults =
+// {
+//   ... readHead.defaults,
+// }
 
 //
 
@@ -112,6 +217,7 @@ readerSelect.defaults =
 let Extension =
 {
 
+  readHead,
   read,
   readerSelect,
 

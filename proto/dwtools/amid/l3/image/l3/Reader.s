@@ -55,6 +55,49 @@ function form()
 
 //
 
+let _readHead = Object.create( null );
+
+_readHead.defaults =
+{
+  data : null,
+  filePath : null,
+  format : null,
+  ext : null,
+  sync : 1,
+}
+
+//
+
+function readHead( o )
+{
+  let self = this;
+  let ready = new _.Consequence().take( null );
+  let result;
+
+  o = _.routineOptions( readHead, o );
+
+  o.structure = _.image.rstructure.from( o.structure );
+
+  ready.then( () => self._readHead( o ) );
+  ready.then( () => _.image.rstructure.validate( o.structure ) );
+  ready.catch( ( err ) =>
+  {
+    o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
+    throw o.err;
+  });
+
+  if( o.sync )
+  return ready.sync();
+  return ready;
+}
+
+readHead.defaults =
+{
+  ... _readHead.defaults,
+}
+
+//
+
 let _read = Object.create( null );
 
 _read.defaults =
@@ -75,19 +118,10 @@ function read( o )
   let result;
 
   o = _.routineOptions( read, o );
-
-  if( !o.structure )
-  o.structure = Object.create( null );
-
-  if( !o.structure.special )
-  o.structure.special = Object.create( null );
-  if( !o.structure.channelsMap )
-  o.structure.channelsMap = Object.create( null );
-  if( !o.structure.channelsArray )
-  o.structure.channelsArray = [];
+  o.structure = _.image.rstructure.from( o.structure );
 
   ready.then( () => self._read( o ) );
-  ready.then( () => end() );
+  ready.then( () => _.image.rstructure.validate( o.structure ) && o );
   ready.catch( ( err ) =>
   {
     o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
@@ -97,26 +131,73 @@ function read( o )
   if( o.sync )
   return ready.sync();
   return ready;
-
-  function end()
-  {
-    _.assert( _.longIs( o.structure.dims ), 'Expects {- o.dims -}' );
-    _.assert( !!o.structure.buffer, 'Expects {- o.buffer -}' );
-    _.assert( _.mapIs( o.structure.channelsMap ), 'Expects {- o.channelsMap -}' );
-    _.assert( _.longIs( o.structure.channelsArray ), 'Expects {- o.channelsArray -}' );
-    _.assert
-    (
-      o.structure.bytesPerPixel === Math.ceil( o.structure.bitsPerPixel / 8 ),
-      `Mismatch of {- o.bytesPerPixel=${o.structure.bytesPerPixel} -} and {- o.bitsPerPixel=${o.structure.bitsPerPixel} -}`
-    );
-    return o;
-  }
-
 }
 
 read.defaults =
 {
   ... _read.defaults,
+}
+
+//
+
+let _readStream = Object.create( null );
+
+_readStream.defaults =
+{
+  data : null,
+  filePath : null,
+  format : null,
+  ext : null,
+  sync : 1,
+}
+
+//
+
+function readStream( o )
+{
+  let self = this;
+  let ready = new _.Consequence().take( null );
+  let result;
+
+  // new stream.Writable([options])
+
+  o = _.routineOptions( readStream, o );
+
+  o.structure = _.image._readStructureFrom( o.structure );
+
+  _.assert( 0, 'not implemented' );
+
+  // ready.then( () => self.readHead( o ) );
+  // ready.then( () => end() );
+  // ready.catch( ( err ) =>
+  // {
+  //   o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
+  //   throw o.err;
+  // });
+  //
+  // if( o.sync )
+  // return ready.sync();
+  // return ready;
+  //
+  // function end()
+  // {
+  //   _.assert( _.longIs( o.structure.dims ), 'Expects {- o.dims -}' );
+  //   _.assert( !!o.structure.buffer, 'Expects {- o.buffer -}' );
+  //   _.assert( _.mapIs( o.structure.channelsMap ), 'Expects {- o.channelsMap -}' );
+  //   _.assert( _.longIs( o.structure.channelsArray ), 'Expects {- o.channelsArray -}' );
+  //   _.assert
+  //   (
+  //     o.structure.bytesPerPixel === Math.ceil( o.structure.bitsPerPixel / 8 ),
+  //     `Mismatch of {- o.bytesPerPixel=${o.structure.bytesPerPixel} -} and {- o.bitsPerPixel=${o.structure.bitsPerPixel} -}`
+  //   );
+  //   return o;
+  // }
+
+}
+
+readStream.defaults =
+{
+  ... _readStream.defaults,
 }
 
 //
@@ -164,7 +245,7 @@ _Supports.defaults =
 }
 
 // --
-//
+// relations
 // --
 
 let Formats = null;
@@ -217,8 +298,14 @@ let Extension =
   init,
   form,
 
+  _readHead,
+  readHead,
+
   _read,
   read,
+
+  _readStream,
+  readStream,
 
   Supports,
   _Supports,
