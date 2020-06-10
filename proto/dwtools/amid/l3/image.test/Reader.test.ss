@@ -72,7 +72,7 @@ function fileReadHeadSync( test )
     'mode' : 'head',
     'sync' : 1,
     'readerClass' : _.image.reader.Pngjs,
-    'onHead' : onHead,
+    onHead,
     'headGot' : true,
     'structure' :
     {
@@ -148,7 +148,7 @@ function fileReadHeadAsync( test )
       'mode' : 'head',
       'sync' : 0,
       'readerClass' : _.image.reader.Pngjs,
-      'onHead' : onHead,
+      onHead,
       'headGot' : true,
       'structure' :
       {
@@ -273,7 +273,7 @@ function fileReadSync( test )
     'readerClass' : _.image.reader.Pngjs,
     'mode' : 'full',
     'sync' : 1,
-    'onHead' : onHead,
+    onHead,
     'headGot' : true,
     'structure' :
     {
@@ -353,7 +353,7 @@ function fileReadAsync( test )
       'mode' : 'full',
       'sync' : 0,
       'headGot' : true,
-      'onHead' : onHead,
+      onHead,
       'structure' :
       {
         'special' : { 'interlaced' : false },
