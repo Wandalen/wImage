@@ -30,10 +30,14 @@ function _structureHandle( o )
   let self = this;
   let os = o.originalStructure;
 
-  logger.log( '_structureHandle', o.mode ); debugger;
-  _.assertRoutineOptions( _structureHandle, arguments );
+  if( os === null )
+  os = o.op.originalStructure;
 
-  if( o.mode === 'full' )
+  logger.log( '_structureHandle', o.mode );
+  _.assertRoutineOptions( _structureHandle, arguments );
+  _.assert( _.objectIs( os ) );
+
+  if( o.mode === 'full' && o.op.mode === 'full' )
   o.op.structure.buffer = _.bufferRawFrom( os.data );
   else
   o.op.structure.buffer = null;
@@ -150,11 +154,10 @@ function _readGeneralStreamAsync( o )
   let self = this;
   let ready = new _.Consequence();
   let backend = new Backend.PNG();
-
-  _.assert( o.mode === 'head' );
+  let done;
 
   backend
-  .on( 'error', ( err ) => ready.error( _.err( err ) ) )
+  .on( 'error', ( err ) => errorHandle( err ) )
   .on( 'metadata', function ( os )
   {
     if( o.mode === 'head' )
@@ -165,20 +168,38 @@ function _readGeneralStreamAsync( o )
     }
     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
     if( o.mode === 'head' )
-    ready.take( o );
+    {
+      done = true;
+      ready.take( o );
+    }
   })
-  .on( 'end', function ( os )
+  .on( 'parsed', function ( data )
   {
-    xxx
     if( o.mode === 'head' )
     return;
-    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+    if( done )
+    return;
+    _.assert( !!o.headGot );
+    o.originalStructure.data = data;
+    self._structureHandle({ originalStructure : o.originalStructure, op : o, mode : 'full' });
     ready.take( o );
+    done = true;
   })
 
   o.data.pipe( backend );
 
   return ready;
+
+  function errorHandle( err )
+  {
+    if( o.headGot )
+    return;
+    if( done )
+    return;
+    err = _.err( err )
+    done = err;
+    ready.error( err );
+  }
 }
 
 //
@@ -205,18 +226,11 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  let stream = new Backend.PNG({})
-  let error;
+  let backend = new Backend.PNG({})
+  let done;
 
-  stream
-  .on( 'error', ( err ) =>
-  {
-    if( error )
-    return;
-    err = _.err( err )
-    error = err;
-    ready.error( err );
-  })
+  backend
+  .on( 'error', ( err ) => errorHandle( err ) )
   .on( 'metadata', ( os ) =>
   {
     if( o.mode === 'head' )
@@ -226,26 +240,35 @@ function _readGeneralBufferAsync( o )
     }
     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
     if( o.mode === 'head' )
-    ready.take( o );
+    {
+      ready.take( o );
+      done = true;
+    }
   })
 
-  stream.parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
+  backend.parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
   {
     if( err )
-    {
-      if( error )
-      return;
-      err = _.err( err )
-      error = err;
-      ready.error( err );
-    }
+    return errorHandle( err );
     if( o.mode === 'head' )
     return;
     self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
     ready.take( o );
+    done = true;
   });
 
   return ready;
+
+  function errorHandle( err )
+  {
+    if( o.headGot )
+    return;
+    if( done )
+    return;
+    err = _.err( err )
+    done = err;
+    ready.error( err );
+  }
 }
 
 //

@@ -40,6 +40,706 @@ function onSuiteEnd( test )
 // tests
 // --
 
+function readHeadBufferAsync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    a.ready.then( () =>
+    {
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      test.is( o.is( data ) );
+      var op = _.image.readHead({ data, ext : 'png', sync : 0, onHead });
+      test.is( _.consequenceIs( op ) );
+      return op;
+    })
+
+    a.ready.then( ( op ) =>
+    {
+
+      test.description = 'operation';
+
+      test.is( o.is( op.data ) );
+      test.is( op.reader instanceof op.readerClass );
+      test.is( _.objectIs( op.originalStructure ) );
+
+      delete op.data;
+      delete op.originalStructure;
+      delete op.reader;
+
+      var exp =
+      {
+        'filePath' : null,
+        'format' : 'png',
+        'ext' : 'png',
+        'mode' : 'head',
+        'sync' : 0,
+        'readerClass' : _.image.reader.Pngjs,
+        onHead,
+        'headGot' : true,
+        'structure' :
+        {
+          'buffer' : null,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
+        }
+      }
+
+      test.identical( op, exp );
+
+      test.description = 'onHead';
+      test.is( callbacks[ 0 ] === op );
+      test.identical( callbacks.length, 1 );
+
+      return op;
+    });
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readHeadStreamAsync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    a.ready.then( () =>
+    {
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      test.is( _.streamIs( data ) );
+      var op = _.image.readHead({ data, ext : 'png', sync : 0, onHead });
+      test.is( _.consequenceIs( op ) );
+      return op;
+    })
+
+    a.ready.then( ( op ) =>
+    {
+
+      test.description = 'operation';
+
+      test.is( _.streamIs( op.data ) );
+      test.is( op.reader instanceof op.readerClass );
+      test.is( _.objectIs( op.originalStructure ) );
+
+      delete op.data;
+      delete op.originalStructure;
+      delete op.reader;
+
+      var exp =
+      {
+        'filePath' : null,
+        'format' : 'png',
+        'ext' : 'png',
+        'mode' : 'head',
+        'sync' : 0,
+        'readerClass' : _.image.reader.Pngjs,
+        onHead,
+        'headGot' : true,
+        'structure' :
+        {
+          'buffer' : null,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
+        }
+      }
+
+      test.identical( op, exp );
+
+      test.description = 'onHead';
+      test.is( callbacks[ 0 ] === op );
+      test.identical( callbacks.length, 1 );
+
+      return op;
+    });
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readHeadBufferSync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    test.case = `src:${o.encoding}`;
+    callbacks = [];
+    a.reflect();
+    var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    test.is( o.is( data ) );
+    var op = _.image.readHead({ data, ext : 'png', sync : 1, onHead });
+
+    test.description = 'operation';
+
+    test.is( o.is( op.data ) );
+    test.is( op.reader instanceof op.readerClass );
+    test.is( _.objectIs( op.originalStructure ) );
+
+    delete op.data;
+    delete op.originalStructure;
+    delete op.reader;
+
+    var exp =
+    {
+      'filePath' : null,
+      'format' : 'png',
+      'ext' : 'png',
+      'mode' : 'head',
+      'sync' : 1,
+      'readerClass' : _.image.reader.Pngjs,
+      onHead,
+      'headGot' : true,
+      'structure' :
+      {
+        'buffer' : null,
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
+      }
+    }
+
+    test.identical( op, exp );
+
+    test.description = 'onHead';
+    test.is( callbacks[ 0 ] === op );
+    test.identical( callbacks.length, 1 );
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readHeadStreamSync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    test.case = `src:${o.encoding}`;
+    callbacks = [];
+    a.reflect();
+    var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    test.is( _.streamIs( data ) );
+    var op = _.image.readHead({ data, ext : 'png', sync : 1, onHead });
+
+    test.description = 'operation';
+
+    test.is( _.streamIs( data ) );
+    test.is( op.reader instanceof op.readerClass );
+    test.is( _.objectIs( op.originalStructure ) );
+
+    delete op.data;
+    delete op.originalStructure;
+    delete op.reader;
+
+    var exp =
+    {
+      'filePath' : null,
+      'format' : 'png',
+      'ext' : 'png',
+      'mode' : 'head',
+      'sync' : 1,
+      'readerClass' : _.image.reader.Pngjs,
+      onHead,
+      'headGot' : true,
+      'structure' :
+      {
+        'buffer' : null,
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
+      }
+    }
+
+    test.identical( op, exp );
+
+    test.description = 'onHead';
+    test.is( callbacks[ 0 ] === op );
+    test.identical( callbacks.length, 1 );
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readBufferAsync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    a.ready.then( () =>
+    {
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      test.is( o.is( data ) );
+      var op = _.image.read({ data, ext : 'png', sync : 0, onHead });
+      test.is( _.consequenceIs( op ) );
+      return op;
+    })
+
+    a.ready.then( ( op ) =>
+    {
+
+      test.description = 'operation';
+
+      test.is( o.is( op.data ) );
+      test.is( op.reader instanceof op.readerClass );
+      test.is( _.objectIs( op.originalStructure ) );
+
+      delete op.data;
+      delete op.originalStructure;
+      delete op.reader;
+
+      var exp =
+      {
+        'filePath' : null,
+        'format' : 'png',
+        'ext' : 'png',
+        'mode' : 'full',
+        'sync' : 0,
+        'readerClass' : _.image.reader.Pngjs,
+        onHead,
+        'headGot' : true,
+        'structure' :
+        {
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
+        }
+      }
+
+      test.identical( op, exp );
+
+      test.description = 'onHead';
+      test.is( callbacks[ 0 ] === op );
+      test.identical( callbacks.length, 1 );
+
+      return op;
+    });
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readStreamAsync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  // act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  // act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    a.ready.then( () =>
+    {
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      test.is( _.streamIs( data ) );
+      var op = _.image.read({ data, ext : 'png', sync : 0, onHead });
+      test.is( _.consequenceIs( op ) );
+      return op;
+    })
+
+    a.ready.then( ( op ) =>
+    {
+
+      test.description = 'operation';
+
+      test.is( _.streamIs( op.data ) );
+      test.is( op.reader instanceof op.readerClass );
+      test.is( _.objectIs( op.originalStructure ) );
+
+      delete op.data;
+      delete op.originalStructure;
+      delete op.reader;
+
+      var exp =
+      {
+        'filePath' : null,
+        'format' : 'png',
+        'ext' : 'png',
+        'mode' : 'full',
+        'sync' : 0,
+        'readerClass' : _.image.reader.Pngjs,
+        onHead,
+        'headGot' : true,
+        'structure' :
+        {
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
+        }
+      }
+
+      test.identical( op, exp );
+
+      test.description = 'onHead';
+      test.is( callbacks[ 0 ] === op );
+      test.identical( callbacks.length, 1 );
+
+      return op;
+    });
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readBufferSync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    test.case = `src:${o.encoding}`;
+    callbacks = [];
+    a.reflect();
+    var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    test.is( o.is( data ) );
+    var op = _.image.read({ data, ext : 'png', sync : 1, onHead });
+
+    test.description = 'operation';
+
+    test.is( o.is( op.data ) );
+    test.is( op.reader instanceof op.readerClass );
+    test.is( _.objectIs( op.originalStructure ) );
+
+    delete op.data;
+    delete op.originalStructure;
+    delete op.reader;
+
+    var exp =
+    {
+      'filePath' : null,
+      'format' : 'png',
+      'ext' : 'png',
+      'mode' : 'full',
+      'sync' : 1,
+      'readerClass' : _.image.reader.Pngjs,
+      onHead,
+      'headGot' : true,
+      'structure' :
+      {
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
+      }
+    }
+
+    test.identical( op, exp );
+
+    test.description = 'onHead';
+    test.is( callbacks[ 0 ] === op );
+    test.identical( callbacks.length, 1 );
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
+function readStreamSync( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    test.case = `src:${o.encoding}`;
+    callbacks = [];
+    a.reflect();
+    var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    test.is( _.streamIs( data ) );
+    var op = _.image.read({ data, ext : 'png', sync : 1, onHead });
+
+    test.description = 'operation';
+
+    test.is( _.streamIs( data ) );
+    test.is( op.reader instanceof op.readerClass );
+    test.is( _.objectIs( op.originalStructure ) );
+
+    delete op.data;
+    delete op.originalStructure;
+    delete op.reader;
+
+    var exp =
+    {
+      'filePath' : null,
+      'format' : 'png',
+      'ext' : 'png',
+      'mode' : 'full',
+      'sync' : 1,
+      'readerClass' : _.image.reader.Pngjs,
+      onHead,
+      'headGot' : true,
+      'structure' :
+      {
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
+      }
+    }
+
+    test.identical( op, exp );
+
+    test.description = 'onHead';
+    test.is( callbacks[ 0 ] === op );
+    test.identical( callbacks.length, 1 );
+
+  }
+
+  /* */
+
+  function onHead( op )
+  {
+    callbacks.push( op );
+  }
+
+}
+
+//
+
 function fileReadHeadSync( test )
 {
   let context = this;
@@ -421,11 +1121,20 @@ var Proto =
   tests :
   {
 
+    readHeadBufferAsync,
+    readHeadStreamAsync,
+    readHeadBufferSync,
+    readHeadStreamSync,
+
+    readBufferAsync,
+    readStreamAsync,
+    readBufferSync,
+    readStreamSync,
+
     fileReadHeadSync,
     fileReadHeadAsync,
-
     fileReadSync,
-    fileReadAsync
+    fileReadAsync,
 
   },
 
