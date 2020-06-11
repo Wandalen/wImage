@@ -1,4 +1,4 @@
-( function _Reader_test_s_( )
+( function _ReaderAbstract_test_s_( )
 {
 
 'use strict';
@@ -6,11 +6,11 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../dwtools/Tools.s' );
-  _.include( 'wTesting' );
   require( '../image/entry/Reader.s' );
+  _.include( 'wTesting' );
 }
 
-var _ = _global_.wTools;
+let _ = _global_.wTools;
 
 // --
 // context
@@ -62,9 +62,9 @@ function readHeadBufferAsync( test )
       test.case = `src:${o.encoding}`;
       callbacks = [];
       a.reflect();
-      var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
       test.is( o.is( data ) );
-      var op = _.image.readHead({ data, ext : 'png', sync : 0, onHead });
+      var op = _.image.readHead({ data, ext : context.ext, sync : 0, onHead });
       test.is( _.consequenceIs( op ) );
       return op;
     })
@@ -85,8 +85,8 @@ function readHeadBufferAsync( test )
       var exp =
       {
         'filePath' : null,
-        'format' : 'png',
-        'ext' : 'png',
+        'format' : context.format,
+        'ext' : context.ext,
         'mode' : 'head',
         'sync' : 0,
         'readerClass' : _.image.reader.Pngjs,
@@ -155,9 +155,9 @@ function readHeadStreamAsync( test )
       test.case = `src:${o.encoding}`;
       callbacks = [];
       a.reflect();
-      var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
       test.is( _.streamIs( data ) );
-      var op = _.image.readHead({ data, ext : 'png', sync : 0, onHead });
+      var op = _.image.readHead({ data, ext : context.ext, sync : 0, onHead });
       test.is( _.consequenceIs( op ) );
       return op;
     })
@@ -178,8 +178,8 @@ function readHeadStreamAsync( test )
       var exp =
       {
         'filePath' : null,
-        'format' : 'png',
-        'ext' : 'png',
+        'format' : context.format,
+        'ext' : context.ext,
         'mode' : 'head',
         'sync' : 0,
         'readerClass' : _.image.reader.Pngjs,
@@ -246,9 +246,9 @@ function readHeadBufferSync( test )
     test.case = `src:${o.encoding}`;
     callbacks = [];
     a.reflect();
-    var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
     test.is( o.is( data ) );
-    var op = _.image.readHead({ data, ext : 'png', sync : 1, onHead });
+    var op = _.image.readHead({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
@@ -263,8 +263,8 @@ function readHeadBufferSync( test )
     var exp =
     {
       'filePath' : null,
-      'format' : 'png',
-      'ext' : 'png',
+      'format' : context.format,
+      'ext' : context.ext,
       'mode' : 'head',
       'sync' : 1,
       'readerClass' : _.image.reader.Pngjs,
@@ -328,9 +328,9 @@ function readHeadStreamSync( test )
     test.case = `src:${o.encoding}`;
     callbacks = [];
     a.reflect();
-    var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
     test.is( _.streamIs( data ) );
-    var op = _.image.readHead({ data, ext : 'png', sync : 1, onHead });
+    var op = _.image.readHead({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
@@ -345,8 +345,8 @@ function readHeadStreamSync( test )
     var exp =
     {
       'filePath' : null,
-      'format' : 'png',
-      'ext' : 'png',
+      'format' : context.format,
+      'ext' : context.ext,
       'mode' : 'head',
       'sync' : 1,
       'readerClass' : _.image.reader.Pngjs,
@@ -412,9 +412,9 @@ function readBufferAsync( test )
       test.case = `src:${o.encoding}`;
       callbacks = [];
       a.reflect();
-      var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
       test.is( o.is( data ) );
-      var op = _.image.read({ data, ext : 'png', sync : 0, onHead });
+      var op = _.image.read({ data, ext : context.ext, sync : 0, onHead });
       test.is( _.consequenceIs( op ) );
       return op;
     })
@@ -435,8 +435,8 @@ function readBufferAsync( test )
       var exp =
       {
         'filePath' : null,
-        'format' : 'png',
-        'ext' : 'png',
+        'format' : context.format,
+        'ext' : context.ext,
         'mode' : 'full',
         'sync' : 0,
         'readerClass' : _.image.reader.Pngjs,
@@ -505,9 +505,9 @@ function readStreamAsync( test )
       test.case = `src:${o.encoding}`;
       callbacks = [];
       a.reflect();
-      var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+      var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
       test.is( _.streamIs( data ) );
-      var op = _.image.read({ data, ext : 'png', sync : 0, onHead });
+      var op = _.image.read({ data, ext : context.ext, sync : 0, onHead });
       test.is( _.consequenceIs( op ) );
       return op;
     })
@@ -528,8 +528,8 @@ function readStreamAsync( test )
       var exp =
       {
         'filePath' : null,
-        'format' : 'png',
-        'ext' : 'png',
+        'format' : context.format,
+        'ext' : context.ext,
         'mode' : 'full',
         'sync' : 0,
         'readerClass' : _.image.reader.Pngjs,
@@ -596,9 +596,9 @@ function readBufferSync( test )
     test.case = `src:${o.encoding}`;
     callbacks = [];
     a.reflect();
-    var data = _.fileProvider.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
     test.is( o.is( data ) );
-    var op = _.image.read({ data, ext : 'png', sync : 1, onHead });
+    var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
@@ -613,8 +613,8 @@ function readBufferSync( test )
     var exp =
     {
       'filePath' : null,
-      'format' : 'png',
-      'ext' : 'png',
+      'format' : context.format,
+      'ext' : context.ext,
       'mode' : 'full',
       'sync' : 1,
       'readerClass' : _.image.reader.Pngjs,
@@ -678,9 +678,9 @@ function readStreamSync( test )
     test.case = `src:${o.encoding}`;
     callbacks = [];
     a.reflect();
-    var data = _.fileProvider.streamRead({ filePath : a.abs( 'Pixels-2x2.png' ), encoding : o.encoding });
+    var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
     test.is( _.streamIs( data ) );
-    var op = _.image.read({ data, ext : 'png', sync : 1, onHead });
+    var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
@@ -695,8 +695,8 @@ function readStreamSync( test )
     var exp =
     {
       'filePath' : null,
-      'format' : 'png',
-      'ext' : 'png',
+      'format' : context.format,
+      'ext' : context.ext,
       'mode' : 'full',
       'sync' : 1,
       'readerClass' : _.image.reader.Pngjs,
@@ -751,7 +751,7 @@ function fileReadHeadSync( test )
   test.case = 'basic';
 
   a.reflect();
-  var op = _.image.fileReadHead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 1, onHead });
+  var op = _.image.fileReadHead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 1, onHead });
   test.is( _.mapIs( op ) );
 
   test.description = 'operation';
@@ -766,9 +766,9 @@ function fileReadHeadSync( test )
 
   var exp =
   {
-    'filePath' : a.abs( 'Pixels-2x2.png' ),
-    'format' : 'png',
-    'ext' : 'png',
+    'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+    'format' : context.format,
+    'ext' : context.ext,
     'mode' : 'head',
     'sync' : 1,
     'readerClass' : _.image.reader.Pngjs,
@@ -822,7 +822,7 @@ function fileReadHeadAsync( test )
   {
     test.case = 'basic';
     a.reflect();
-    var op = _.image.fileReadHead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 0, onHead });
+    var op = _.image.fileReadHead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 0, onHead });
     test.is( _.consequenceIs( op ) );
     return op;
   })
@@ -842,9 +842,9 @@ function fileReadHeadAsync( test )
 
     var exp =
     {
-      'filePath' : a.abs( 'Pixels-2x2.png' ),
-      'format' : 'png',
-      'ext' : 'png',
+      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+      'format' : context.format,
+      'ext' : context.ext,
       'mode' : 'head',
       'sync' : 0,
       'readerClass' : _.image.reader.Pngjs,
@@ -903,7 +903,7 @@ function fileReadSync( test )
 
   a.reflect();
 
-  var op = _.image.fileRead( a.abs( 'Pixels-2x2.png' ) );
+  var op = _.image.fileRead( a.abs( `Pixels-2x2.${context.ext}` ) );
 
   test.description = 'operation';
 
@@ -917,9 +917,9 @@ function fileReadSync( test )
 
   var exp =
   {
-    'filePath' : a.abs( 'Pixels-2x2.png' ),
-    'format' : 'png',
-    'ext' : 'png',
+    'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+    'format' : context.format,
+    'ext' : context.ext,
     'readerClass' : _.image.reader.Pngjs,
     'mode' : 'full',
     'sync' : 1,
@@ -953,7 +953,7 @@ function fileReadSync( test )
   a.reflect();
   callbacks = [];
 
-  var op = _.image.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 1, onHead });
+  var op = _.image.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 1, onHead });
 
   test.description = 'operation';
 
@@ -967,9 +967,9 @@ function fileReadSync( test )
 
   var exp =
   {
-    'filePath' : a.abs( 'Pixels-2x2.png' ),
-    'format' : 'png',
-    'ext' : 'png',
+    'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+    'format' : context.format,
+    'ext' : context.ext,
     'readerClass' : _.image.reader.Pngjs,
     'mode' : 'full',
     'sync' : 1,
@@ -1025,7 +1025,7 @@ function fileReadAsync( test )
     test.case = 'basic';
 
     a.reflect();
-    var op = _.image.fileRead({ filePath : a.abs( 'Pixels-2x2.png' ), sync : 0, onHead });
+    var op = _.image.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 0, onHead });
     test.is( _.consequenceIs( op ) );
 
     return op;
@@ -1046,9 +1046,9 @@ function fileReadAsync( test )
 
     var exp =
     {
-      'filePath' : a.abs( 'Pixels-2x2.png' ),
-      'format' : 'png',
-      'ext' : 'png',
+      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+      'format' : context.format,
+      'ext' : context.ext,
       'readerClass' : _.image.reader.Pngjs,
       'mode' : 'full',
       'sync' : 0,
@@ -1102,11 +1102,9 @@ function fileReadAsync( test )
 var Proto =
 {
 
-  name : 'ImageRead',
-  abstract : 0,
+  name : 'ImageReadAbstract',
+  abstract : 1,
   silencing : 1,
-  enabled : 1,
-  verbosity : 4,
 
   onSuiteBegin,
   onSuiteEnd,
@@ -1116,6 +1114,8 @@ var Proto =
     suiteTempPath : null,
     assetsOriginalPath : null,
     appJsPath : null,
+    ext : null,
+    format : null,
   },
 
   tests :

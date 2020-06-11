@@ -39,8 +39,6 @@ function read_body( o )
     o.reader = new o.readerClass();
   }
 
-  // let mode = o.mode;
-  // delete o.mode;
   let methodName = o.mode === 'full' ? 'read' : 'readHead';
   let o2 = _.mapOnly( o, o.reader[ methodName ].defaults );
   o2.onHead = handleHead;
@@ -55,7 +53,6 @@ function read_body( o )
 
   function handleHead( result )
   {
-    // _.mapExtend( o, result );
 
     for( let k in result )
     if( o[ k ] === undefined )
@@ -70,8 +67,6 @@ function read_body( o )
     for( let k in result )
     if( o[ k ] === undefined )
     o[ k ] = result[ k ];
-    // return _.mapExtend( o, result );
-    // o.mode = mode;
     return o;
   }
 }
