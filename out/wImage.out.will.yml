@@ -2,15 +2,18 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  wImage.out.will.yml: &ref_0
-    hash: 470e512cb362021fbc2bddb876354ea5
-    size: 40711
-  ../.ex.will.yml: &ref_1
-    hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
-    size: 1732
-  ../.im.will.yml: &ref_2
-    hash: 23c30d3adc97ad778466cf1aa99dacba
-    size: 4982
+  ../.ex.will.yml: &ref_0
+    hash: 6b9afa69a13b607ca9418472bff4473e
+    size: 1733
+  ../.im.will.yml: &ref_1
+    hash: 9e8a6bca2aa7c3d6a5fed3a78f141cb9
+    size: 5326
+  ../.module/AssetsImagesPng/will.yml: &ref_6
+    hash: 3d78fa89530a262abb542ae8f7a0f209
+    size: 349
+  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_7
+    hash: 609742a312c07a0f71a4d8c46267ea34
+    size: 7739
 module:
   wImage.out:
     about:
@@ -21,19 +24,19 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - tools
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -76,8 +79,12 @@ module:
         path: .
       out:
         path: .
+      tmp:
+        path: ../tmp
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - 'path::tmp'
       proto:
         path: ../proto
       export:
@@ -111,7 +118,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/amid/l3/image/entry/Reader.s
+        path: ../proto/dwtools/amid/l3/image/entry/Image.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -121,13 +128,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -159,27 +166,16 @@ module:
           - ../proto/dwtools/abase
           - ../proto/dwtools/amid
           - ../proto/dwtools/amid/l3
-          - ../proto/dwtools/amid/l3/-image
-          - ../proto/dwtools/amid/l3/-image/entry
-          - ../proto/dwtools/amid/l3/-image/entry/Reader.s
-          - ../proto/dwtools/amid/l3/-image/include
-          - ../proto/dwtools/amid/l3/-image/include/Basic.s
-          - ../proto/dwtools/amid/l3/-image/include/Reader.s
-          - ../proto/dwtools/amid/l3/-image/l1_namespace
-          - ../proto/dwtools/amid/l3/-image/l1_namespace/Reader.s
-          - ../proto/dwtools/amid/l3/-image/l1_namespace/Writer.s
-          - ../proto/dwtools/amid/l3/-image/l3
-          - ../proto/dwtools/amid/l3/-image/l3/Reader.s
-          - ../proto/dwtools/amid/l3/-image/l5_reader
-          - ../proto/dwtools/amid/l3/-image/l5_reader/Pngjs.s
-          - ../proto/dwtools/amid/l3/-image/l7_namespace
-          - ../proto/dwtools/amid/l3/-image/l7_namespace/Reader.s
           - ../proto/dwtools/amid/l3/image
           - ../proto/dwtools/amid/l3/image/entry
+          - ../proto/dwtools/amid/l3/image/entry/Image.s
           - ../proto/dwtools/amid/l3/image/entry/Reader.s
+          - ../proto/dwtools/amid/l3/image/entry/ReaderPngjs.s
           - ../proto/dwtools/amid/l3/image/include
           - ../proto/dwtools/amid/l3/image/include/Basic.s
+          - ../proto/dwtools/amid/l3/image/include/Image.s
           - ../proto/dwtools/amid/l3/image/include/Reader.s
+          - ../proto/dwtools/amid/l3/image/include/ReaderPngjs.s
           - ../proto/dwtools/amid/l3/image/l1_namespace
           - ../proto/dwtools/amid/l3/image/l1_namespace/Reader.s
           - ../proto/dwtools/amid/l3/image/l1_namespace/ReaderStructure.s
@@ -191,7 +187,8 @@ module:
           - ../proto/dwtools/amid/l3/image/l7_namespace
           - ../proto/dwtools/amid/l3/image/l7_namespace/Reader.s
           - ../proto/dwtools/amid/l3/image.test
-          - ../proto/dwtools/amid/l3/image.test/Reader.test.ss
+          - ../proto/dwtools/amid/l3/image.test/ReaderAbstract.test.s
+          - ../proto/dwtools/amid/l3/image.test/ReaderPngjs.test.s
           - ../proto/dwtools/amid/l3/image.test/_assets
           - ../proto/dwtools/amid/l3/image.test/_assets/basic
           - ../proto/dwtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
@@ -214,7 +211,7 @@ module:
         autoExporting: 0
         enabled: 0
       pngjs:
-        path: 'npm:///pngjs'
+        path: 'npm:///pngjs#5.0.0'
         autoExporting: 0
         enabled: 0
       eslint:
@@ -223,7 +220,23 @@ module:
         enabled: 0
         criterion:
           debug: 1
+      AssetsImagesPng:
+        path: 'git:///git@github.com:Wandalen/AssetsImagesPng.git'
+        autoExporting: 0
+        enabled: 1
+        criterion:
+          asset: 1
+          proto: 0
     reflector:
+      reflect.assets:
+        src:
+          filePath:
+            .: .
+          prefixPath: >-
+            submodule::AssetsImagesPng / exported::*=1 /
+            reflector::exported.export
+        dst:
+          prefixPath: '{path::tmp}'
       reflect.proto.debug.raw:
         src:
           filePath:
@@ -231,9 +244,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -248,9 +258,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -265,9 +272,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: debug
@@ -282,9 +286,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           debug: release
@@ -299,9 +300,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           raw: raw
           debug: release
@@ -317,9 +315,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -336,9 +331,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: no.tests
           raw: compiled
@@ -354,9 +346,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -372,9 +361,6 @@ module:
           prefixPath: ''
         dst:
           prefixPath: ''
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
         criterion:
           tests: only.tests
           raw: compiled
@@ -661,9 +647,14 @@ module:
         criterion:
           content: prime
           debug: release
+      reflect.assets:
+        opts:
+          filePath: 'reflector::reflect.assets'
+        inherit:
+          - files.reflect
       reflect.proto.debug.raw:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: debug
@@ -673,7 +664,7 @@ module:
           - files.reflect
       reflect.proto.release.raw:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: release
@@ -683,7 +674,7 @@ module:
           - files.reflect
       reflect.proto.debug.compiled:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: debug
@@ -693,7 +684,7 @@ module:
           - files.reflect
       reflect.proto.release.compiled:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: release
@@ -704,7 +695,7 @@ module:
       transpile.proto.raw:
         opts:
           entry: 'path::entry.proto.no.tests'
-          filePath: 'reflector::transpile.proto.raw*'
+          filePath: 'reflector::transpile.proto.raw'
         criterion:
           raw: raw
           debug: release
@@ -714,7 +705,7 @@ module:
       transpile.proto.no.tests.compiled.debug:
         opts:
           entry: 'path::entry.proto.*=1'
-          filePath: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled'
         criterion:
           tests: no.tests
           raw: compiled
@@ -725,7 +716,7 @@ module:
       transpile.proto.no.tests.compiled.release:
         opts:
           entry: 'path::entry.proto.*=1'
-          filePath: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled'
         criterion:
           tests: no.tests
           raw: compiled
@@ -737,7 +728,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          filePath: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled'
         criterion:
           tests: only.tests
           raw: compiled
@@ -749,7 +740,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          filePath: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled'
         criterion:
           tests: only.tests
           raw: compiled
@@ -757,24 +748,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export*'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -803,7 +776,7 @@ module:
       debug:
         steps:
           - 'step::clean.out*=2'
-          - reflect.proto.*=1
+          - reflect.assets
         criterion:
           default: 1
           debug: debug
@@ -863,9 +836,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wImage.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wImage
@@ -875,21 +847,13 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - tools
-        - wTools
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wimage
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -930,8 +894,12 @@ module:
         path: .
       out:
         path: out
+      tmp:
+        path: tmp
       temp:
-        path: 'path::out'
+        path:
+          - 'path::out'
+          - 'path::tmp'
       proto:
         path: proto
       export:
@@ -965,7 +933,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/amid/l3/image/entry/Reader.s
+        path: proto/dwtools/amid/l3/image/entry/Image.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -975,13 +943,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Reader.s'
+        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -1012,7 +980,7 @@ module:
         autoExporting: 0
         enabled: 0
       pngjs:
-        path: 'npm:///pngjs'
+        path: 'npm:///pngjs#5.0.0'
         autoExporting: 0
         enabled: 0
       eslint:
@@ -1021,7 +989,23 @@ module:
         enabled: 0
         criterion:
           debug: 1
+      AssetsImagesPng:
+        path: 'git:///git@github.com:Wandalen/AssetsImagesPng.git'
+        autoExporting: 0
+        enabled: 1
+        criterion:
+          asset: 1
+          proto: 0
     reflector:
+      reflect.assets:
+        src:
+          filePath:
+            .: .
+          prefixPath: >-
+            submodule::AssetsImagesPng / exported::*=1 /
+            reflector::exported.export
+        dst:
+          prefixPath: '{path::tmp}'
       reflect.proto.debug.raw:
         src:
           filePath:
@@ -1381,9 +1365,14 @@ module:
         criterion:
           content: prime
           debug: release
+      reflect.assets:
+        opts:
+          filePath: 'reflector::reflect.assets'
+        inherit:
+          - files.reflect
       reflect.proto.debug.raw:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: debug
@@ -1393,7 +1382,7 @@ module:
           - files.reflect
       reflect.proto.release.raw:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: release
@@ -1403,7 +1392,7 @@ module:
           - files.reflect
       reflect.proto.debug.compiled:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: debug
@@ -1413,7 +1402,7 @@ module:
           - files.reflect
       reflect.proto.release.compiled:
         opts:
-          filePath: 'reflector::reflect.proto*'
+          filePath: 'reflector::reflect.proto'
         criterion:
           tests: no.tests
           debug: release
@@ -1424,7 +1413,7 @@ module:
       transpile.proto.raw:
         opts:
           entry: 'path::entry.proto.no.tests'
-          filePath: 'reflector::transpile.proto.raw*'
+          filePath: 'reflector::transpile.proto.raw'
         criterion:
           raw: raw
           debug: release
@@ -1434,7 +1423,7 @@ module:
       transpile.proto.no.tests.compiled.debug:
         opts:
           entry: 'path::entry.proto.*=1'
-          filePath: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled'
         criterion:
           tests: no.tests
           raw: compiled
@@ -1445,7 +1434,7 @@ module:
       transpile.proto.no.tests.compiled.release:
         opts:
           entry: 'path::entry.proto.*=1'
-          filePath: 'reflector::transpile.proto.no.tests.compiled*'
+          filePath: 'reflector::transpile.proto.no.tests.compiled'
         criterion:
           tests: no.tests
           raw: compiled
@@ -1457,7 +1446,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          filePath: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled'
         criterion:
           tests: only.tests
           raw: compiled
@@ -1469,7 +1458,7 @@ module:
         opts:
           entry: 'path::entry.proto.*=1'
           external.before: '{path::out.*=1}/Main.s'
-          filePath: 'reflector::transpile.proto.only.tests.compiled*'
+          filePath: 'reflector::transpile.proto.only.tests.compiled'
         criterion:
           tests: only.tests
           raw: compiled
@@ -1505,7 +1494,7 @@ module:
       debug:
         steps:
           - 'step::clean.out*=2'
-          - reflect.proto.*=1
+          - reflect.assets
         criterion:
           default: 1
           debug: debug
@@ -1553,9 +1542,262 @@ module:
           - 'build::npm'
     consistency:
       ../.ex.will.yml:
-        hash: 48d2cbe4a90396c35c7c5c0ca651b7c8
-        size: 1732
+        hash: 6b9afa69a13b607ca9418472bff4473e
+        size: 1733
       ../.im.will.yml:
-        hash: 23c30d3adc97ad778466cf1aa99dacba
-        size: 4982
-      wImage.out.will.yml: *ref_0
+        hash: 9e8a6bca2aa7c3d6a5fed3a78f141cb9
+        size: 5326
+  ../.module/AssetsImagesPng/:
+    about:
+      name: AssetsImagesPng
+      org: noorg
+      description: Collection of PNG images for testing purpose.
+      enabled: 1
+    path:
+      module.willfiles:
+        criterion:
+          predefined: 1
+        path: will.yml
+      module.original.willfiles:
+        criterion:
+          predefined: 1
+        path: will.yml
+      module.peer.willfiles:
+        criterion:
+          predefined: 1
+        path: out/AssetsImagesPng.out.will.yml
+      module.peer.in:
+        criterion:
+          predefined: 1
+        path: out
+      module.common:
+        criterion:
+          predefined: 1
+        path: ./
+      download:
+        criterion:
+          predefined: 1
+        path: .
+      in:
+        path: .
+      out:
+        path: out
+      data:
+        path: data
+      temp:
+        path: 'path::out'
+      export:
+        path: '{path::data}/**.png'
+    submodule: {}
+    reflector: {}
+    step: {}
+    build:
+      export:
+        steps:
+          - 'step::module.export'
+        criterion:
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+    consistency:
+      ../.module/AssetsImagesPng/will.yml: *ref_6
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
+  ../.module/AssetsImagesPng/out/AssetsImagesPng.out:
+    about:
+      name: AssetsImagesPng
+      org: noorg
+      description: Collection of PNG images for testing purpose.
+      enabled: 1
+    path:
+      module.willfiles:
+        criterion:
+          predefined: 1
+        path: AssetsImagesPng.out.will.yml
+      module.common:
+        criterion:
+          predefined: 1
+        path: AssetsImagesPng.out
+      module.original.willfiles:
+        criterion:
+          predefined: 1
+        path: ../will.yml
+      module.peer.willfiles:
+        criterion:
+          predefined: 1
+        path: ../will.yml
+      module.peer.in:
+        criterion:
+          predefined: 1
+        path: ..
+      download:
+        criterion:
+          predefined: 1
+        path: ..
+      in:
+        path: .
+      out:
+        path: .
+      data:
+        path: ../data
+      temp:
+        path: 'path::out'
+      export:
+        path: '{path::data}/**.png'
+      exported.dir.export:
+        criterion:
+          generated: 1
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+        path: ../data
+      exported.files.export:
+        criterion:
+          generated: 1
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+        path:
+          - ../data/image/Pixels-2048x2048-depth8-interlaced1-rgb.png
+          - ../data/image/Pixels-2x2-depth1-interlaced0-g.png
+          - ../data/image/Pixels-2x2-depth1-interlaced1-g.png
+          - ../data/image/Pixels-2x2-depth16-interlaced0-g.png
+          - ../data/image/Pixels-2x2-depth16-interlaced0-ga.png
+          - ../data/image/Pixels-2x2-depth16-interlaced0-rgb.png
+          - ../data/image/Pixels-2x2-depth16-interlaced0-rgba.png
+          - ../data/image/Pixels-2x2-depth16-interlaced1-g.png
+          - ../data/image/Pixels-2x2-depth16-interlaced1-ga.png
+          - ../data/image/Pixels-2x2-depth16-interlaced1-rgb.png
+          - ../data/image/Pixels-2x2-depth16-interlaced1-rgba.png
+          - ../data/image/Pixels-2x2-depth2-interlaced0-g.png
+          - ../data/image/Pixels-2x2-depth2-interlaced0-palette.png
+          - ../data/image/Pixels-2x2-depth2-interlaced1-g.png
+          - ../data/image/Pixels-2x2-depth2-interlaced1-palette.png
+          - ../data/image/Pixels-2x2-depth4-interlaced0-g.png
+          - ../data/image/Pixels-2x2-depth4-interlaced0-palette.png
+          - ../data/image/Pixels-2x2-depth4-interlaced1-g.png
+          - ../data/image/Pixels-2x2-depth4-interlaced1-palette.png
+          - ../data/image/Pixels-2x2-depth8-interlaced0-g.png
+          - ../data/image/Pixels-2x2-depth8-interlaced0-ga.png
+          - ../data/image/Pixels-2x2-depth8-interlaced0-palette.png
+          - ../data/image/Pixels-2x2-depth8-interlaced0-rgb.png
+          - ../data/image/Pixels-2x2-depth8-interlaced0-rgba.png
+          - ../data/image/Pixels-2x2-depth8-interlaced1-g.png
+          - ../data/image/Pixels-2x2-depth8-interlaced1-ga.png
+          - ../data/image/Pixels-2x2-depth8-interlaced1-palette.png
+          - ../data/image/Pixels-2x2-depth8-interlaced1-rgb.png
+          - ../data/image/Pixels-2x2-depth8-interlaced1-rgba.png
+          - ../data/image/Pixels-4096x4096-depth8-interlaced1-rgb.png
+          - ../data/image/Pixels-4x5-depth1-interlaced0-g.png
+          - ../data/image/Pixels-4x5-depth1-interlaced1-g.png
+          - ../data/image/Pixels-4x5-depth16-interlaced0-g.png
+          - ../data/image/Pixels-4x5-depth16-interlaced0-ga.png
+          - ../data/image/Pixels-4x5-depth16-interlaced0-rgb.png
+          - ../data/image/Pixels-4x5-depth16-interlaced0-rgba.png
+          - ../data/image/Pixels-4x5-depth16-interlaced1-g.png
+          - ../data/image/Pixels-4x5-depth16-interlaced1-ga.png
+          - ../data/image/Pixels-4x5-depth16-interlaced1-rgb.png
+          - ../data/image/Pixels-4x5-depth16-interlaced1-rgba.png
+          - ../data/image/Pixels-4x5-depth2-interlaced0-g.png
+          - ../data/image/Pixels-4x5-depth2-interlaced0-rgb.png
+          - ../data/image/Pixels-4x5-depth2-interlaced1-g.png
+          - ../data/image/Pixels-4x5-depth2-interlaced1-rgb.png
+          - ../data/image/Pixels-4x5-depth4-interlaced0-g.png
+          - ../data/image/Pixels-4x5-depth4-interlaced0-rgb.png
+          - ../data/image/Pixels-4x5-depth4-interlaced1-g.png
+          - ../data/image/Pixels-4x5-depth4-interlaced1-rgb.png
+          - ../data/image/Pixels-4x5-depth8-interlaced0-g.png
+          - ../data/image/Pixels-4x5-depth8-interlaced0-ga.png
+          - ../data/image/Pixels-4x5-depth8-interlaced0-palette.png
+          - ../data/image/Pixels-4x5-depth8-interlaced0-rgb.png
+          - ../data/image/Pixels-4x5-depth8-interlaced0-rgba.png
+          - ../data/image/Pixels-4x5-depth8-interlaced1-g.png
+          - ../data/image/Pixels-4x5-depth8-interlaced1-ga.png
+          - ../data/image/Pixels-4x5-depth8-interlaced1-palette.png
+          - ../data/image/Pixels-4x5-depth8-interlaced1-rgb.png
+          - ../data/image/Pixels-4x5-depth8-interlaced1-rgba.png
+          - ../data/image/Pixels-8192x8192-depth8-interlaced1-rgb.png
+    submodule: {}
+    reflector:
+      exported.export:
+        src:
+          filePath:
+            '**.png': ''
+          prefixPath: ../data
+        mandatory: 1
+        dstRewritingOnlyPreserving: 1
+        linking: hardLinkMaybe
+        criterion:
+          generated: 1
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+      exported.files.export:
+        src:
+          filePath:
+            'path::exported.files.export': ''
+          basePath: .
+          prefixPath: 'path::exported.dir.export'
+          recursive: 0
+        recursive: 0
+        criterion:
+          generated: 1
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+    step:
+      exported.export:
+        opts:
+          filePath: 'reflector::exported.export'
+        criterion:
+          generated: 1
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+        inherit:
+          - files.reflect
+      exported.files.export:
+        opts:
+          filePath: 'reflector::exported.files.export'
+        criterion:
+          generated: 1
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+        inherit:
+          - files.reflect
+    build:
+      export:
+        steps:
+          - 'step::module.export'
+        criterion:
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+    exported:
+      export:
+        version: 0.0.0
+        recursive: 0
+        withIntegrated: 2
+        tar: 0
+        exportedReflector: 'reflector::exported.export'
+        exportedFilesReflector: 'reflector::exported.files.export'
+        exportedDirPath: 'path::exported.dir.export'
+        exportedFilesPath: 'path::exported.files.export'
+        criterion:
+          export: 1
+          default: 1
+          proto: 0
+          asset: 1
+    consistency:
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
+      ../.module/AssetsImagesPng/will.yml:
+        hash: 3d78fa89530a262abb542ae8f7a0f209
+        size: 349
