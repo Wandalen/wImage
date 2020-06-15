@@ -6,7 +6,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../dwtools/Tools.s' );
-  require( '../image/include/ReaderPngjs.s' );
+  require( '../image/entry/ReaderPngjs.s' );
   require( './ReaderAbstract.test.s' );
 }
 
