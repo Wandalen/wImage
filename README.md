@@ -8,3 +8,8 @@ Standardized abstract interface to open / read / parse image with collection of 
 npm install
 node sample/Sample.js
 ```
+
+## To add as submodule
+```
+npm add 'wimage@alpha'
+```
