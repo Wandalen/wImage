@@ -28,13 +28,13 @@ function read_body( o )
   let self = this;
 
   if( o.filePath && !o.ext )
-  o.ext = _.path.ext( o.filePath );
+  o.ext = _.path.ext( o.filePath ).toLowerCase();
 
   if( o.reader === null )
   {
-    let o2 = _.mapOnly( o, self.readerSelect.defaults );
+    let o2 = _.mapOnly( o, self.readerDeduce.defaults );
     o2.single = 1;
-    let selected = self.readerSelect( o2 );
+    let selected = self.readerDeduce( o2 );
     _.mapExtend( o, selected );
     o.reader = new o.readerClass();
   }
@@ -95,21 +95,21 @@ read.defaults.mode = 'full';
 
 //
 
-function readerSelect( o )
+function readerDeduce( o )
 {
   let self = this;
   let result = [];
 
-  o = _.routineOptions( readerSelect, arguments );
+  o = _.routineOptions( readerDeduce, arguments );
 
   if( o.filePath && !o.ext )
-  o.ext = _.path.ext( o.filePath );
+  o.ext = _.path.ext( o.filePath ).toLowerCase();
 
   for( let n in _.image.reader )
   {
     let Reader = _.image.reader[ n ];
-    if( !Reader.Formats )
-    continue;
+    // if( !Reader.Formats )
+    // continue;
     let supports = Reader.Supports( _.mapBut( o, [ 'single' ] ) );
     if( supports )
     result.push( supports );
@@ -133,7 +133,7 @@ function readerSelect( o )
   return result;
 }
 
-readerSelect.defaults =
+readerDeduce.defaults =
 {
   data : null,
   format : null,
@@ -151,7 +151,7 @@ let Extension =
 
   readHead,
   read,
-  readerSelect,
+  readerDeduce,
 
 }
 

@@ -138,6 +138,12 @@ function Supports( o )
 
   o = _.routineOptions( Supports, arguments );
 
+  if( !o.ext )
+  if( o.filePath )
+  o.filePath = _.path.ext( o.filePath );
+  if( o.ext )
+  o.ext = o.ext.toLowerCase()
+
   if( o.format )
   if( _.longHas( cls.Formats, o.format ) )
   console.log();
@@ -150,7 +156,7 @@ function Supports( o )
   if( _.longHas( cls.Exts, o.ext ) )
   return { readerClass : cls, format : cls.Formats[ 0 ] };
 
-  return false;
+  return cls._Supports( o );
 }
 
 Supports.defaults =
