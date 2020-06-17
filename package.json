@@ -14,12 +14,12 @@
   },
   "dependencies" :
   {
-    "pngjs" : "=5.0.0",
     "wTools" : "alpha",
     "wCopyable" : "alpha",
     "wFiles" : "alpha",
-    "wConsequence" : "alpha"
+    "wConsequence" : "alpha",
+    "pngjs" : "=5.0.0"
   },
-  "devDependencies" : { "eslint" : "7.1.0", "wimage" : "file:.", "wTesting" : "alpha" },
+  "devDependencies" : { "wTesting" : "alpha", "eslint" : "7.1.0", "wimage" : "file:." },
   "keywords" : [ "wTools" ]
 }
