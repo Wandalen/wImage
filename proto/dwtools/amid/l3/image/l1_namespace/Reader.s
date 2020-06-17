@@ -108,8 +108,8 @@ function readerDeduce( o )
   for( let n in _.image.reader )
   {
     let Reader = _.image.reader[ n ];
-    // if( !Reader.Formats )
-    // continue;
+    if( !Reader.Formats )
+    continue;
     let supports = Reader.Supports( _.mapBut( o, [ 'single' ] ) );
     if( supports )
     result.push( supports );
