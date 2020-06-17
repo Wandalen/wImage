@@ -1,4 +1,4 @@
-( function _Reader_s_( )
+( function _ReaderPngjs_s_( )
 {
 
 'use strict';
