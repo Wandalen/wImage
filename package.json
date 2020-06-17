@@ -18,7 +18,8 @@
     "wCopyable" : "alpha",
     "wFiles" : "alpha",
     "wConsequence" : "alpha",
-    "pngjs" : "=5.0.0"
+    "pngjs" : "=5.0.0",
+    "png.js": "=0.2.1"
   },
   "devDependencies" : { "wTesting" : "alpha", "eslint" : "7.1.0", "wimage" : "file:." },
   "keywords" : [ "wTools" ]

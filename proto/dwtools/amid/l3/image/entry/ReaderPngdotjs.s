@@ -4,13 +4,13 @@
 'use strict';
 
 /**
- * Plugin for wImageRader to read PNG images with backend npm:///pngjs.
+ * Plugin for wImageRader to read PNG images with backend npm:///png.js.
   @module Tools/mid/ImageReaderPngjs
 */
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderPngjs.s' )
+  let _ = require( '../include/ReaderPngdotjs.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 
