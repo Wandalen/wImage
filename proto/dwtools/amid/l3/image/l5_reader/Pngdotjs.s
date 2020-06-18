@@ -1,4 +1,3 @@
-/*eslint-disable*/
 ( function _Pngdotjs_s_()
 {
 
