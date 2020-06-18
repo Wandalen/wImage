@@ -32,10 +32,8 @@ function _read( o )
   _.assertRoutineOptions( _read, o );
   o.mode = 'full';
 
-  /* qqq : write proper code for mode : head */
   try
   {
-    debugger;
     let reader = new Backend( _.bufferNodeFrom( o.data ) );
     reader.parse( ( err, png ) =>
     {
@@ -48,6 +46,7 @@ function _read( o )
   {
     throw _.err( err );
   }
+
   return o;
 }
 
