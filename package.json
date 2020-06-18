@@ -1,26 +1,39 @@
 {
-  "name" : "wimage",
-  "version" : "0.3.13",
-  "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "license" : "MIT",
-  "main" : "proto/dwtools/amid/l3/image/entry/Image.s",
-  "files" : [ "proto/dwtools/amid/l3/image", "proto/dwtools/Tools.s" ],
-  "scripts" : { "test" : "wtest .run proto rapidity:-3", "docgen" : "wdocgen .build proto" },
-  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wImage.git" },
-  "bugs" :
-  {
-    "url" : "https://github.com/Wandalen/wImage/issues"
+  "name": "wimage",
+  "version": "0.3.13",
+  "description": "Standardized abstract interface to open / read / parse image with collection of plugins.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "license": "MIT",
+  "main": "proto/dwtools/amid/l3/image/entry/Image.s",
+  "files": [
+    "proto/dwtools/amid/l3/image",
+    "proto/dwtools/Tools.s"
+  ],
+  "scripts": {
+    "test": "wtest .run proto rapidity:-3",
+    "docgen": "wdocgen .build proto"
   },
-  "dependencies" :
-  {
-    "pngjs" : "=5.0.0",
-    "png.js" : "=0.2.1",
-    "wTools" : "alpha",
-    "wCopyable" : "alpha",
-    "wFiles" : "alpha",
-    "wConsequence" : "alpha"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wImage.git"
   },
-  "devDependencies" : { "eslint" : "7.1.0", "wimage" : "file:.", "wTesting" : "alpha" },
-  "keywords" : [ "wTools" ]
+  "bugs": {
+    "url": "https://github.com/Wandalen/wImage/issues"
+  },
+  "dependencies": {
+    "pngjs": "=5.0.0",
+    "png.js": "=0.2.1",
+    "wTools": "alpha",
+    "wCopyable": "alpha",
+    "wFiles": "alpha",
+    "wConsequence": "alpha"
+  },
+  "devDependencies": {
+    "eslint": "7.1.0",
+    "wimage": "file:.",
+    "wTesting": "alpha"
+  },
+  "keywords": [
+    "wTools"
+  ]
 }
