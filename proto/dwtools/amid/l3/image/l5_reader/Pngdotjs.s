@@ -1,3 +1,4 @@
+/*eslint-disable*/
 ( function _Pngdotjs_s_()
 {
 
@@ -29,7 +30,7 @@ function _structureHandle( o )
 {
   let self = this;
   let os = o.originalStructure;
-  console.log(o);
+
   if( os === null )
   os = o.op.originalStructure;
 
@@ -38,7 +39,7 @@ function _structureHandle( o )
   _.assert( _.objectIs( os ) );
 
   if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.data );
+  o.op.structure.buffer = _.bufferRawFrom( os.pixels );
 
   else
   o.op.structure.buffer = null;
@@ -105,200 +106,30 @@ _structureHandle.defaults =
 
 //
 
-function _readGeneral( o )
-{
-  let self = this;
-
-  _.assertRoutineOptions( _readGeneral, o );
-  _.assert( arguments.length === 1 );
-  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
-
-  o.headGot = false;
-
-  if( _.streamIs( o.data ) )
-  {
-    if( o.sync )
-    return self._readGeneralStreamSync( o );
-    else
-    return self._readGeneralStreamAsync( o );
-  }
-  else
-  {
-    if( o.sync )
-    return self._readGeneralBufferSync( o );
-    else
-    return self._readGeneralBufferAsync( o );
-  }
-
-}
-
-_readGeneral.defaults =
-{
-  ... Parent.prototype._read.defaults,
-  mode : 'full',
-}
-
-//
-
-function _readGeneralStreamSync( o )
-{
-  let self = this;
-  let ready = self._readGeneralStreamAsync( o );
-  ready.deasync();
-  return ready.sync();
-}
-
-//
-
-function _readGeneralStreamAsync( o )
-{
-  let self = this;
-  let ready = new _.Consequence();
-  let backend = new Backend();
-  let done;
-
-  backend
-  .on( 'error', ( err ) => errorHandle( err ) )
-  .on( 'metadata', function ( os )
-  {
-    if( o.mode === 'head' )
-    {
-      o.data.close();
-      backend._parser._paused = true;
-      backend._parser._buffered = 0;
-    }
-    self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    if( o.mode === 'head' )
-    {
-      done = true;
-      ready.take( o );
-    }
-  })
-  .on( 'parsed', function ( data )
-  {
-    if( o.mode === 'head' )
-    return;
-    if( done )
-    return;
-    _.assert( !!o.headGot );
-    o.originalStructure.data = data;
-    self._structureHandle({ originalStructure : o.originalStructure, op : o, mode : 'full' });
-    ready.take( o );
-    done = true;
-  })
-
-  o.data.pipe( backend );
-
-  return ready;
-
-  function errorHandle( err )
-  {
-    if( o.headGot )
-    return;
-    if( done )
-    return;
-    err = _.err( err )
-    done = err;
-    ready.error( err );
-  }
-}
-
-//
-
-function _readGeneralBufferSync( o )
-{
-  let self = this;
-  /* qqq : write proper code for mode : head */
-  try
-  {
-    // let os = Backend.sync.read( _.bufferNodeFrom( o.data ) );
-    let os = new Backend( _.bufferNodeFrom( o.data ) );
-    // console.log(os);
-    self._structureHandle({ originalStructure : os.png, op : o, mode : 'full' });
-  }
-  catch( err )
-  {
-    throw _.err( err );
-  }
-  return o;
-}
-
-//
-
-function _readGeneralBufferAsync( o )
-{
-  let self = this;
-  let ready = new _.Consequence();
-  let backend = new Backend({})
-  let done;
-
-  backend
-  .on( 'error', ( err ) => errorHandle( err ) )
-  .on( 'metadata', ( os ) =>
-  {
-    if( o.mode === 'head' )
-    {
-      backend._parser._paused = true;
-      backend._parser._buffered = 0;
-    }
-    self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    if( o.mode === 'head' )
-    {
-      ready.take( o );
-      done = true;
-    }
-  })
-
-  backend.parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
-  {
-    if( err )
-    return errorHandle( err );
-    if( o.mode === 'head' )
-    return;
-    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-    ready.take( o );
-    done = true;
-  });
-
-  return ready;
-
-  function errorHandle( err )
-  {
-    if( o.headGot )
-    return;
-    if( done )
-    return;
-    err = _.err( err )
-    done = err;
-    ready.error( err );
-  }
-}
-
-//
-
-function _readHead( o )
-{
-  let self = this;
-  _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _readHead, o );
-  o.mode = 'head';
-  return self._readGeneral( o );
-}
-
-_readHead.defaults =
-{
-  ... Parent.prototype._read.defaults,
-}
-
-//
-
 function _read( o )
 {
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
   o.mode = 'full';
-  return self._readGeneral( o );
+
+  /* qqq : write proper code for mode : head */
+  try
+  {
+    debugger;
+    let reader = new Backend( _.bufferNodeFrom( o.data ) );
+    reader.parse( ( err, png ) => 
+    {
+      if( err ) console.log( err );
+      console.log( png );
+      self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
+    });
+  }
+  catch( err )
+  {
+    throw _.err( err );
+  }
+  return o;
 }
 
 _read.defaults =
@@ -355,13 +186,7 @@ let Extension =
 {
 
   _structureHandle,
-  _readGeneralStreamSync,
-  _readGeneralStreamAsync,
-  _readGeneralBufferSync,
-  _readGeneralBufferAsync,
-  _readGeneral,
 
-  _readHead,
   _read,
 
   //
