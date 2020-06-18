@@ -7,7 +7,7 @@ if( typeof module !== 'undefined' )
 {
   let _ = require( './Reader.s' );
 
-  require( '../l5_reader/Pngdotjs.s' );
+  require( '../l5_reader/PngDotJs.s' );
 
   module[ 'exports' ] = _global_.wTools;
 }

@@ -8,7 +8,7 @@ if( typeof module !== 'undefined' )
   let _ = require( './Basic.s' );
 
   require( './Reader.s' );
-  require( './ReaderPngdotjs.s' );
+  require( './ReaderPngDotJs.s' );
   // require( './Writer.s' );
 
   module[ 'exports' ] = _global_.wTools;
