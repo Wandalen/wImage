@@ -19,7 +19,6 @@ submodule :
     enabled : 0 # submodule
     criterion :
       external : 1
-
   png.js :
     path : npm:///png.js#0.2.1
     enabled : 0 # submodule
