@@ -13,14 +13,25 @@ submodule :
   wConsequence :
     path : npm:///wConsequence
     enabled : 0 # submodule
+
   pngjs :
     path : npm:///pngjs#5.0.0
     enabled : 0 # submodule
+     criterion :
+       external : 1
+
+  png.js :
+    path : npm:///png.js#0.2.1
+    enabled : 0 # submodule
+     criterion :
+       external : 1
+
   eslint :
     path : npm:///eslint#7.1.0
     enabled : 0 # submodule
     criterion :
       debug : 1
+       external : 1
 
   AssetsImagesPng :
     path : git:///git@github.com:Wandalen/AssetsImagesPng.git
