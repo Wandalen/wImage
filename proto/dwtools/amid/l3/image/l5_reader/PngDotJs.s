@@ -28,25 +28,35 @@ Self.shortName = 'PngDotJs';
 function _read( o )
 {
   let self = this;
+
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
+
+  _.assert( !!o.sync, 'not implemented' );
+  _.assert( _.bufferAnyIs( o.data ), 'not implemented' );
+
   o.mode = 'full';
 
   try
   {
+    debugger;
     let reader = new Backend( _.bufferNodeFrom( o.data ) );
+    debugger;
     reader.parse( ( err, png ) =>
     {
       if( err ) console.log( err );
       console.log( png );
       self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
-    } );
+      debugger;
+    });
   }
   catch( err )
   {
+    debugger;
     throw _.err( err );
   }
 
+  debugger;
   return o;
 }
 
