@@ -9,10 +9,12 @@ if( typeof module !== 'undefined' )
 
   require( './Reader.s' );
   // require( './ReaderPngjs.s' );
-  require( './ReaderPngDotJs.s' );
+  // require( './ReaderPngDotJs.s' );
+  // require( './ReaderPngSharp.s' );
+  require( './ReaderPngNodeLib.s' );
   // require( './Writer.s' );
 
   module[ 'exports' ] = _global_.wTools;
 }
 
-} )();
+})();

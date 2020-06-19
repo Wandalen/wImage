@@ -44,9 +44,10 @@ function _read( o )
     debugger;
     reader.parse( ( err, png ) =>
     {
+      debugger;
       if( err ) console.log( err );
       console.log( png );
-      self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
+      // self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
       debugger;
     });
   }

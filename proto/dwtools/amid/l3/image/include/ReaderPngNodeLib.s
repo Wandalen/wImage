@@ -7,7 +7,7 @@ if( typeof module !== 'undefined' )
 {
   let _ = require( './Reader.s' );
 
-  require( '../l5_reader/PngSharp.s' );
+  require( '../l5_reader/PngNodeLib.s' );
 
   module[ 'exports' ] = _global_.wTools;
 }
