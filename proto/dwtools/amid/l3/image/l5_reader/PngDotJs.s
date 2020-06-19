@@ -39,25 +39,24 @@ function _read( o )
 
   try
   {
-    debugger;
+
     let reader = new Backend( _.bufferNodeFrom( o.data ) );
-    debugger;
+
     reader.parse( ( err, png ) =>
     {
-      debugger;
+
       if( err ) console.log( err );
       console.log( png );
-      // self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
-      debugger;
+
     });
   }
   catch( err )
   {
-    debugger;
+
     throw _.err( err );
   }
 
-  debugger;
+
   return o;
 }
 

@@ -5,14 +5,15 @@
 
 /**
  * @classdesc Abstract interface to read image.
- * @class wImageReaderPngjs
+ * @class wImageReaderPngNodeLib
  * @namespace wTools
  * @module Tools/mid/ImageReader
  */
 
 let _ = _global_.wTools;
-let { decode } = require( 'node-libpng' );
-let Backend = decode;
+let { decode, readPngFile } = require( 'node-libpng' );
+let Backend = { decode };
+Backend.decodeAsync = readPngFile;
 let Parent = _.image.reader.Abstract;
 let Self = wImageReaderPngNodeLib;
 function wImageReaderPngNodeLib()
@@ -48,8 +49,6 @@ function _structureHandle( o )
 
   o.op.structure.dims = [ os.width, os.height ];
 
-  os = os._parser ? os._parser._metaData : os;
-
   o.op.originalStructure = os;
 
   _.assert( !os.palette, 'not implemented' );
@@ -76,9 +75,10 @@ function _structureHandle( o )
     channelAdd( 'gray' );
   }
 
-  o.op.structure.bytesPerPixel = Math.round( os.bitDepth / 8 );
-  o.op.structure.bitsPerPixel = os.bitDepth;
-  o.op.structure.special.interlaced = os.interlacetype !== 'none';
+  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
+
+  o.op.structure.special.interlaced = os.interlaceType !== 'none';
   o.op.structure.hasPalette = os.palette !== undefined;
 
   o.op.headGot = true;
@@ -105,32 +105,79 @@ _structureHandle.defaults =
   mode : null,
 }
 
+//
+
 function _read( o )
 {
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
   o.mode = 'full';
+  return self._readGeneral( o );
+}
 
+_read.defaults =
+{
+  ... Parent.prototype._read.defaults,
+}
+
+//
+
+function _readHead ( o )
+{
+  let self = this;
+  _.assert( arguments.length === 1 );
+  _.assertRoutineOptions( _readHead, o );
+  o.mode = 'head';
+  return self._readGeneral( o );
+}
+
+_readHead.defaults =
+{
+  ... Parent.prototype._read.defaults,
+}
+
+//
+
+function _readGeneral( o )
+{
+  let self = this;
+
+  _.assertRoutineOptions( _readGeneral, o );
+  _.assert( arguments.length === 1 );
+  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
+
+  o.headGot = false;
+
+  if( o.sync )
+  return self._readGeneralBufferSync( o );
+
+  // TODO: Add other methods of reading(async, stream)
+
+}
+
+_readGeneral.defaults =
+{
+  ... Parent.prototype._read.defaults,
+  mode : 'full',
+}
+
+//
+
+function _readGeneralBufferSync( o )
+{
+  let self = this;
   /* qqq : write proper code for mode : head */
   try
   {
-    debugger;
-    const image = Backend( _.bufferNodeFrom( o.data ) );
-    debugger;
+    let image = Backend.decode( _.bufferNodeFrom( o.data ) );
     self._structureHandle({ originalStructure : image, op : o, mode : 'full' });
-    debugger;
   }
   catch( err )
   {
     throw _.err( err );
   }
   return o;
-}
-
-_read.defaults =
-{
-  ... Parent.prototype._read.defaults,
 }
 
 // --
@@ -181,6 +228,10 @@ let Medials =
 let Extension =
 {
   _structureHandle,
+  _readGeneralBufferSync,
+  _readGeneral,
+
+  _readHead,
   _read,
 
   //
@@ -216,4 +267,4 @@ _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
-} )();
+})();

@@ -1,4 +1,4 @@
-( function _ReaderPngjs_test_s_( )
+( function _ReaderPngNodeLib_test_s_()
 {
 
 'use strict';
@@ -35,6 +35,7 @@ var Proto =
   {
     ext : 'png',
     format : 'png',
+    readerName : 'PngNodeLib',
   },
 
   tests :

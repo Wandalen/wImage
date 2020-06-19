@@ -89,7 +89,7 @@ function readHeadBufferAsync( test )
         'ext' : context.ext,
         'mode' : 'head',
         'sync' : 0,
-        'readerClass' : _.image.reader.Pngjs,
+        'readerClass' : _.image.reader[ context.readerName ],
         onHead,
         'headGot' : true,
         'structure' :
@@ -182,7 +182,7 @@ function readHeadStreamAsync( test )
         'ext' : context.ext,
         'mode' : 'head',
         'sync' : 0,
-        'readerClass' : _.image.reader.Pngjs,
+        'readerClass' : _.image.reader[ context.readerName ],
         onHead,
         'headGot' : true,
         'structure' :
@@ -267,7 +267,7 @@ function readHeadBufferSync( test )
       'ext' : context.ext,
       'mode' : 'head',
       'sync' : 1,
-      'readerClass' : _.image.reader.Pngjs,
+      'readerClass' : _.image.reader[ context.readerName ],
       onHead,
       'headGot' : true,
       'structure' :
@@ -349,7 +349,7 @@ function readHeadStreamSync( test )
       'ext' : context.ext,
       'mode' : 'head',
       'sync' : 1,
-      'readerClass' : _.image.reader.Pngjs,
+      'readerClass' : _.image.reader[ context.readerName ],
       onHead,
       'headGot' : true,
       'structure' :
@@ -439,7 +439,7 @@ function readBufferAsync( test )
         'ext' : context.ext,
         'mode' : 'full',
         'sync' : 0,
-        'readerClass' : _.image.reader.Pngjs,
+        'readerClass' : _.image.reader[ context.readerName ],
         onHead,
         'headGot' : true,
         'structure' :
@@ -532,7 +532,7 @@ function readStreamAsync( test )
         'ext' : context.ext,
         'mode' : 'full',
         'sync' : 0,
-        'readerClass' : _.image.reader.Pngjs,
+        'readerClass' : _.image.reader[ context.readerName ],
         onHead,
         'headGot' : true,
         'structure' :
@@ -617,7 +617,7 @@ function readBufferSync( test )
       'ext' : context.ext,
       'mode' : 'full',
       'sync' : 1,
-      'readerClass' : _.image.reader.Pngjs,
+      'readerClass' : _.image.reader[ context.readerName ],
       onHead,
       'headGot' : true,
       'structure' :
@@ -699,7 +699,7 @@ function readStreamSync( test )
       'ext' : context.ext,
       'mode' : 'full',
       'sync' : 1,
-      'readerClass' : _.image.reader.Pngjs,
+      'readerClass' : _.image.reader[ context.readerName ],
       onHead,
       'headGot' : true,
       'structure' :
@@ -771,7 +771,7 @@ function fileReadHeadSync( test )
     'ext' : context.ext,
     'mode' : 'head',
     'sync' : 1,
-    'readerClass' : _.image.reader.Pngjs,
+    'readerClass' : _.image.reader[ context.readerName ],
     onHead,
     'headGot' : true,
     'structure' :
@@ -847,7 +847,7 @@ function fileReadHeadAsync( test )
       'ext' : context.ext,
       'mode' : 'head',
       'sync' : 0,
-      'readerClass' : _.image.reader.Pngjs,
+      'readerClass' : _.image.reader[ context.readerName ],
       onHead,
       'headGot' : true,
       'structure' :
@@ -920,7 +920,7 @@ function fileReadSync( test )
     'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
     'format' : context.format,
     'ext' : context.ext,
-    'readerClass' : _.image.reader.Pngjs,
+    'readerClass' : _.image.reader[ context.readerName ],
     'mode' : 'full',
     'sync' : 1,
     'onHead' : null,
@@ -970,7 +970,7 @@ function fileReadSync( test )
     'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
     'format' : context.format,
     'ext' : context.ext,
-    'readerClass' : _.image.reader.Pngjs,
+    'readerClass' : _.image.reader[ context.readerName ],
     'mode' : 'full',
     'sync' : 1,
     onHead,
@@ -1049,7 +1049,7 @@ function fileReadAsync( test )
       'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
       'format' : context.format,
       'ext' : context.ext,
-      'readerClass' : _.image.reader.Pngjs,
+      'readerClass' : _.image.reader[ context.readerName ],
       'mode' : 'full',
       'sync' : 0,
       'headGot' : true,
@@ -1116,6 +1116,7 @@ var Proto =
     appJsPath : null,
     ext : null,
     format : null,
+    readerName : null
   },
 
   tests :
@@ -1123,7 +1124,7 @@ var Proto =
 
     // readHeadBufferAsync,
     // readHeadStreamAsync,
-    // readHeadBufferSync,
+    readHeadBufferSync,
     // readHeadStreamSync,
 
     // readBufferAsync,

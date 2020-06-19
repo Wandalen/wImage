@@ -35,16 +35,14 @@ function _read( o )
   /* qqq : write proper code for mode : head */
   try
   {
-    debugger;
+
     Backend( _.bufferNodeFrom( o.data ) ).raw()
     .toBuffer({ resolveWithObject : true })
-    .then( ({ data }) => 
+    .then( ({ data }) =>
     {
-      debugger;
-      console.log(data)
       // self._structureHandle({ originalStructure : data, op : o, mode : 'full' }) );
     });
-    debugger;
+
   }
   catch( err )
   {

@@ -35,6 +35,7 @@ var Proto =
   {
     ext : 'png',
     format : 'png',
+    readerName : 'Pngjs',
   },
 
   tests :
