@@ -1,3 +1,4 @@
+/*eslint-disable */
 ( function _PngDotJs_s_()
 {
 
@@ -25,45 +26,251 @@ Self.shortName = 'PngDotJs';
 // implementation
 // --
 
-function _read( o )
+function _structureHandle( o )
+{
+  let self = this;
+  let os = o.originalStructure;
+
+  if( os === null )
+  os = o.op.originalStructure;
+
+  // logger.log( '_structureHandle', o.mode );
+  _.assertRoutineOptions( _structureHandle, arguments );
+  _.assert( _.objectIs( os ) );
+
+  if( o.mode === 'full' && o.op.mode === 'full' )
+  o.op.structure.buffer = _.bufferRawFrom( os.data );
+  else
+  o.op.structure.buffer = null;
+
+  if( o.op.headGot )
+  return o.op;
+
+  o.op.structure.dims = [ os.width, os.height ];
+
+  o.op.originalStructure = os;
+
+  _.assert( !os.palette, 'not implemented' );
+
+  if( os.colorType === 'rgb' )
+  {
+    _.assert( o.op.structure.channelsArray.length === 0 );
+    channelAdd( 'red' );
+    channelAdd( 'green' );
+    channelAdd( 'blue' );
+  }
+  else if( os.colorType === 'rgba' )
+  {
+    _.assert( o.op.structure.channelsArray.length === 0 );
+    channelAdd( 'red' );
+    channelAdd( 'green' );
+    channelAdd( 'blue' );
+    channelAdd( 'alpha' );
+  }
+
+  if( os.colorType === 'gray-scale' )
+  {
+    _.assert( o.op.structure.channelsArray.length === 0 );
+    channelAdd( 'gray' );
+  }
+
+  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
+
+  o.op.structure.special.interlaced = os.interlaceType !== 'none';
+  o.op.structure.hasPalette = os.palette !== undefined;
+
+  o.op.headGot = true;
+
+  if( o.op.onHead )
+  o.op.onHead( o.op );
+
+  return o.op;
+
+  /* */
+
+  function channelAdd( name )
+  {
+    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
+    o.op.structure.channelsArray.push( name );
+  }
+
+}
+
+_structureHandle.defaults =
+{
+  op : null,
+  originalStructure : null,
+  mode : null,
+}
+
+//
+
+function _readGeneral( o )
 {
   let self = this;
 
+  _.assertRoutineOptions( _readGeneral, o );
   _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _read, o );
+  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
-  _.assert( !!o.sync, 'not implemented' );
-  _.assert( _.bufferAnyIs( o.data ), 'not implemented' );
+  o.headGot = false;
 
-  o.mode = 'full';
+  return self._readGeneralBufferAsync( o );
+  
 
-  try
+}
+
+_readGeneral.defaults =
+{
+  ... Parent.prototype._read.defaults,
+  mode : 'full',
+}
+
+//
+
+function _readGeneralBufferAsync( o )
+{
+  let self = this;
+  let ready = new _.Consequence();
+  let backend = new Backend( _.bufferNodeFrom( o.data ) );
+  let done;
+
+  if ( o.mode === 'head' )
   {
-
-    let reader = new Backend( _.bufferNodeFrom( o.data ) );
-
-    reader.parse( ( err, png ) =>
+    backend.parse( { data : false }, ( err, os ) =>
     {
+      if( err )
+      return errorHandle( err );
 
-      if( err ) console.log( err );
-      console.log( png );
-
+      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+      ready.take( o );
+      done = true;
     });
   }
-  catch( err )
+  else
   {
+    backend.parse( ( err, os ) =>
+    {
+      if( err )
+      return errorHandle( err );
 
-    throw _.err( err );
+      self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+      ready.take( o );
+      done = true;
+    });
   }
 
+  return ready;
 
-  return o;
+  function errorHandle( err )
+  {
+    if( o.headGot )
+    return;
+    if( done )
+    return;
+    err = _.err( err )
+    done = err;
+    ready.error( err );
+  }
+
+  // try
+  // {
+  //   debugger;
+  //   let reader = new Backend( _.bufferNodeFrom( o.data ) );
+  //   debugger;
+  //   reader.parse( ( err, png ) =>
+  //   {
+  //     debugger;
+  //     if( err ) console.log( err );
+  //     console.log( png );
+  //     debugger;
+  //     self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
+  //     debugger;
+  //   });
+  // }
+  // catch( err )
+  // {
+  //   throw _.err( err );
+  // }
+
+  // return o;
+}
+
+//
+
+function _readHead( o )
+{
+  let self = this;
+  _.assert( arguments.length === 1 );
+  _.assertRoutineOptions( _readHead, o );
+  o.mode = 'head';
+  return self._readGeneral( o );
+}
+
+_readHead.defaults =
+{
+  ... Parent.prototype._read.defaults,
+}
+
+//
+
+function _read( o )
+{
+  let self = this;
+  _.assert( arguments.length === 1 );
+  _.assertRoutineOptions( _read, o );
+  o.mode = 'full';
+  return self._readGeneral( o );
 }
 
 _read.defaults =
 {
   ... Parent.prototype._read.defaults,
 }
+
+//
+
+// function _read( o )
+// {
+  // let self = this;
+
+  // _.assert( arguments.length === 1 );
+  // _.assertRoutineOptions( _read, o );
+
+  // _.assert( !!o.sync, 'not implemented' );
+  // _.assert( _.bufferAnyIs( o.data ), 'not implemented' );
+
+  // o.mode = 'full';
+
+  // try
+  // {
+
+  //   let reader = new Backend( _.bufferNodeFrom( o.data ) );
+
+  //   reader.parse( ( err, png ) =>
+  //   {
+
+  //     if( err ) console.log( err );
+  //     console.log( png );
+
+  //   });
+  // }
+  // catch( err )
+  // {
+
+  //   throw _.err( err );
+  // }
+
+
+  // return o;
+// }
+
+// _read.defaults =
+// {
+  // ... Parent.prototype._read.defaults,
+// }
+
 
 // --
 // relations
@@ -112,6 +319,11 @@ let Medials =
 
 let Extension =
 {
+  _structureHandle,
+  _readGeneralBufferAsync,
+  _readGeneral,
+
+  _readHead,
   _read,
 
   //
