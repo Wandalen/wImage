@@ -1,4 +1,3 @@
-/*eslint-disable */
 ( function _PngDotJs_s_()
 {
 
@@ -117,7 +116,7 @@ function _readGeneral( o )
   o.headGot = false;
 
   return self._readGeneralBufferAsync( o );
-  
+
 
 }
 
@@ -136,7 +135,7 @@ function _readGeneralBufferAsync( o )
   let backend = new Backend( _.bufferNodeFrom( o.data ) );
   let done;
 
-  if ( o.mode === 'head' )
+  if( o.mode === 'head' )
   {
     backend.parse( { data : false }, ( err, os ) =>
     {
@@ -229,49 +228,6 @@ _read.defaults =
   ... Parent.prototype._read.defaults,
 }
 
-//
-
-// function _read( o )
-// {
-  // let self = this;
-
-  // _.assert( arguments.length === 1 );
-  // _.assertRoutineOptions( _read, o );
-
-  // _.assert( !!o.sync, 'not implemented' );
-  // _.assert( _.bufferAnyIs( o.data ), 'not implemented' );
-
-  // o.mode = 'full';
-
-  // try
-  // {
-
-  //   let reader = new Backend( _.bufferNodeFrom( o.data ) );
-
-  //   reader.parse( ( err, png ) =>
-  //   {
-
-  //     if( err ) console.log( err );
-  //     console.log( png );
-
-  //   });
-  // }
-  // catch( err )
-  // {
-
-  //   throw _.err( err );
-  // }
-
-
-  // return o;
-// }
-
-// _read.defaults =
-// {
-  // ... Parent.prototype._read.defaults,
-// }
-
-
 // --
 // relations
 // --
@@ -359,4 +315,4 @@ _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
-} )();
+})();
