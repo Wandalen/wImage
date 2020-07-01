@@ -1,3 +1,4 @@
+/*eslint-disable*/
 ( function _PngDotJs_s_()
 {
 
@@ -38,7 +39,7 @@ function _structureHandle( o )
   _.assert( _.objectIs( os ) );
 
   if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.data );
+  o.op.structure.buffer = _.bufferRawFrom( os.pixels );
   else
   o.op.structure.buffer = null;
 
@@ -51,14 +52,14 @@ function _structureHandle( o )
 
   _.assert( !os.palette, 'not implemented' );
 
-  if( os.colorType === 'rgb' )
+  if( os.colors === 3 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'red' );
     channelAdd( 'green' );
     channelAdd( 'blue' );
   }
-  else if( os.colorType === 'rgba' )
+  else if( os.colors === 4 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'red' );
@@ -67,7 +68,7 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  if( os.colorType === 'gray-scale' )
+  if( os.colors === 2 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
@@ -76,21 +77,22 @@ function _structureHandle( o )
   o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
 
-  o.op.structure.special.interlaced = os.interlaceType !== 'none';
-  o.op.structure.hasPalette = os.palette !== undefined;
+  o.op.structure.special.interlaced = os.interlaceMethod !== 0;
+  o.op.structure.hasPalette = os.palette !== null;
 
   o.op.headGot = true;
 
   if( o.op.onHead )
   o.op.onHead( o.op );
 
+  console.log( o.op )
   return o.op;
 
   /* */
 
   function channelAdd( name )
   {
-    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
+    o.op.structure.channelsMap[ name ] = { name, bits : os.bitDepth, order : o.op.structure.channelsArray.length };
     o.op.structure.channelsArray.push( name );
   }
 
@@ -141,7 +143,6 @@ function _readGeneralBufferAsync( o )
     {
       if( err )
       return errorHandle( err );
-
       self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
       ready.take( o );
       done = true;
@@ -153,14 +154,14 @@ function _readGeneralBufferAsync( o )
     {
       if( err )
       return errorHandle( err );
-
+      // console.log( os )
       self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
       ready.take( o );
       done = true;
     });
   }
 
-  return ready;
+  return ready
 
   function errorHandle( err )
   {
@@ -173,27 +174,6 @@ function _readGeneralBufferAsync( o )
     ready.error( err );
   }
 
-  // try
-  // {
-  //   debugger;
-  //   let reader = new Backend( _.bufferNodeFrom( o.data ) );
-  //   debugger;
-  //   reader.parse( ( err, png ) =>
-  //   {
-  //     debugger;
-  //     if( err ) console.log( err );
-  //     console.log( png );
-  //     debugger;
-  //     self._structureHandle({ originalStructure : png, op : o, mode : 'full' });
-  //     debugger;
-  //   });
-  // }
-  // catch( err )
-  // {
-  //   throw _.err( err );
-  // }
-
-  // return o;
 }
 
 //
