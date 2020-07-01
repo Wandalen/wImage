@@ -117,8 +117,10 @@ function _readGeneral( o )
 
   o.headGot = false;
 
+  if( o.sync )
+  return self._readGeneralBufferSync( o );
+  else
   return self._readGeneralBufferAsync( o );
-
 
 }
 
@@ -154,7 +156,6 @@ function _readGeneralBufferAsync( o )
     {
       if( err )
       return errorHandle( err );
-      // console.log( os )
       self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
       ready.take( o );
       done = true;
@@ -174,6 +175,16 @@ function _readGeneralBufferAsync( o )
     ready.error( err );
   }
 
+}
+
+//
+
+function _readGeneralBufferSync( o )
+{
+  let self = this;
+  let ready = self._readGeneralBufferAsync( o );
+  ready.deasync()
+  return ready.sync();
 }
 
 //
@@ -257,6 +268,7 @@ let Extension =
 {
   _structureHandle,
   _readGeneralBufferAsync,
+  _readGeneralBufferSync,
   _readGeneral,
 
   _readHead,
