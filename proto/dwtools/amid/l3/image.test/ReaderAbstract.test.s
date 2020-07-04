@@ -20,7 +20,7 @@ function onSuiteBegin( test )
 {
   let context = this;
 
-  context.suiteTempPath = _.path.pathDirTempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
+  context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
   context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
 
 }
@@ -32,7 +32,7 @@ function onSuiteEnd( test )
   let context = this;
 
   _.assert( _.strHas( context.suiteTempPath, '/ImageRead' ) )
-  _.path.pathDirTempClose( context.suiteTempPath );
+  _.path.tempClose( context.suiteTempPath );
 
 }
 
