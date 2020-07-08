@@ -1,4 +1,3 @@
-/*eslint-disable*/
 ( function _PngDotJs_s_()
 {
 
@@ -136,27 +135,37 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
+  // console.log( o.data )
+  // console.log( typeof( o.data ) )
   let backend = new Backend( _.bufferNodeFrom( o.data ) );
   let done;
 
   if( o.mode === 'head' )
   {
+    debugger
     backend.parse( { data : false }, ( err, os ) =>
     {
+      debugger
       if( err )
       return errorHandle( err );
+      console.log( os );
+      debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+      debugger
       ready.take( o );
       done = true;
     });
   }
   else
   {
+    debugger
     backend.parse( ( err, os ) =>
     {
       if( err )
       return errorHandle( err );
+      debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+      debugger
       ready.take( o );
       done = true;
     });
@@ -246,6 +255,10 @@ let Statics =
 {
   Formats,
   Exts,
+  SupportsStream : 0, 
+  SupportsAsync : 1, 
+  SupportsSync : 1,
+  SupportsReadHead : 1
 }
 
 let Forbids =

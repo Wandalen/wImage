@@ -152,8 +152,6 @@ function _readGeneral( o )
   if( o.sync )
   return self._readGeneralBufferSync( o );
 
-  // TODO: Add other methods of reading(async, stream)
-
 }
 
 _readGeneral.defaults =
