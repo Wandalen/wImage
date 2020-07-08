@@ -1,4 +1,4 @@
-( function _Integration_test_s_()
+( function _Integration_test_ss_()
 {
 
 'use strict';
@@ -40,7 +40,8 @@ function samples( test )
 
   let found = fileProvider.filesFind
   ({
-    filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
+    // filePath : path.join( sampleDir, '**/*.(s|js|ss)' ),
+    filePath : path.join( sampleDir, '**/*.(s|ss)' ),
     withStem : 0,
     withDirs : 0,
     mode : 'distinct',
@@ -120,7 +121,7 @@ function eslint( test )
     execPath : eslint,
     mode : 'fork',
     currentPath : rootPath,
-    args : [ '-c', '.eslintrc.yml', '--ext', '.js,.s,.ss', '--ignore-pattern', '*.html', '--ignore-pattern', '*.txt', '--ignore-pattern', '*.png', '--ignore-pattern', '*.json' ],
+    args : [ '-c', '.eslintrc.yml', '--ext', '.js,.s,.ss', '--ignore-pattern', '*.html', '--ignore-pattern', '*.txt', '--ignore-pattern', '*.png', '--ignore-pattern', '*.json', '--quiet' ],
     throwingExitCode : 0,
     outputCollecting : 1,
   })
