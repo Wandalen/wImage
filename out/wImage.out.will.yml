@@ -3,14 +3,14 @@ root:
   - wImage.out
 consistency:
   wImage.out.will.yml: &ref_0
-    hash: a23d4fc658bc6ff95cba499eeef58736
-    size: 50194
+    hash: f79288775c318b047610433d4e2e2b7e
+    size: 50150
   ../.ex.will.yml: &ref_1
     hash: 6b9afa69a13b607ca9418472bff4473e
     size: 1733
   ../.im.will.yml: &ref_2
-    hash: ccff0cbec090d878341eaf664288f422
-    size: 5487
+    hash: 31178345906e8a31dbf0bde84df0f60e
+    size: 5485
   ../.module/AssetsImagesPng/will.yml: &ref_3
     hash: 3d78fa89530a262abb542ae8f7a0f209
     size: 349
@@ -121,7 +121,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: ../proto/dwtools/amid/l3/image/entry/Image.s
+        path: ../proto/wtools/amid/l3/image/entry/Image.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -131,13 +131,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
+        path: '{path::out.*=1}/source/wtools/amid/l3/image/entry/Image.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
+        path: '{path::out.*=1}/source/wtools/amid/l3/image/entry/Image.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -164,44 +164,44 @@ module:
         path:
           - ../proto
           - ../proto/Integration.test.s
-          - ../proto/dwtools
-          - ../proto/dwtools/Tools.s
-          - ../proto/dwtools/abase
-          - ../proto/dwtools/amid
-          - ../proto/dwtools/amid/l3
-          - ../proto/dwtools/amid/l3/image
-          - ../proto/dwtools/amid/l3/image/entry
-          - ../proto/dwtools/amid/l3/image/entry/Image.s
-          - ../proto/dwtools/amid/l3/image/entry/Reader.s
-          - ../proto/dwtools/amid/l3/image/entry/ReaderPngDotJs.s
-          - ../proto/dwtools/amid/l3/image/entry/ReaderPngjs.s
-          - ../proto/dwtools/amid/l3/image/entry/ReaderPngSharp.s
-          - ../proto/dwtools/amid/l3/image/include
-          - ../proto/dwtools/amid/l3/image/include/Basic.s
-          - ../proto/dwtools/amid/l3/image/include/Image.s
-          - ../proto/dwtools/amid/l3/image/include/Reader.s
-          - ../proto/dwtools/amid/l3/image/include/ReaderPngDotJs.s
-          - ../proto/dwtools/amid/l3/image/include/ReaderPngjs.s
-          - ../proto/dwtools/amid/l3/image/include/ReaderPngSharp.s
-          - ../proto/dwtools/amid/l3/image/l1_namespace
-          - ../proto/dwtools/amid/l3/image/l1_namespace/Reader.s
-          - ../proto/dwtools/amid/l3/image/l1_namespace/ReaderStructure.s
-          - ../proto/dwtools/amid/l3/image/l1_namespace/Writer.s
-          - ../proto/dwtools/amid/l3/image/l3
-          - ../proto/dwtools/amid/l3/image/l3/Reader.s
-          - ../proto/dwtools/amid/l3/image/l5_reader
-          - ../proto/dwtools/amid/l3/image/l5_reader/PngDotJs.s
-          - ../proto/dwtools/amid/l3/image/l5_reader/Pngjs.s
-          - ../proto/dwtools/amid/l3/image/l5_reader/PngSharp.s
-          - ../proto/dwtools/amid/l3/image/l7_namespace
-          - ../proto/dwtools/amid/l3/image/l7_namespace/Reader.s
-          - ../proto/dwtools/amid/l3/image.test
-          - ../proto/dwtools/amid/l3/image.test/ReaderAbstract.test.s
-          - ../proto/dwtools/amid/l3/image.test/ReaderPngjs.test.s
-          - ../proto/dwtools/amid/l3/image.test/_assets
-          - ../proto/dwtools/amid/l3/image.test/_assets/basic
-          - ../proto/dwtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
-          - ../proto/dwtools/atop
+          - ../proto/wtools
+          - ../proto/wtools/Tools.s
+          - ../proto/wtools/abase
+          - ../proto/wtools/amid
+          - ../proto/wtools/amid/l3
+          - ../proto/wtools/amid/l3/image
+          - ../proto/wtools/amid/l3/image/entry
+          - ../proto/wtools/amid/l3/image/entry/Image.s
+          - ../proto/wtools/amid/l3/image/entry/Reader.s
+          - ../proto/wtools/amid/l3/image/entry/ReaderPngDotJs.s
+          - ../proto/wtools/amid/l3/image/entry/ReaderPngjs.s
+          - ../proto/wtools/amid/l3/image/entry/ReaderPngSharp.s
+          - ../proto/wtools/amid/l3/image/include
+          - ../proto/wtools/amid/l3/image/include/Basic.s
+          - ../proto/wtools/amid/l3/image/include/Image.s
+          - ../proto/wtools/amid/l3/image/include/Reader.s
+          - ../proto/wtools/amid/l3/image/include/ReaderPngDotJs.s
+          - ../proto/wtools/amid/l3/image/include/ReaderPngjs.s
+          - ../proto/wtools/amid/l3/image/include/ReaderPngSharp.s
+          - ../proto/wtools/amid/l3/image/l1_namespace
+          - ../proto/wtools/amid/l3/image/l1_namespace/Reader.s
+          - ../proto/wtools/amid/l3/image/l1_namespace/ReaderStructure.s
+          - ../proto/wtools/amid/l3/image/l1_namespace/Writer.s
+          - ../proto/wtools/amid/l3/image/l3
+          - ../proto/wtools/amid/l3/image/l3/Reader.s
+          - ../proto/wtools/amid/l3/image/l5_reader
+          - ../proto/wtools/amid/l3/image/l5_reader/PngDotJs.s
+          - ../proto/wtools/amid/l3/image/l5_reader/Pngjs.s
+          - ../proto/wtools/amid/l3/image/l5_reader/PngSharp.s
+          - ../proto/wtools/amid/l3/image/l7_namespace
+          - ../proto/wtools/amid/l3/image/l7_namespace/Reader.s
+          - ../proto/wtools/amid/l3/image.test
+          - ../proto/wtools/amid/l3/image.test/ReaderAbstract.test.s
+          - ../proto/wtools/amid/l3/image.test/ReaderPngjs.test.s
+          - ../proto/wtools/amid/l3/image.test/_assets
+          - ../proto/wtools/amid/l3/image.test/_assets/basic
+          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
+          - ../proto/wtools/atop
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -978,7 +978,7 @@ module:
       entry.proto.no.tests:
         criterion:
           tests: no.tests
-        path: proto/dwtools/amid/l3/image/entry/Image.s
+        path: proto/wtools/amid/l3/image/entry/Image.s
       entry.proto.only.tests:
         criterion:
           tests: only.tests
@@ -988,13 +988,13 @@ module:
           debug: debug
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
+        path: '{path::out.*=1}/source/wtools/amid/l3/image/entry/Image.s'
       entry.out.raw.debug.release:
         criterion:
           debug: release
           raw: raw
           content: prime
-        path: '{path::out.*=1}/source/dwtools/amid/l3/image/entry/Image.s'
+        path: '{path::out.*=1}/source/wtools/amid/l3/image/entry/Image.s'
       entry.out.compiled.debug.debug:
         criterion:
           debug: debug
@@ -1599,9 +1599,11 @@ module:
         hash: 6b9afa69a13b607ca9418472bff4473e
         size: 1733
       ../.im.will.yml:
-        hash: ccff0cbec090d878341eaf664288f422
-        size: 5487
-      wImage.out.will.yml: *ref_0
+        hash: 31178345906e8a31dbf0bde84df0f60e
+        size: 5485
+      wImage.out.will.yml:
+        hash: f79288775c318b047610433d4e2e2b7e
+        size: 50150
   ../.module/AssetsImagesPng/:
     about:
       name: AssetsImagesPng
