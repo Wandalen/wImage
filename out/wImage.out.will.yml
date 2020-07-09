@@ -2,16 +2,19 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wImage.out.will.yml: &ref_0
+    hash: f79288775c318b047610433d4e2e2b7e
+    size: 50150
+  ../.ex.will.yml: &ref_1
     hash: 6b9afa69a13b607ca9418472bff4473e
     size: 1733
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: 31178345906e8a31dbf0bde84df0f60e
     size: 5485
-  ../.module/AssetsImagesPng/will.yml: &ref_6
+  ../.module/AssetsImagesPng/will.yml: &ref_3
     hash: 3d78fa89530a262abb542ae8f7a0f209
     size: 349
-  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_7
+  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_4
     hash: 609742a312c07a0f71a4d8c46267ea34
     size: 7739
 module:
@@ -24,19 +27,19 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - tools
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -763,6 +766,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -851,8 +872,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wImage.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wImage
@@ -862,13 +884,21 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - tools
+        - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -1571,6 +1601,9 @@ module:
       ../.im.will.yml:
         hash: 31178345906e8a31dbf0bde84df0f60e
         size: 5485
+      wImage.out.will.yml:
+        hash: f79288775c318b047610433d4e2e2b7e
+        size: 50150
   ../.module/AssetsImagesPng/:
     about:
       name: AssetsImagesPng
@@ -1625,8 +1658,8 @@ module:
           proto: 0
           asset: 1
     consistency:
-      ../.module/AssetsImagesPng/will.yml: *ref_6
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
+      ../.module/AssetsImagesPng/will.yml: *ref_3
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_4
   ../.module/AssetsImagesPng/out/AssetsImagesPng.out:
     about:
       name: AssetsImagesPng
@@ -1821,7 +1854,5 @@ module:
           proto: 0
           asset: 1
     consistency:
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
-      ../.module/AssetsImagesPng/will.yml:
-        hash: 3d78fa89530a262abb542ae8f7a0f209
-        size: 349
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_4
+      ../.module/AssetsImagesPng/will.yml: *ref_3
