@@ -13,6 +13,7 @@
 let _ = _global_.wTools;
 let Backend = require( 'png.js' );
 let Parent = _.image.reader.Abstract;
+// let bufferFromStream = require( './BufferFromStream.s' );
 let Self = wImageReaderPngDotJs;
 function wImageReaderPngDotJs()
 {
@@ -138,6 +139,7 @@ function _readGeneralBufferAsync( o )
   // console.log( o.data )
   // console.log( typeof( o.data ) )
   let backend = new Backend( _.bufferNodeFrom( o.data ) );
+  // console.log( bufferFromStream( { src : o.data } ) );
   let done;
 
   if( o.mode === 'head' )
@@ -228,6 +230,8 @@ _read.defaults =
   ... Parent.prototype._read.defaults,
 }
 
+//
+
 // --
 // relations
 // --
@@ -255,8 +259,8 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsStream : 0, 
-  SupportsAsync : 1, 
+  SupportsStream : 0,
+  SupportsAsync : 1,
   SupportsSync : 1,
   SupportsReadHead : 1
 }

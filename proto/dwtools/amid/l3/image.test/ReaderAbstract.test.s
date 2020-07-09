@@ -1133,7 +1133,7 @@ var Proto =
     // readStreamSync,
 
     fileReadHeadSync,
-    // fileReadHeadAsync,
+    fileReadHeadAsync,
     // fileReadSync,
     // fileReadAsync,
 

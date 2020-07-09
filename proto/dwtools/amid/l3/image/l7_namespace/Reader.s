@@ -1,4 +1,5 @@
-( function _Reader_s_( )
+/*eslint-disable*/
+( function _Reader_s_()
 {
 
 'use strict';
@@ -38,7 +39,13 @@ function fileReadHead_body( o )
     encoding : 'buffer.raw',
   });
 
+  if( self.SupportsStream )
   o.data = stream;
+  else
+  {
+    let data = bufferFromStream( { src : stream } );
+    data.then( ( data ) => o.data = data )
+  }
 
   ready.then( () => self.readHead( o ) );
 
@@ -99,6 +106,45 @@ _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
+function bufferFromStream( o )
+{
+  // let result;
+  let tempArray = [];
+  let ready = new _.Consequence();
+  debugger;
+  _.assert( arguments.length === 1, 'Expects single argument' );
+  _.assert( _.objectIs( o ) );
+  _.assertMapHasOnly( o, bufferFromStream.defaults );
+  _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
+  debugger;
+  o.src
+  .on( 'data', ( chunk ) =>
+  {
+    debugger;
+    // console.log( chunk )
+    tempArray.push( chunk )
+    debugger;
+  } );
+  console.log( tempArray )
+  debugger;
+  o.src
+  .on( 'end', () =>
+  {
+    ready.take( BufferNode.from( tempArray ) )
+  } );
+  debugger;
+  console.log( ready )
+  return ready;
+
+}
+
+bufferFromStream.defaults =
+{
+  src : null,
+}
+
+//
+
 let fileRead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
 
 // --
@@ -120,4 +166,4 @@ _.mapExtend( Self, Extension );
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = _global_.wTools;
 
-})();
+} )();
