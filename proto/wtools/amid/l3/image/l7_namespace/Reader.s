@@ -1,4 +1,3 @@
-/*eslint-disable*/
 ( function _Reader_s_()
 {
 
@@ -13,7 +12,6 @@ let Self = _.image;
 
 function fileRead_pre( routine, args )
 {
-
   let o = args[ 0 ]
   if( _.strIs( args[ 0 ] ) )
   o = { filePath : o }
@@ -30,22 +28,34 @@ function fileReadHead_body( o )
 {
   let self = this;
   let ready = new _.Consequence().take( null );
-
+  let data;
   o = _.assertRoutineOptions( fileReadHead_body, arguments );
-
-  let stream = _.fileProvider.streamRead
-  ({
-    filePath : o.filePath,
-    encoding : 'buffer.raw',
-  });
-
-  if( self.SupportsStream )
-  o.data = stream;
+  if( o.withStream === null )
+  {
+  /*
+    Find a class that will create a strategy
+    o.withStream = !!o.reader.SupportsStream;
+  */
+    o.withStream = true;
+  }
+  // or fileRead
+  if( o.withStream === true )
+  {
+    data = _.fileProvider.streamRead
+    ({
+      filePath : o.filePath,
+      encoding : 'buffer.raw',
+    });
+  }
   else
   {
-    let data = bufferFromStream( { src : stream } );
-    data.then( ( data ) => o.data = data )
+    data = _.fileProvider.fileRead
+    ({
+      filePath : o.filePath,
+    });
   }
+
+  o.data = data;
 
   ready.then( () => self.readHead( o ) );
 
@@ -58,6 +68,7 @@ fileReadHead_body.defaults =
 {
   ... _.image.readHead.defaults,
   filePath : null,
+  withStream : null,
 }
 
 _.assert( _.image.readHead.defaults.methodName === undefined );
@@ -103,45 +114,6 @@ fileRead_body.defaults =
 
 _.assert( _.image.read.defaults.methodName === undefined );
 _.assert( _.image.read.defaults.sync !== undefined );
-
-//
-
-function bufferFromStream( o )
-{
-  // let result;
-  let tempArray = [];
-  let ready = new _.Consequence();
-  debugger;
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( o ) );
-  _.assertMapHasOnly( o, bufferFromStream.defaults );
-  _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
-  debugger;
-  o.src
-  .on( 'data', ( chunk ) =>
-  {
-    debugger;
-    // console.log( chunk )
-    tempArray.push( chunk )
-    debugger;
-  } );
-  console.log( tempArray )
-  debugger;
-  o.src
-  .on( 'end', () =>
-  {
-    ready.take( BufferNode.from( tempArray ) )
-  } );
-  debugger;
-  console.log( ready )
-  return ready;
-
-}
-
-bufferFromStream.defaults =
-{
-  src : null,
-}
 
 //
 

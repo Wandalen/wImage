@@ -1,6 +1,6 @@
 let _ = _global_.wTools;
 
-async function bufferFromStream( o )
+function bufferFromStream( o )
 {
   let chunks = [];
   let ready = new _.Consequence();
@@ -10,46 +10,26 @@ async function bufferFromStream( o )
   _.assertMapHasOnly( o, bufferFromStream.defaults );
   _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
 
-  // o.src
-  // .on( 'data', ( chunk ) =>
-  // {
-  //   chunks.push( chunk )
-  // } );
-
-
-  // o.src
-  // .on( 'end', () =>
-  // {
-  //   try
-  //   {
-  //     ready.take( Buffer.concat( chunks ) )
-  //     return ready
-  //   }
-  //   catch( err )
-  //   {
-  //     console.log( err )
-  //   }
-  // } );
-  try
+  o.src
+  .on( 'data', ( chunk ) =>
   {
-    debugger
-    for await( const chunk of o.src )
+    chunks.push( chunk )
+  } );
+
+  o.src
+  .on( 'end', () =>
+  {
+    try
     {
-      debugger
-      chunks.push( chunk );
-      debugger
+      ready.take( Buffer.concat( chunks ).buffer )
     }
+    catch( err )
+    {
+      console.log( err )
+    }
+  } );
 
-    debugger
-    ready.take( Buffer.concat( chunks ) );
-    debugger
-    // console.log( ready.argumentsGet() )
-    return ready;
-  }
-  catch( err )
-  {
-    console.log( 'Error: ', err );
-  }
+  return ready;
 }
 
 bufferFromStream.defaults =

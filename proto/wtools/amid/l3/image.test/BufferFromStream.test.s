@@ -43,46 +43,23 @@ function onSuiteEnd( test )
 
 function bufferFromStream_( test )
 {
-  // let a = test.assetFor( 'basic' );
-  // // let context = this;
   test.case = 'test';
   let stream = _.fileProvider.streamRead
   ({
     filePath : 'D:/programming/BFS/wImage/wImage/proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png',
     encoding : 'buffer.raw',
   });
-  // debugger;
-  var got = bufferFromStream({ src : stream });
-  test.is( 1 )
-  // debugger;
-  // // console.log( 'data: ', got )
-  got.then( ( data ) =>
+  test.is( _.streamIs( stream ) );
+  let ready = bufferFromStream({ src : stream });
+  test.is( _.consequenceIs( ready ))
+
+  ready.then( ( data ) =>
   {
-
-    console.log( 'data:' )
-    console.log( data )
-    try
-    {
-      test.is( _.bufferNodeIs( data ) );
-    }
-    catch( err )
-    {
-      console.log( 'ERROR: ', err );
-    }
+    test.is( _.bufferRawIs( data ) );
+    return null;
   } );
-  // got.then( ( data ) =>
-  // {
-  //   console.log( 'data:' )
-  //   console.log( data )
-  //   test.is( _.bufferNodeIs( data ) );
-  // } );
-  // console.log( bufferFromStream({ src : stream }) );
-  // bufferFromStream({ src : stream })
-  // debugger
-  // })
-  test.case = 'test'
-  test.il( 1, 1 );
 
+  return ready;
 }
 
 // --

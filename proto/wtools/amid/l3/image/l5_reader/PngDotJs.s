@@ -107,6 +107,31 @@ _structureHandle.defaults =
 
 //
 
+// function _readStreamGeneral( o )
+// {
+//   let self = this;
+//   let ready = new _.Consequence().take( null );
+//   let data = bufferFromStream({ src : o.data });
+
+// data.then( ( buffer ) =>
+// {
+//   new Backend( buffer ).parse( { data : false }, ( err, os ) =>
+//   {
+//     if( err )
+//     console.log( err );
+//     // return errorHandle( err );
+//     console.log( os );
+//     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+//     ready.take( o );
+//     // done = true;
+//     return null;
+//   });
+//   return null;
+// } )
+// }
+
+//
+
 function _readGeneral( o )
 {
   let self = this;
@@ -116,12 +141,28 @@ function _readGeneral( o )
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
   o.headGot = false;
-
-  if( o.sync )
-  return self._readGeneralBufferSync( o );
+  debugger;
+  if( _.streamIs( o.data ) )
+  {
+    let data = bufferFromStream({ src : o.data });
+    data.then( ( buffer ) =>
+    {
+      o.data = buffer;
+      if( o.sync )
+      return self._readGeneralBufferSync( o );
+      else
+      return self._readGeneralBufferAsync( o );
+    } )
+  }
   else
-  return self._readGeneralBufferAsync( o );
+  {
+    if( o.sync )
+    return self._readGeneralBufferSync( o );
+    else
+    return self._readGeneralBufferAsync( o );
+  }
 
+  // return null;
 }
 
 _readGeneral.defaults =
@@ -136,43 +177,39 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  // console.log( o.data )
-  // console.log( typeof( o.data ) )
-  let backend = o.mode !== 'head' ? new Backend( _.bufferNodeFrom( o.data ) ) : null;
-  // console.log( bufferFromStream( { src : o.data } ) );
+  let backend = new Backend( _.bufferNodeFrom( o.data ) );
   let done;
 
   if( o.mode === 'head' )
   {
-    debugger
-    data = bufferFromStream({ src : o.data });
-    data.then( ( buffer ) =>
-    {
-      new Backend( buffer ).parse( { data : false }, ( err, os ) =>
-      {
-        debugger
-        if( err )
-        return errorHandle( err );
-        console.log( os );
-        debugger
-        self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-        debugger
-        ready.take( o );
-        done = true;
-      });
-    } )
-    // backend.parse( { data : false }, ( err, os ) =>
+    // let data = bufferFromStream({ src : o.data });
+    // data.then( ( buffer ) =>
     // {
-    //   debugger
-    //   if( err )
-    //   return errorHandle( err );
-    //   console.log( os );
-    //   debugger
-    //   self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    //   debugger
-    //   ready.take( o );
-    //   done = true;
-    // });
+    //   new Backend( buffer ).parse( { data : false }, ( err, os ) =>
+    //   {
+    //     if( err )
+    //     return errorHandle( err );
+    //     console.log( os );
+    //     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+    //     ready.take( o );
+    //     done = true;
+    //     return null;
+    //   });
+    //   return null;
+    // } )
+    backend.parse( { data : false }, ( err, os ) =>
+    {
+      debugger
+      if( err )
+      console.log( 'ERROR: ', err );
+      // return errorHandle( err );
+      // console.log( os );
+      debugger
+      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+      debugger
+      ready.take( o );
+      done = true;
+    });
   }
   else
   {
@@ -189,7 +226,7 @@ function _readGeneralBufferAsync( o )
     });
   }
 
-  return ready
+  return ready;
 
   function errorHandle( err )
   {
@@ -303,6 +340,7 @@ let Extension =
   _readGeneralBufferAsync,
   _readGeneralBufferSync,
   _readGeneral,
+  // _readStreamGeneral,
 
   _readHead,
   _read,

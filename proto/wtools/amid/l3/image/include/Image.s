@@ -1,4 +1,3 @@
-/*eslint-disable*/
 ( function _Image_s_()
 {
 
@@ -13,6 +12,7 @@ if( typeof module !== 'undefined' )
   require( './ReaderPngDotJs.s' );
   // require( './ReaderPngSharp.s' );
   // require( './ReaderPngNodeLib.s' );
+  // require( './ReaderPngLwip.s' );
   // require( './Writer.s' );
 
   module[ 'exports' ] = _global_.wTools;

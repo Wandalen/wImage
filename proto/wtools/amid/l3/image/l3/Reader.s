@@ -73,8 +73,9 @@ function readHead( o )
 
   o = _.routineOptions( readHead, o );
   o.structure = _.image.rstructure.from( o.structure );
-
+  debugger;
   ready.then( () => self._readHead( o ) );
+  debugger;
   ready.then( () => _.image.rstructure.validate( o.structure ) && o );
   ready.catch( ( err ) =>
   {
