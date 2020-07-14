@@ -13,7 +13,7 @@
 let _ = _global_.wTools;
 let Backend = require( 'png.js' );
 let Parent = _.image.reader.Abstract;
-// let bufferFromStream = require( './BufferFromStream.s' );
+let bufferFromStream = require( './BufferFromStream.s' );
 let Self = wImageReaderPngDotJs;
 function wImageReaderPngDotJs()
 {
@@ -138,25 +138,41 @@ function _readGeneralBufferAsync( o )
   let ready = new _.Consequence();
   // console.log( o.data )
   // console.log( typeof( o.data ) )
-  let backend = new Backend( _.bufferNodeFrom( o.data ) );
+  let backend = o.mode !== 'head' ? new Backend( _.bufferNodeFrom( o.data ) ) : null;
   // console.log( bufferFromStream( { src : o.data } ) );
   let done;
 
   if( o.mode === 'head' )
   {
     debugger
-    backend.parse( { data : false }, ( err, os ) =>
+    data = bufferFromStream({ src : o.data });
+    data.then( ( buffer ) =>
     {
-      debugger
-      if( err )
-      return errorHandle( err );
-      console.log( os );
-      debugger
-      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      debugger
-      ready.take( o );
-      done = true;
-    });
+      new Backend( buffer ).parse( { data : false }, ( err, os ) =>
+      {
+        debugger
+        if( err )
+        return errorHandle( err );
+        console.log( os );
+        debugger
+        self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+        debugger
+        ready.take( o );
+        done = true;
+      });
+    } )
+    // backend.parse( { data : false }, ( err, os ) =>
+    // {
+    //   debugger
+    //   if( err )
+    //   return errorHandle( err );
+    //   console.log( os );
+    //   debugger
+    //   self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+    //   debugger
+    //   ready.take( o );
+    //   done = true;
+    // });
   }
   else
   {

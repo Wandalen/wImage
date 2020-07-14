@@ -1,8 +1,8 @@
 let _ = _global_.wTools;
 
-function bufferFromStream( o )
+async function bufferFromStream( o )
 {
-  let tempArray = [];
+  let chunks = [];
   let ready = new _.Consequence();
 
   _.assert( arguments.length === 1, 'Expects single argument' );
@@ -10,21 +10,46 @@ function bufferFromStream( o )
   _.assertMapHasOnly( o, bufferFromStream.defaults );
   _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
 
-  o.src
-  .on( 'data', ( chunk ) =>
+  // o.src
+  // .on( 'data', ( chunk ) =>
+  // {
+  //   chunks.push( chunk )
+  // } );
+
+
+  // o.src
+  // .on( 'end', () =>
+  // {
+  //   try
+  //   {
+  //     ready.take( Buffer.concat( chunks ) )
+  //     return ready
+  //   }
+  //   catch( err )
+  //   {
+  //     console.log( err )
+  //   }
+  // } );
+  try
   {
-    tempArray.push( chunk )
-  } );
+    debugger
+    for await( const chunk of o.src )
+    {
+      debugger
+      chunks.push( chunk );
+      debugger
+    }
 
-
-  o.src
-  .on( 'end', () =>
+    debugger
+    ready.take( Buffer.concat( chunks ) );
+    debugger
+    // console.log( ready.argumentsGet() )
+    return ready;
+  }
+  catch( err )
   {
-    ready.take( BufferNode.from( tempArray ) )
-  } );
-
-  return ready;
-
+    console.log( 'Error: ', err );
+  }
 }
 
 bufferFromStream.defaults =
@@ -33,30 +58,3 @@ bufferFromStream.defaults =
 }
 
 module.exports = bufferFromStream;
-
-//
-
-function bufferFromStream_( src )
-{
-  let tempArray = [];
-  let ready = new _.Consequence();
-
-  _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
-
-  src
-  .on( 'data', ( chunk ) =>
-  {
-    tempArray.push( chunk )
-  } );
-
-
-  src
-  .on( 'end', () =>
-  {
-    ready.take( BufferNode.from( tempArray ) )
-  } );
-
-  return ready;
-
-}
