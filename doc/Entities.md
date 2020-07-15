@@ -1,9 +1,17 @@
 ## Entities
-1. Backend( png.js, sharp, png-js, ... ) - entity to choose from as low level parser of image data.
-2. Strategy ( one of the Class entity) - chosen parser to read image data.
-3. Namespace ( _.image, _.image.reader, _.image.rstructure,  _.image.writer ) - a map with fields and routines.
-4. Class (  _.image.reader.Reader,  _.image.reader.PngDotJs, _.image.reader.PngSharp,  _.image.reader.Pngjs, _.image.reader.PngDashJs, _.image.reader.PngNodeLib ) - class which represents an image reader.
-5. _.image.read - routine to read image data.
-6. _.image.readHead - routine to read image data without pixels.
-7. _.image.fileReadHead - routine to read image file without pixel data.
-8. _.image.fileRead - routine to read image file.
+* Backend( png.js, sharp, png-js, ... ) - module to choose from as low level parser of image data.
+* Strategy ( one of the Class entity) - chosen class to read image data.
+* Namespace _.image - for accessing data about image reader, writer and structure.
+* Namespace _.image.reader - for accessing reader class of the image.
+* Namespace _.image.rstructure - for accessing image structure.
+* Namespace _.image.writer - for accessing image writer.
+* Class _.image.reader.Reader - class which represents a general image reader.
+* Class _.image.reader.PngDotJs - class which represents the PngDotJs image reader.
+* Class _.image.reader.PngSharp - class which represents the PngSharp image reader.
+* Class _.image.reader.Pngjs - class which represents the Pngjs image reader.
+* Class _.image.reader.PngDashJs - class which represents the PngDashJs image reader.
+* Class _.image.reader.PngNodeLib - class which represents the PngNodeLib image reader..
+* _.image.read - routine to read image data.
+* _.image.readHead - routine to read image data without pixels.
+* _.image.fileReadHead - routine to read image file without pixel data.
+* _.image.fileRead - routine to read image file.
