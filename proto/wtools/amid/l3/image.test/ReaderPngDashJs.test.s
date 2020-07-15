@@ -6,7 +6,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../wtools/Tools.s' );
-  require( '../image/entry/ReaderPngSharp.s' );
+  require( '../image/entry/ReaderPngDashJs.s' );
   require( './ReaderAbstract.test.s' );
 }
 
@@ -28,14 +28,14 @@ let Parent = _global_.wTests.ImageReadAbstract; /* xxx : rename */
 var Proto =
 {
 
-  name : 'ImageReadPngSharp',
+  name : 'ImageReadPngDashJs',
   abstract : 0,
 
   context :
   {
     ext : 'png',
     format : 'png',
-    readerName : 'PngSharp',
+    readerName : 'PngDashJs',
   },
 
   tests :

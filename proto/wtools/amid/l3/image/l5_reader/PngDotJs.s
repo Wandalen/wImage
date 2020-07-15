@@ -1,5 +1,5 @@
 ( function _PngDotJs_s_()
-{
+{ // read async full; sync full
 
 'use strict';
 
@@ -147,7 +147,7 @@ function _readGeneral( o )
     let data = bufferFromStream({ src : o.data });
     data.then( ( buffer ) =>
     {
-      o.data = buffer;
+      o.data = _.bufferNodeFrom( buffer );
       if( o.sync )
       return self._readGeneralBufferSync( o );
       else
@@ -162,7 +162,7 @@ function _readGeneral( o )
     return self._readGeneralBufferAsync( o );
   }
 
-  // return null;
+  return null;
 }
 
 _readGeneral.defaults =
