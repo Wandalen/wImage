@@ -319,7 +319,7 @@ let Statics =
   SupportsStream : 0,
   SupportsAsync : 1,
   SupportsSync : 1,
-  SupportsReadHead : 1
+  SupportsReadHead : 0
 }
 
 let Forbids =

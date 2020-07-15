@@ -1,5 +1,5 @@
 ( function _PngNodeLib_s_()
-{
+{ // sync
 
 'use strict';
 
@@ -149,6 +149,9 @@ function _readGeneral( o )
 
   o.headGot = false;
 
+  if( _streamIs( o.data ) )
+  return self._readGeneralStreamAsync( o );
+
   if( o.sync )
   return self._readGeneralBufferSync( o );
 
@@ -158,6 +161,23 @@ _readGeneral.defaults =
 {
   ... Parent.prototype._read.defaults,
   mode : 'full',
+}
+
+//
+
+function _readGeneralStreamAsync( o )
+{
+  let self = this;
+
+  let data = bufferFromStream({ src : o.data });
+    data.then( ( buffer ) =>
+    {
+      o.data = _.bufferNodeFrom( buffer );
+      // if( o.sync )
+      return self._readGeneralBufferSync( o );
+      // else
+      // return self._readGeneralBufferAsync( o );
+    } )
 }
 
 //
@@ -231,6 +251,7 @@ let Extension =
 {
   _structureHandle,
   _readGeneralBufferSync,
+  _readGeneralStreamAsync,
   _readGeneral,
 
   _readHead,
