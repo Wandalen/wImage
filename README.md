@@ -6,7 +6,7 @@ Standardized abstract interface to open / read / parse image with collection of 
 ## Try out
 ```
 npm install
-node sample/Sample.js
+node sample/Sample.s
 ```
 
 ## To add
