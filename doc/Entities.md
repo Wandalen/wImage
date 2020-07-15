@@ -36,14 +36,14 @@ Class which represents the PngDashJs image reader.
 ### Class _.image.reader.PngNodeLib
 Class which represents the PngNodeLib image reader.
 
-### _.image.read
+### Routine _.image.read
 Routine to read image data.
 
-### _.image.readHead
+### Routine _.image.readHead
 Routine to read image data without pixels.
 
-### _.image.fileReadHead
+### Routine _.image.fileReadHead
 Routine to read image file without pixel data.
 
-### _.image.fileRead
+### Routine _.image.fileRead
 Routine to read image file.
