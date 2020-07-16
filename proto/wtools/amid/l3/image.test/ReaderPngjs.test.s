@@ -47,7 +47,7 @@ var Proto =
 
 //
 
-var Self = new wTestSuite( Proto ).inherit( Parent );
+let Self = new wTestSuite( Proto ).inherit( Parent );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
