@@ -1124,7 +1124,7 @@ var Proto =
 
     // readHeadBufferAsync,
     // fail
-    readHeadStreamAsync,
+    // readHeadStreamAsync,
     // readHeadBufferSync,
     // fail
     // readHeadStreamSync,
@@ -1132,7 +1132,7 @@ var Proto =
     // fail
     // readBufferAsync,
     // fail
-    // readStreamAsync,
+    readStreamAsync,
     // fail
     // readBufferSync,
     // fail

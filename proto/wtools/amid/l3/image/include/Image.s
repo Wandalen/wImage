@@ -10,8 +10,8 @@ if( typeof module !== 'undefined' )
   require( './Reader.s' );
   // require( './ReaderPngjs.s' );
   // require( './ReaderPngDotJs.s' );
-  require( './ReaderPngSharp.s' );
-  // require( './ReaderPngNodeLib.s' );
+  // require( './ReaderPngSharp.s' );
+  require( './ReaderPngNodeLib.s' );
   // require( './ReaderPngDashJs.s' );
   // require( './Writer.s' );
 

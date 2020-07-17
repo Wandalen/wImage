@@ -13,7 +13,8 @@
 let _ = _global_.wTools;
 let { decode, readPngFile } = require( 'node-libpng' );
 let Backend = { decode };
-Backend.decodeAsync = readPngFile;
+// Backend.decodeAsync = readPngFile;
+let bufferFromStream = require( './BufferFromStream.s' );
 let Parent = _.image.reader.Abstract;
 let Self = wImageReaderPngNodeLib;
 function wImageReaderPngNodeLib()
@@ -149,11 +150,13 @@ function _readGeneral( o )
 
   o.headGot = false;
 
-  if( _streamIs( o.data ) )
+  if( _.streamIs( o.data ) )
   return self._readGeneralStreamAsync( o );
 
   if( o.sync )
   return self._readGeneralBufferSync( o );
+  else
+  return self._readGeneralBufferAsync( o );
 
 }
 
@@ -170,14 +173,24 @@ function _readGeneralStreamAsync( o )
   let self = this;
 
   let data = bufferFromStream({ src : o.data });
-    data.then( ( buffer ) =>
-    {
-      o.data = _.bufferNodeFrom( buffer );
-      // if( o.sync )
-      return self._readGeneralBufferSync( o );
-      // else
-      // return self._readGeneralBufferAsync( o );
-    } )
+  data.then( ( buffer ) =>
+  {
+    o.data = _.bufferNodeFrom( buffer );
+    if( o.sync )
+    return self._readGeneralBufferSync( o );
+    else
+    return self._readGeneralBufferAsync( o );
+  } )
+}
+
+//
+
+function _readGeneralStreamSync( o )
+{
+  let self = this;
+  let ready = self._readGeneralStreamAsync( o );
+  ready.deasync();
+  return ready.sync();
 }
 
 //
@@ -197,6 +210,28 @@ function _readGeneralBufferSync( o )
   }
   return o;
 }
+
+//
+
+function _readGeneralBufferAsync( o )
+{
+  let self = this;
+  let ready = new _.Consequence();
+  /* qqq : write proper code for mode : head */
+  try
+  {
+    let image = Backend.decode( _.bufferNodeFrom( o.data ) );
+    self._structureHandle({ originalStructure : image, op : o, mode : 'full' });
+    ready.take( o );
+  }
+  catch( err )
+  {
+    throw _.err( err );
+  }
+  return ready;
+
+}
+
 
 // --
 // relations
@@ -251,7 +286,9 @@ let Extension =
 {
   _structureHandle,
   _readGeneralBufferSync,
+  _readGeneralBufferAsync,
   _readGeneralStreamAsync,
+  _readGeneralStreamSync,
   _readGeneral,
 
   _readHead,
