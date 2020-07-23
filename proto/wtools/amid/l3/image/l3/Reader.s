@@ -27,7 +27,7 @@ function init( o )
   let self = this;
 
   _.assert( arguments.length === 0 || arguments.length === 1 );
-
+  // find out
   _.workpiece.initFields( self );
   Object.preventExtensions( self )
 
@@ -73,8 +73,9 @@ function readHead( o )
 
   o = _.routineOptions( readHead, o );
   o.structure = _.image.rstructure.from( o.structure );
-
+  debugger;
   ready.then( () => self._readHead( o ) );
+  debugger;
   ready.then( () => _.image.rstructure.validate( o.structure ) && o );
   ready.catch( ( err ) =>
   {

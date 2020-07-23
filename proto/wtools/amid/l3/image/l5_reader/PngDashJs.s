@@ -1,25 +1,25 @@
-( function _Pngjs_s_()
+( function _PngPngDashJs_s_()
 {
 
 'use strict';
 
 /**
  * @classdesc Abstract interface to read image.
- * @class wImageReaderPngjs
+ * @class wImageReaderPngLwipjs
  * @namespace wTools
  * @module Tools/mid/ImageReader
  */
 
 let _ = _global_.wTools;
-let Backend = require( 'pngjs' );
+let Backend = require( 'png-js' );
 let Parent = _.image.reader.Abstract;
-let Self = wImageReaderPngjs;
-function wImageReaderPngjs()
+let Self = wImageReaderPngDashJs;
+function wImageReaderPngDashJs()
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'Pngjs';
+Self.shortName = 'Png-js';
 
 // --
 // implementation
@@ -114,20 +114,19 @@ function _readGeneral( o )
 
   o.headGot = false;
 
-  if( _.streamIs( o.data ) )
-  {
-    if( o.sync )
-    return self._readGeneralStreamSync( o );
-    else
-    return self._readGeneralStreamAsync( o );
-  }
-  else
-  {
-    if( o.sync )
-    return self._readGeneralBufferSync( o );
-    else
-    return self._readGeneralBufferAsync( o );
-  }
+  // if( _.streamIs( o.data ) )
+  // {
+  //   if( o.sync )
+  //   return self._readGeneralStreamSync( o );
+  //   else
+  //   return self._readGeneralStreamAsync( o );
+  // }
+  // else
+  // {
+  // if( o.sync )
+  // return self._readGeneralBufferSync( o );
+  // else
+  return self._readGeneralBufferAsync( o );
 
 }
 
@@ -139,123 +138,108 @@ _readGeneral.defaults =
 
 //
 
-function _readGeneralStreamSync( o )
-{
-  let self = this;
-  let ready = self._readGeneralStreamAsync( o );
-  ready.deasync();
-  return ready.sync();
-}
+// function _readGeneralStreamSync( o )
+// {
+//   let self = this;
+//   let ready = self._readGeneralStreamAsync( o );
+//   ready.deasync();
+//   return ready.sync();
+// }
 
-//
+// //
 
-function _readGeneralStreamAsync( o )
-{
-  let self = this;
-  let ready = new _.Consequence();
-  let backend = new Backend.PNG();
-  let done;
+// function _readGeneralStreamAsync( o )
+// {
+//   let self = this;
+//   let ready = new _.Consequence();
+//   let backend = new Backend.PNG();
+//   let done;
 
-  backend
-  .on( 'error', ( err ) => errorHandle( err ) )
-  .on( 'metadata', function ( os )
-  {
-    if( o.mode === 'head' )
-    {
-      o.data.close();
-      backend._parser._paused = true;
-      backend._parser._buffered = 0;
-    }
-    self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    if( o.mode === 'head' )
-    {
-      done = true;
-      ready.take( o );
-    }
-  })
-  .on( 'parsed', function ( data )
-  {
-    if( o.mode === 'head' )
-    return;
-    if( done )
-    return;
-    _.assert( !!o.headGot );
-    o.originalStructure.data = data;
-    self._structureHandle({ originalStructure : o.originalStructure, op : o, mode : 'full' });
-    ready.take( o );
-    done = true;
-  })
+//   backend
+//   .on( 'error', ( err ) => errorHandle( err ) )
+//   .on( 'metadata', function ( os )
+//   {
+//     if( o.mode === 'head' )
+//     {
+//       o.data.close();
+//       backend._parser._paused = true;
+//       backend._parser._buffered = 0;
+//     }
+//     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+//     if( o.mode === 'head' )
+//     {
+//       done = true;
+//       ready.take( o );
+//     }
+//   })
+//   .on( 'parsed', function ( data )
+//   {
+//     if( o.mode === 'head' )
+//     return;
+//     if( done )
+//     return;
+//     _.assert( !!o.headGot );
+//     o.originalStructure.data = data;
+//     self._structureHandle({ originalStructure : o.originalStructure, op : o, mode : 'full' });
+//     ready.take( o );
+//     done = true;
+//   })
 
-  o.data.pipe( backend );
+//   o.data.pipe( backend );
 
-  return ready;
+//   return ready;
 
-  function errorHandle( err )
-  {
-    if( o.headGot )
-    return;
-    if( done )
-    return;
-    err = _.err( err )
-    done = err;
-    ready.error( err );
-  }
-}
+//   function errorHandle( err )
+//   {
+//     if( o.headGot )
+//     return;
+//     if( done )
+//     return;
+//     err = _.err( err )
+//     done = err;
+//     ready.error( err );
+//   }
+// }
 
-//
+// //
 
-function _readGeneralBufferSync( o )
-{
-  let self = this;
-  /* qqq : write proper code for mode : head */
-  try
-  {
-    let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
-    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-  }
-  catch( err )
-  {
-    throw _.err( err );
-  }
-  return o;
-}
+// function _readGeneralBufferSync( o )
+// {
+//   let self = this;
+//   /* qqq : write proper code for mode : head */
+//   try
+//   {
+//     let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
+//     self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+//   }
+//   catch( err )
+//   {
+//     throw _.err( err );
+//   }
+//   return o;
+// }
 
-//
+// //
 
 function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  let backend = new Backend.PNG({})
+  // let backend = new Backend( _.bufferNodeFrom( o.data ) );
   let done;
 
-  backend
-  .on( 'error', ( err ) => errorHandle( err ) )
-  .on( 'metadata', ( os ) =>
-  {
-    if( o.mode === 'head' )
-    {
-      backend._parser._paused = true;
-      backend._parser._buffered = 0;
-    }
-    self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    if( o.mode === 'head' )
-    {
-      ready.take( o );
-      done = true;
-    }
-  })
 
-  backend.parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
+  Backend.decode( _.bufferNodeFrom( o.data ).readUInt8(), ( err, os ) =>
   {
     if( err )
-    return errorHandle( err );
-    if( o.mode === 'head' )
-    return;
+    console.log( 'ERROR: ', err );
+    // return errorHandle( err );
     self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+    console.log( os )
     ready.take( o );
     done = true;
   });
+
 
   return ready;
 
@@ -269,6 +253,7 @@ function _readGeneralBufferAsync( o )
     done = err;
     ready.error( err );
   }
+
 }
 
 //
@@ -333,7 +318,7 @@ let Statics =
   SupportsStream : 0,
   SupportsAsync : 1,
   SupportsSync : 1,
-  SupportsReadHead : 1
+  SupportsReadHead : 0
 }
 
 let Forbids =
@@ -356,9 +341,9 @@ let Extension =
 {
 
   _structureHandle,
-  _readGeneralStreamSync,
-  _readGeneralStreamAsync,
-  _readGeneralBufferSync,
+  // _readGeneralStreamSync,
+  // _readGeneralStreamAsync,
+  // _readGeneralBufferSync,
   _readGeneralBufferAsync,
   _readGeneral,
 

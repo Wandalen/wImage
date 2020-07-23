@@ -1,4 +1,4 @@
-( function _Reader_s_( )
+( function _Reader_s_()
 {
 
 'use strict';
@@ -37,6 +37,7 @@ function read_body( o )
     let selected = self.readerDeduce( o2 );
     _.mapExtend( o, selected );
     o.reader = new o.readerClass();
+    debugger;
   }
 
   let methodName = o.mode === 'full' ? 'read' : 'readHead';
@@ -81,6 +82,7 @@ read_body.defaults =
   sync : 1,
   mode : null,
   onHead : null,
+  // withStream : null,
 }
 
 //
@@ -154,7 +156,7 @@ let Extension =
   readerDeduce,
 
 }
-
+debugger;
 _.mapExtend( Self, Extension );
 
 //

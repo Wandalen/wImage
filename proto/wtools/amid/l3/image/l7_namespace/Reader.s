@@ -1,4 +1,4 @@
-( function _Reader_s_( )
+( function _Reader_s_()
 {
 
 'use strict';
@@ -12,7 +12,7 @@ let Self = _.image;
 
 function fileRead_pre( routine, args )
 {
-
+  debugger;
   let o = args[ 0 ]
   if( _.strIs( args[ 0 ] ) )
   o = { filePath : o }
@@ -29,16 +29,34 @@ function fileReadHead_body( o )
 {
   let self = this;
   let ready = new _.Consequence().take( null );
-
+  let data;
   o = _.assertRoutineOptions( fileReadHead_body, arguments );
-
-  let stream = _.fileProvider.streamRead
+  // if( o.withStream === null )
+  // {
+  /*
+    Find a class that will create a strategy
+    o.withStream = !!o.reader.SupportsStream;
+  */
+  //   o.withStream = true;
+  // }
+  // or fileRead
+  // if( o.withStream === true )
+  // {
+  data = _.fileProvider.streamRead
   ({
     filePath : o.filePath,
     encoding : 'buffer.raw',
   });
+  // }
+  // else
+  // {
+  //   data = _.fileProvider.fileRead
+  //   ({
+  //     filePath : o.filePath,
+  //   });
+  // }
 
-  o.data = stream;
+  o.data = data;
 
   ready.then( () => self.readHead( o ) );
 
@@ -51,6 +69,7 @@ fileReadHead_body.defaults =
 {
   ... _.image.readHead.defaults,
   filePath : null,
+  // withStream : null,
 }
 
 _.assert( _.image.readHead.defaults.methodName === undefined );
@@ -120,4 +139,4 @@ _.mapExtend( Self, Extension );
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = _global_.wTools;
 
-})();
+} )();
