@@ -62,7 +62,7 @@ function bufferFromStream_( test )
   return ready;
 }
 
-bufferFromStream_.timeOut = 10000;
+bufferFromStream_.timeOut = 20000;
 
 // --
 // declare
@@ -73,6 +73,7 @@ var Proto =
 
   name : 'bufferFromStream',
   silencing : 1,
+  enabled : 1,
 
   onSuiteBegin,
   onSuiteEnd,
@@ -84,7 +85,6 @@ var Proto =
     appJsPath : null,
     ext : 'png',
     format : 'png',
-    readerName : 'PngDotJs',
   },
 
   tests :
