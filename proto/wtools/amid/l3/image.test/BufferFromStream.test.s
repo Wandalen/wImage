@@ -62,6 +62,8 @@ function bufferFromStream_( test )
   return ready;
 }
 
+bufferFromStream_.timeOut = 5000;
+
 // --
 // declare
 // --
