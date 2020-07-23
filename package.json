@@ -13,6 +13,7 @@
     "url" : "https://github.com/Wandalen/wImage/issues"
   },
   "dependencies": {
+    "sharp": "0.25.4",
     "pngjs": "=5.0.0",
     "png.js": "=0.2.1",
     "png-js": "=1.0.0",
