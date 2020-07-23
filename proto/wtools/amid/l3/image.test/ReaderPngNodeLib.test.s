@@ -1,55 +1,55 @@
-( function _ReaderPngNodeLib_test_s_()
-{
+// ( function _ReaderPngNodeLib_test_s_()
+// {
 
-'use strict';
+// 'use strict';
 
-if( typeof module !== 'undefined' )
-{
-  let _ = require( '../../../../wtools/Tools.s' );
-  require( '../image/entry/ReaderPngNodeLib.s' );
-  require( './ReaderAbstract.test.s' );
-}
+// if( typeof module !== 'undefined' )
+// {
+//   let _ = require( '../../../../wtools/Tools.s' );
+//   require( '../image/entry/ReaderPngNodeLib.s' );
+//   require( './ReaderAbstract.test.s' );
+// }
 
-let _ = _global_.wTools;
-let Parent = _global_.wTests.ImageReadAbstract; /* xxx : rename */
+// let _ = _global_.wTools;
+// let Parent = _global_.wTests.ImageReadAbstract; /* xxx : rename */
 
-// --
-// context
-// --
+// // --
+// // context
+// // --
 
-// --
-// tests
-// --
+// // --
+// // tests
+// // --
 
-// --
-// declare
-// --
+// // --
+// // declare
+// // --
 
-var Proto =
-{
+// var Proto =
+// {
 
-  name : 'ImageReadPngNodeLib',
-  abstract : 0,
+//   name : 'ImageReadPngNodeLib',
+//   abstract : 0,
 
-  context :
-  {
-    ext : 'png',
-    format : 'png',
-    readerName : 'PngNodeLib',
-  },
+//   context :
+//   {
+//     ext : 'png',
+//     format : 'png',
+//     readerName : 'PngNodeLib',
+//   },
 
-  tests :
-  {
+//   tests :
+//   {
 
 
-  },
+//   },
 
-}
+// }
 
-//
+// //
 
-var Self = new wTestSuite( Proto ).inherit( Parent );
-if( typeof module !== 'undefined' && !module.parent )
-wTester.test( Self.name );
+// var Self = new wTestSuite( Proto ).inherit( Parent );
+// if( typeof module !== 'undefined' && !module.parent )
+// wTester.test( Self.name );
 
-})();
+// })();

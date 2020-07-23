@@ -1122,28 +1122,20 @@ var Proto =
   tests :
   {
 
-    // readHeadBufferAsync,
-    // fail
-    // readHeadStreamAsync,
-    // readHeadBufferSync,
-    // fail
-    // readHeadStreamSync,
+    readHeadBufferAsync,
+    readHeadStreamAsync,
+    readHeadBufferSync,
+    readHeadStreamSync,
 
-    // fail
-    // readBufferAsync,
-    // fail
+    readBufferAsync,
     readStreamAsync,
-    // fail
-    // readBufferSync,
-    // fail
-    // readStreamSync,
+    readBufferSync,
+    readStreamSync,
 
-    // fail
-    // fileReadHeadSync,
-    // fail
-    // fileReadHeadAsync,
-    // fileReadSync,
-    // fileReadAsync,
+    fileReadHeadSync,
+    fileReadHeadAsync,
+    fileReadSync,
+    fileReadAsync,
 
   },
 
