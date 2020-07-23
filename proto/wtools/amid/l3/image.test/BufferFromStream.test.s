@@ -62,6 +62,21 @@ function bufferFromStream_( test )
   return ready;
 }
 
+//
+
+function bufferFromStreamThrowing( test )
+{
+  test.case = 'throwing';
+  test.shouldThrowErrorSync( () => bufferFromStream({ src : 'stream' }) );
+
+  test.shouldThrowErrorSync( () => bufferFromStream({ src : _.fileProvider.streamRead
+  ({
+    filePath : '/WRONG',
+    encoding : 'buffer.raw',
+  })}) );
+
+}
+
 // --
 // declare
 // --
@@ -87,7 +102,8 @@ var Proto =
 
   tests :
   {
-    bufferFromStream_
+    bufferFromStream_,
+    bufferFromStreamThrowing
   },
 
 }
