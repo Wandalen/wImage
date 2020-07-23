@@ -46,7 +46,7 @@ function bufferFromStream_( test )
   test.case = 'test';
   let stream = _.fileProvider.streamRead
   ({
-    filePath : 'D:/programming/BFS/wImage/wImage/proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png',
+    filePath : __dirname + '/_assets/basic/Pixels-2x2.png',
     encoding : 'buffer.raw',
   });
   test.is( _.streamIs( stream ) );
@@ -62,7 +62,7 @@ function bufferFromStream_( test )
   return ready;
 }
 
-bufferFromStream_.timeOut = 20000;
+bufferFromStream_.timeOut = 40000;
 
 // --
 // declare
