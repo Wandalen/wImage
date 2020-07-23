@@ -19,6 +19,7 @@ let Parent = _.image.reader.Abstract;
 let Self = wImageReaderPngNodeLib;
 function wImageReaderPngNodeLib()
 {
+
   return _.workpiece.construct( Self, this, arguments );
 }
 
@@ -171,16 +172,20 @@ _readGeneral.defaults =
 function _readGeneralStreamAsync( o )
 {
   let self = this;
-
+  // let ready = new _.Consequence();
   let data = bufferFromStream({ src : o.data });
   data.then( ( buffer ) =>
   {
+    // console.log( buffer )
     o.data = _.bufferNodeFrom( buffer );
+    // console.log('o.data: ', o.data )
     if( o.sync )
     return self._readGeneralBufferSync( o );
     else
     return self._readGeneralBufferAsync( o );
   } )
+
+  return data;
 }
 
 //
@@ -320,11 +325,12 @@ _.classDeclare
   parent : Parent,
   extend : Extension,
 });
-
+// debugger;
+// x = new wImageReaderPngNodeLib( o )
 //
 
 _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
-
+// y = new _.image.reader.PngNodeLib()
 })();

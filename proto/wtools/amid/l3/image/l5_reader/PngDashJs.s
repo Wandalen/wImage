@@ -127,7 +127,6 @@ function _readGeneral( o )
   // return self._readGeneralBufferSync( o );
   // else
   return self._readGeneralBufferAsync( o );
-  // }
 
 }
 

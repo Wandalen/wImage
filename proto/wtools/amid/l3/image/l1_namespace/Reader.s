@@ -37,6 +37,7 @@ function read_body( o )
     let selected = self.readerDeduce( o2 );
     _.mapExtend( o, selected );
     o.reader = new o.readerClass();
+    debugger;
   }
 
   let methodName = o.mode === 'full' ? 'read' : 'readHead';
@@ -155,7 +156,7 @@ let Extension =
   readerDeduce,
 
 }
-
+debugger;
 _.mapExtend( Self, Extension );
 
 //

@@ -1,6 +1,6 @@
 ( function _PngSharp_s_()
-{ 
-// buffer sync, buffer async
+{
+
 'use strict';
 
 /**
@@ -199,7 +199,6 @@ function _readGeneralBufferHeadAsync( o )
 }
 
 
-
 function _readGeneralBufferHeadSync( o )
 {
   let self = this;
@@ -250,7 +249,6 @@ function _readGeneralBufferAsync( o )
 }
 
 
-
 function _readGeneralBufferSync( o )
 {
   let self = this;
@@ -264,16 +262,15 @@ function _readGeneralBufferSync( o )
 }
 
 
-
 function _readGeneralStreamAsync()
 {
   Backend( _.bufferNodeFrom( o.data ) )
-  .on('info', function(info) {
+  .on( 'info', function( info )
+  {
     // console.log('Image height is ' + info.height);
     console.log( info );
   });
 }
-
 
 
 function _readGeneralStreamSync()

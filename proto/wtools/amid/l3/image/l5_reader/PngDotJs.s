@@ -107,28 +107,28 @@ _structureHandle.defaults =
 
 //
 
-// function _readStreamGeneral( o )
-// {
-//   let self = this;
-//   let ready = new _.Consequence().take( null );
-//   let data = bufferFromStream({ src : o.data });
+function _readStreamGeneral( o )
+{
+  let self = this;
+  let ready = new _.Consequence().take( null );
+  let data = bufferFromStream({ src : o.data });
 
-// data.then( ( buffer ) =>
-// {
-//   new Backend( buffer ).parse( { data : false }, ( err, os ) =>
-//   {
-//     if( err )
-//     console.log( err );
-//     // return errorHandle( err );
-//     console.log( os );
-//     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-//     ready.take( o );
-//     // done = true;
-//     return null;
-//   });
-//   return null;
-// } )
-// }
+  data.then( ( buffer ) =>
+  {
+    new Backend( buffer ).parse( { data : false }, ( err, os ) =>
+    {
+      if( err )
+      console.log( err );
+      // return errorHandle( err );
+      console.log( os );
+      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+      ready.take( o );
+      // done = true;
+    });
+  } )
+
+  return data;
+}
 
 //
 
@@ -141,18 +141,18 @@ function _readGeneral( o )
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
   o.headGot = false;
-  debugger;
   if( _.streamIs( o.data ) )
   {
-    let data = bufferFromStream({ src : o.data });
-    data.then( ( buffer ) =>
-    {
-      o.data = _.bufferNodeFrom( buffer );
-      if( o.sync )
-      return self._readGeneralBufferSync( o );
-      else
-      return self._readGeneralBufferAsync( o );
-    } )
+    // let data = bufferFromStream({ src : o.data });
+    // data.then( ( buffer ) =>
+    // {
+    //   o.data = _.bufferNodeFrom( buffer );
+    //   if( o.sync )
+    //   return self._readGeneralBufferSync( o );
+    //   else
+    //   return self._readGeneralBufferAsync( o );
+    // } )
+    return self._readStreamGeneral( o );
   }
   else
   {
@@ -162,7 +162,7 @@ function _readGeneral( o )
     return self._readGeneralBufferAsync( o );
   }
 
-  return null;
+  // return null;
 }
 
 _readGeneral.defaults =
@@ -340,7 +340,7 @@ let Extension =
   _readGeneralBufferAsync,
   _readGeneralBufferSync,
   _readGeneral,
-  // _readStreamGeneral,
+  _readStreamGeneral,
 
   _readHead,
   _read,
