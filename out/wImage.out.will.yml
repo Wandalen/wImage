@@ -173,15 +173,19 @@ module:
           - ../proto/wtools/amid/l3/image/entry
           - ../proto/wtools/amid/l3/image/entry/Image.s
           - ../proto/wtools/amid/l3/image/entry/Reader.s
+          - ../proto/wtools/amid/l3/image/entry/ReaderPngDashJs.s
           - ../proto/wtools/amid/l3/image/entry/ReaderPngDotJs.s
           - ../proto/wtools/amid/l3/image/entry/ReaderPngjs.s
+          - ../proto/wtools/amid/l3/image/entry/ReaderPngNodeLib.s
           - ../proto/wtools/amid/l3/image/entry/ReaderPngSharp.s
           - ../proto/wtools/amid/l3/image/include
           - ../proto/wtools/amid/l3/image/include/Basic.s
           - ../proto/wtools/amid/l3/image/include/Image.s
           - ../proto/wtools/amid/l3/image/include/Reader.s
+          - ../proto/wtools/amid/l3/image/include/ReaderPngDashJs.s
           - ../proto/wtools/amid/l3/image/include/ReaderPngDotJs.s
           - ../proto/wtools/amid/l3/image/include/ReaderPngjs.s
+          - ../proto/wtools/amid/l3/image/include/ReaderPngNodeLib.s
           - ../proto/wtools/amid/l3/image/include/ReaderPngSharp.s
           - ../proto/wtools/amid/l3/image/l1_namespace
           - ../proto/wtools/amid/l3/image/l1_namespace/Reader.s
@@ -190,14 +194,22 @@ module:
           - ../proto/wtools/amid/l3/image/l3
           - ../proto/wtools/amid/l3/image/l3/Reader.s
           - ../proto/wtools/amid/l3/image/l5_reader
+          - ../proto/wtools/amid/l3/image/l5_reader/BufferFromStream.s
+          - ../proto/wtools/amid/l3/image/l5_reader/PngDashJs.s
           - ../proto/wtools/amid/l3/image/l5_reader/PngDotJs.s
           - ../proto/wtools/amid/l3/image/l5_reader/Pngjs.s
+          - ../proto/wtools/amid/l3/image/l5_reader/PngNodeLib.s
           - ../proto/wtools/amid/l3/image/l5_reader/PngSharp.s
           - ../proto/wtools/amid/l3/image/l7_namespace
           - ../proto/wtools/amid/l3/image/l7_namespace/Reader.s
           - ../proto/wtools/amid/l3/image.test
+          - ../proto/wtools/amid/l3/image.test/BufferFromStream.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderAbstract.test.s
+          - ../proto/wtools/amid/l3/image.test/ReaderPngDashJs.test.s
+          - ../proto/wtools/amid/l3/image.test/ReaderPngDotJs.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderPngjs.test.s
+          - ../proto/wtools/amid/l3/image.test/ReaderPngNodeLib.test.s
+          - ../proto/wtools/amid/l3/image.test/ReaderPngSharp.test.s
           - ../proto/wtools/amid/l3/image.test/_assets
           - ../proto/wtools/amid/l3/image.test/_assets/basic
           - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
