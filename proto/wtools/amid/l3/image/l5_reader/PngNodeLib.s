@@ -1,5 +1,5 @@
 ( function _PngNodeLib_s_()
-{ // sync
+{
 
 'use strict';
 
@@ -13,7 +13,6 @@
 let _ = _global_.wTools;
 let { decode, readPngFile } = require( 'node-libpng' );
 let Backend = { decode };
-// Backend.decodeAsync = readPngFile;
 let bufferFromStream = require( './BufferFromStream.s' );
 let Parent = _.image.reader.Abstract;
 let Self = wImageReaderPngNodeLib;

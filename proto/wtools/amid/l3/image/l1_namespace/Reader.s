@@ -14,7 +14,7 @@ _.image.reader = _.image.reader || Object.create( null );
 function reader_pre( routine, args )
 {
   let o = _.routineOptions( routine, args );
-
+  debugger;
   _.assert( arguments.length === 2 );
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
@@ -25,6 +25,7 @@ function reader_pre( routine, args )
 
 function read_body( o )
 {
+  debugger;
   let self = this;
 
   if( o.filePath && !o.ext )
@@ -44,7 +45,7 @@ function read_body( o )
   let o2 = _.mapOnly( o, o.reader[ methodName ].defaults );
   o2.onHead = handleHead;
   let result = o.reader[ methodName ]( o2 );
-
+  debugger;
   if( o.sync )
   return end( result );
   result.then( end );
@@ -158,7 +159,7 @@ let Extension =
 }
 debugger;
 _.mapExtend( Self, Extension );
-
+debugger;
 //
 
 if( typeof module !== 'undefined' )

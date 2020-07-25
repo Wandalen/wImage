@@ -106,13 +106,14 @@ _read.defaults =
 
 function read( o )
 {
+  debugger;
   let self = this;
   let ready = new _.Consequence().take( null );
   let result;
 
   o = _.routineOptions( read, o );
   o.structure = _.image.rstructure.from( o.structure );
-
+  debugger;
   ready.then( () => self._read( o ) );
   ready.then( () => _.image.rstructure.validate( o.structure ) && o );
   ready.catch( ( err ) =>
@@ -120,7 +121,7 @@ function read( o )
     o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
     throw o.err;
   });
-
+  debugger;
   if( o.sync )
   return ready.sync();
   return ready;
@@ -263,19 +264,20 @@ let Extension =
 }
 
 //
-
+debugger;
 _.classDeclare
 ({
   cls : Self,
   parent : Parent,
   extend : Extension,
 });
-
+debugger;
 _.Copyable.mixin( Self );
-
+debugger;
 //
 
 _.image.reader[ Self.shortName ] = Self;
+debugger;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
