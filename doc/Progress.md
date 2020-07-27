@@ -4,8 +4,8 @@
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | [**sharp**](https://github.com/lovell/sharp) | **X** | **-** | **X** | **-** | **-** | **-** | **-** | **-** |
 | [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **** | **** | **** | **** | **** | **** | **** | **** |
-| [**pngjs**](https://github.com/lukeapage/pngjs) | **+** | **+** | **+** | **+** | **+!** | **+!** | **+!** | **+!** |
-| [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **+!** | **X** | **X** | **-** | **X** | **X** | **X** |
+| [**pngjs**](https://github.com/lukeapage/pngjs) | **+** | **+** | **+** | **+** | **X+** | **X+** | **X+** | **X+** |
+| [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **X+** | **X** | **X** | **X** | **X** | **X** | **X** |
 | [**bmp-js**](https://github.com/shaozilee/bmp-js) | **** | **** | **** | **** | **** | **** | **** | **** |
 | [**omggif**](https://github.com/deanm/omggif) | **** | **** | **** | **** | **** | **** | **** | **** |
 | [**utif**](https://github.com/photopea/UTIF.js) | **** | **** | **** | **** | **** | **** | **** | **** |
@@ -20,4 +20,5 @@
 * *-* - Not implemented.
 * *+* - Implemented.
 * *X* - Not supported.
-* *+!* - Not Supported, but implemented.
+* *X+* - Not Supported, but implemented.
+* **** - No info yet.
