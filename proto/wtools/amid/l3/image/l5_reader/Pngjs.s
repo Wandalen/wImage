@@ -291,7 +291,7 @@ _readHead.defaults =
 
 function _read( o )
 {
-  debugger;
+  //debugger;
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
@@ -385,18 +385,18 @@ let Extension =
 }
 
 //
-debugger
+//debugger
 _.classDeclare
 ({
   cls : Self,
   parent : Parent,
   extend : Extension,
 });
-debugger
+//debugger
 //
 
 _.image.reader[ Self.shortName ] = Self;
-debugger
+//debugger
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 

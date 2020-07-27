@@ -172,9 +172,11 @@ function _readGeneralStreamAsync( o )
 {
   let self = this;
   // let ready = new _.Consequence();
-  let data = bufferFromStream({ src : o.data });
-  data.then( ( buffer ) =>
+  let ready = bufferFromStream({ src : o.data });
+  debugger;
+  ready.then( ( buffer ) =>
   {
+    debugger;
     // console.log( buffer )
     o.data = _.bufferNodeFrom( buffer );
     // console.log('o.data: ', o.data )
@@ -184,7 +186,7 @@ function _readGeneralStreamAsync( o )
     return self._readGeneralBufferAsync( o );
   } )
 
-  return data;
+  return ready;
 }
 
 //
@@ -265,7 +267,7 @@ let Statics =
   Formats,
   Exts,
   SupportsStream : 0,
-  SupportsAsync : 0,
+  SupportsAsync : 1,
   SupportsSync : 1,
   SupportsReadHead : 0
 }
@@ -324,8 +326,7 @@ _.classDeclare
   parent : Parent,
   extend : Extension,
 });
-// debugger;
-// x = new wImageReaderPngNodeLib( o )
+// //debugger;
 //
 
 _.image.reader[ Self.shortName ] = Self;

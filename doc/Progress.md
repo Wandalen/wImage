@@ -1,0 +1,23 @@
+### Reading images
+
+| **Name** | **Buffer S. f** | **Buffer A. f** | **Stream S. f** | **Stream A. f** | **Buffer S. h** | **Buffer A. h** | **Stream S. h** | **Stream A. h** |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| [**sharp**](https://github.com/lovell/sharp) | **X** | **-** | **X** | **-** | **-** | **-** | **-** | **-** |
+| [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **** | **** | **** | **** | **** | **** | **** | **** |
+| [**pngjs**](https://github.com/lukeapage/pngjs) | **+** | **+** | **+** | **+** | **+!** | **+!** | **+!** | **+!** |
+| [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **+!** | **X** | **X** | **-** | **X** | **X** | **X** |
+| [**bmp-js**](https://github.com/shaozilee/bmp-js) | **** | **** | **** | **** | **** | **** | **** | **** |
+| [**omggif**](https://github.com/deanm/omggif) | **** | **** | **** | **** | **** | **** | **** | **** |
+| [**utif**](https://github.com/photopea/UTIF.js) | **** | **** | **** | **** | **** | **** | **** | **** |
+| [**png.js**](https://github.com/arian/pngjs) | **X** | **+** | **X** | **X** | **X** | **X** | **X** | **X** |
+| [**png-js**](https://github.com/foliojs/png.js) | **** | **** | **** | **** | **** | **** | **** | **** |
+
+**Description:**
+* *S.* - Sync reading.
+* *A.* - Async reading.
+* *f* - Full reading.
+* *h* - Head reading.
+* *-* - Not implemented.
+* *+* - Implemented.
+* *X* - Not supported.
+* *+!* - Not Supported, but implemented.

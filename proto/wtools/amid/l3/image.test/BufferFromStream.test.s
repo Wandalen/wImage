@@ -66,16 +66,19 @@ function bufferFromStream_( test )
 
 function bufferFromStreamThrowing( test )
 {
+  let ready = new _.Consequence().take( null );
+
   test.case = 'throwing';
   var src = { src : 'stream' };
   test.shouldThrowErrorSync( () => bufferFromStream( src ) );
 
-  // test.case = 'throwing in stream reader'
-  // test.shouldThrowErrorSync( () => bufferFromStream({ src : _.fileProvider.streamRead
-  // ({
-  //   filePath : '/WRONG',
-  //   encoding : 'buffer.raw',
-  // })}) );
+  test.case = 'throwing in stream reader'
+  test.shouldThrowErrorSync( () => bufferFromStream({ src : _.fileProvider.streamRead
+  ({
+    filePath : '/WRONG',
+    encoding : 'buffer.raw',
+  })}) );
+
 
 }
 

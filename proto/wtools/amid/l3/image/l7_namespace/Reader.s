@@ -12,7 +12,7 @@ let Self = _.image;
 
 function fileRead_pre( routine, args )
 {
-  debugger;
+  //debugger;
   let o = args[ 0 ]
   if( _.strIs( args[ 0 ] ) )
   o = { filePath : o }
@@ -40,21 +40,21 @@ function fileReadHead_body( o )
   //   o.withStream = true;
   // }
   // or fileRead
-  if( o.reader.SupportsStream )
-  {
-    data = _.fileProvider.streamRead
-    ({
-      filePath : o.filePath,
-      encoding : 'buffer.raw',
-    });
-  }
-  else
-  {
-    data = _.fileProvider.fileRead
-    ({
-      filePath : o.filePath,
-    });
-  }
+  // if( o.reader.SupportsStream )
+  // {
+  data = _.fileProvider.streamRead
+  ({
+    filePath : o.filePath,
+    encoding : 'buffer.raw',
+  });
+  // }
+  // else
+  // {
+  //   data = _.fileProvider.fileRead
+  //   ({
+  //     filePath : o.filePath,
+  //   });
+  // }
 
   o.data = data;
 
@@ -83,7 +83,7 @@ function fileRead_body( o )
 {
   let self = this;
   let ready = new _.Consequence().take( null );
-  debugger;
+  //debugger;
   o = _.assertRoutineOptions( fileRead_body, arguments );
   debugger;
   ready
@@ -99,10 +99,10 @@ function fileRead_body( o )
   .then( ( data ) =>
   {
     o.data = data;
-    debugger;
+    //debugger;
     return self.read( o );
   });
-  debugger
+  //debugger
   if( o.sync )
   return ready.sync();
   return ready;
@@ -132,9 +132,9 @@ let Extension =
   fileRead,
 
 }
-debugger
+//debugger
 _.mapExtend( Self, Extension );
-debugger
+//debugger
 //
 
 if( typeof module !== 'undefined' )

@@ -199,28 +199,28 @@ function _readGeneralBufferAsync( o )
     // } )
     backend.parse( { data : false }, ( err, os ) =>
     {
-      debugger
+      //debugger
       if( err )
       console.log( 'ERROR: ', err );
       // return errorHandle( err );
       // console.log( os );
-      debugger
+      //debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      debugger
+      //debugger
       ready.take( o );
       done = true;
     });
   }
   else
   {
-    debugger
+    //debugger
     backend.parse( ( err, os ) =>
     {
       if( err )
       return errorHandle( err );
-      debugger
+      //debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-      debugger
+      //debugger
       ready.take( o );
       done = true;
     });
