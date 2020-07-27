@@ -13,12 +13,12 @@
 | [**png-js**](https://github.com/foliojs/png.js) | **** | **** | **** | **** | **** | **** | **** | **** |
 
 **Description:**
-* **S.** - Sync reading.
-* **A.** - Async reading.
-* **f** - Full reading.
-* **h** - Head reading.
-* **-** - Not implemented.
-* **+** - Implemented.
-* **X** - Not supported.
-* **X+** - Not Supported, but implemented.
-* ****** - No info yet.
+* *S.* Sync reading.
+* *A.* Async reading.
+* *f* Full reading.
+* *h* Head reading.
+* *-* Not implemented.
+* *+* Implemented.
+* *X* Not supported.
+* *X+* Not Supported, but implemented.
+* **** No info yet.
