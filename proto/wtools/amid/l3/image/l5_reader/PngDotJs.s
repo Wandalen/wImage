@@ -1,5 +1,5 @@
 ( function _PngDotJs_s_()
-{ // read async full; sync full
+{
 
 'use strict';
 
@@ -107,27 +107,28 @@ _structureHandle.defaults =
 
 //
 
-function _readStreamGeneral( o )
+function _readGeneralStreamAsync( o )
 {
   let self = this;
-  let ready = new _.Consequence().take( null );
-  let data = bufferFromStream({ src : o.data });
+  let ready = bufferFromStream({ src : o.data });
 
-  data.then( ( buffer ) =>
+  ready.then( ( buffer ) =>
   {
-    new Backend( buffer ).parse( { data : false }, ( err, os ) =>
-    {
-      if( err )
-      console.log( err );
-      // return errorHandle( err );
-      console.log( os );
-      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      ready.take( o );
-      // done = true;
-    });
+    o.data = _.bufferNodeFrom( buffer );
+    return self._readGeneralBufferAsync( o );
   } )
 
-  return data;
+  return ready;
+}
+
+//
+
+function _readGeneralStreamSync( o )
+{
+  let self = this;
+  let ready = self._readGeneralStreamAsync( o );
+  ready.deasync();
+  return ready.sync();
 }
 
 //
@@ -141,28 +142,18 @@ function _readGeneral( o )
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
   o.headGot = false;
-  if( _.streamIs( o.data ) )
-  {
-    // let data = bufferFromStream({ src : o.data });
-    // data.then( ( buffer ) =>
-    // {
-    //   o.data = _.bufferNodeFrom( buffer );
-    //   if( o.sync )
-    //   return self._readGeneralBufferSync( o );
-    //   else
-    //   return self._readGeneralBufferAsync( o );
-    // } )
-    return self._readStreamGeneral( o );
-  }
-  else
-  {
-    if( o.sync )
-    return self._readGeneralBufferSync( o );
-    else
-    return self._readGeneralBufferAsync( o );
-  }
 
-  // return null;
+  if( _.streamIs( o.data ) )
+  if( o.sync )
+  return self._readGeneralStreamSync( o );
+  else
+  return self._readGeneralStreamAsync( o );
+
+  if( o.sync )
+  return self._readGeneralBufferSync( o );
+  else
+  return self._readGeneralBufferAsync( o );
+
 }
 
 _readGeneral.defaults =
@@ -182,45 +173,22 @@ function _readGeneralBufferAsync( o )
 
   if( o.mode === 'head' )
   {
-    // let data = bufferFromStream({ src : o.data });
-    // data.then( ( buffer ) =>
-    // {
-    //   new Backend( buffer ).parse( { data : false }, ( err, os ) =>
-    //   {
-    //     if( err )
-    //     return errorHandle( err );
-    //     console.log( os );
-    //     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    //     ready.take( o );
-    //     done = true;
-    //     return null;
-    //   });
-    //   return null;
-    // } )
     backend.parse( { data : false }, ( err, os ) =>
     {
-      //debugger
       if( err )
       console.log( 'ERROR: ', err );
-      // return errorHandle( err );
-      // console.log( os );
-      //debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      //debugger
       ready.take( o );
       done = true;
     });
   }
   else
   {
-    //debugger
     backend.parse( ( err, os ) =>
     {
       if( err )
       return errorHandle( err );
-      //debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-      //debugger
       ready.take( o );
       done = true;
     });
@@ -339,8 +307,9 @@ let Extension =
   _structureHandle,
   _readGeneralBufferAsync,
   _readGeneralBufferSync,
+  _readGeneralStreamSync,
+  _readGeneralStreamAsync,
   _readGeneral,
-  _readStreamGeneral,
 
   _readHead,
   _read,

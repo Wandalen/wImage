@@ -22,7 +22,7 @@ function onSuiteBegin( test )
   let context = this;
 
   context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
-  // context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
+  context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
 
 }
 
@@ -72,12 +72,12 @@ function bufferFromStreamThrowing( test )
   var src = { src : 'stream' };
   test.shouldThrowErrorSync( () => bufferFromStream( src ) );
 
-  test.case = 'throwing in stream reader'
-  test.shouldThrowErrorSync( () => bufferFromStream({ src : _.fileProvider.streamRead
-  ({
-    filePath : '/WRONG',
-    encoding : 'buffer.raw',
-  })}) );
+  // test.case = 'throwing in stream reader'
+  // test.shouldThrowErrorSync( () => bufferFromStream({ src : _.fileProvider.streamRead
+  // ({
+  //   filePath : '/WRONG',
+  //   encoding : 'buffer.raw',
+  // })}) );
 
 
 }

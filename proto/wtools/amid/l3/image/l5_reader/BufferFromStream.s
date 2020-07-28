@@ -21,7 +21,8 @@ function bufferFromStream( o )
   {
     try
     {
-      ready.take( Buffer.concat( chunks ).buffer )
+      // console.log( Buffer.concat( chunks ) );
+      ready.take( Buffer.concat( chunks ) )
     }
     catch( err )
     {

@@ -25,7 +25,7 @@ function reader_pre( routine, args )
 
 function read_body( o )
 {
-  // debugger;
+
   let self = this;
 
   if( o.filePath && !o.ext )
@@ -55,7 +55,6 @@ function read_body( o )
 
   function handleHead( result )
   {
-
     for( let k in result )
     if( o[ k ] === undefined )
     o[ k ] = result[ k ];
@@ -83,7 +82,6 @@ read_body.defaults =
   sync : 1,
   mode : null,
   onHead : null,
-  // withStream : null,
 }
 
 //
@@ -111,7 +109,7 @@ function readerDeduce( o )
 
   for( let n in _.image.reader )
   {
-    console.log( _.image.reader[ n ] )
+    // console.log( _.image.reader[ n ] )
     let Reader = _.image.reader[ n ];
     if( !Reader.Formats )
     continue;

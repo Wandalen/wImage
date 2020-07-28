@@ -151,6 +151,9 @@ function _readGeneral( o )
   o.headGot = false;
 
   if( _.streamIs( o.data ) )
+  if( o.sync )
+  return self._readGeneralStreamSync( o )
+  else
   return self._readGeneralStreamAsync( o );
 
   if( o.sync )
@@ -171,18 +174,11 @@ _readGeneral.defaults =
 function _readGeneralStreamAsync( o )
 {
   let self = this;
-  // let ready = new _.Consequence();
   let ready = bufferFromStream({ src : o.data });
-  debugger;
+
   ready.then( ( buffer ) =>
   {
-    debugger;
-    // console.log( buffer )
     o.data = _.bufferNodeFrom( buffer );
-    // console.log('o.data: ', o.data )
-    if( o.sync )
-    return self._readGeneralBufferSync( o );
-    else
     return self._readGeneralBufferAsync( o );
   } )
 
@@ -204,7 +200,6 @@ function _readGeneralStreamSync( o )
 function _readGeneralBufferSync( o )
 {
   let self = this;
-  /* qqq : write proper code for mode : head */
   try
   {
     let image = Backend.decode( _.bufferNodeFrom( o.data ) );
@@ -223,9 +218,9 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  /* qqq : write proper code for mode : head */
   try
   {
+    debugger;
     let image = Backend.decode( _.bufferNodeFrom( o.data ) );
     self._structureHandle({ originalStructure : image, op : o, mode : 'full' });
     ready.take( o );
@@ -326,11 +321,11 @@ _.classDeclare
   parent : Parent,
   extend : Extension,
 });
-// //debugger;
+
 //
 
 _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
-// y = new _.image.reader.PngNodeLib()
+
 })();

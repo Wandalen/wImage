@@ -5,11 +5,11 @@
 | [**sharp**](https://github.com/lovell/sharp) | **X** | **-** | **X** | **-** | **X** | **X** | **X** | **X** |
 | [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 | [**pngjs**](https://github.com/lukeapage/pngjs) | **+** | **+** | **+** | **+** | **X+** | **X+** | **X+** | **X+** |
-| [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **X+** | **X** | **X** | **X** | **X** | **X** | **X** |
+| [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **X+** | **X+** | **X+** | **X** | **X** | **X** | **X** |
 | [**bmp-js**](https://github.com/shaozilee/bmp-js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 | [**omggif**](https://github.com/deanm/omggif) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 | [**utif**](https://github.com/photopea/UTIF.js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
-| [**png.js**](https://github.com/arian/pngjs) | **X** | **+** | **X** | **X** | **X** | **X** | **X** | **X** |
+| [**png.js**](https://github.com/arian/pngjs) | **X+** | **+** | **X+** | **X+** | **X+** | **+** | **X+** | **X+** |
 | [**png-js**](https://github.com/foliojs/png.js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 
 **Description:**
