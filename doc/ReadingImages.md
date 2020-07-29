@@ -2,7 +2,7 @@
 
 | **Name** | **Buffer S. f** | **Buffer A. f** | **Stream S. f** | **Stream A. f** | **Buffer S. h** | **Buffer A. h** | **Stream S. h** | **Stream A. h** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [**sharp**](https://github.com/lovell/sharp) | **X** | **-** | **X** | **-** | **X** | **X** | **X** | **X** |
+| [**sharp**](https://github.com/lovell/sharp) | **X** | **-** | **X** | **X** | **X** | **-** | **X** | **X** |
 | [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 | [**pngjs**](https://github.com/lukeapage/pngjs) | **+** | **+** | **+** | **+** | **X+** | **X+** | **X+** | **X+** |
 | [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **X+** | **X+** | **X+** | **X** | **X** | **X** | **X** |

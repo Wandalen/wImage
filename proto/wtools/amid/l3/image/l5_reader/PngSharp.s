@@ -13,6 +13,7 @@
 let _ = _global_.wTools;
 let Backend = require( 'sharp' );
 let Parent = _.image.reader.Abstract;
+let bufferFromStream = require( './BufferFromStream.s' );
 let Self = wImageReaderPngSharp;
 function wImageReaderPngSharp()
 {
@@ -29,10 +30,8 @@ function _structureHandle( o )
 {
   let self = this;
   let os = o.originalStructure;
-  console.log( os );
   if( os === null )
   os = o.op.originalStructure;
-
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
@@ -85,6 +84,7 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
+    // HACK: NO WAY TO GET BITS PER PIXEL
     o.op.structure.channelsMap[ name ] = { name, bits : 8, order : o.op.structure.channelsArray.length };
     o.op.structure.channelsArray.push( name );
   }
@@ -111,19 +111,15 @@ function _readGeneral( o )
   o.headGot = false;
 
   if( _.streamIs( o.data ) )
-  {
-    if( o.sync )
-    return self._readGeneralStreamSync( o );
-    else
-    return self._readGeneralStreamAsync( o );
-  }
+  if( o.sync )
+  return self._readGeneralStreamSync( o );
   else
-  {
+  return self._readGeneralStreamAsync( o );
+
   if( o.sync )
   return self._readGeneralBufferSync( o );
   else
   return self._readGeneralBufferAsync( o );
-  }
 
 }
 
@@ -141,11 +137,7 @@ function _readHead( o )
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _readHead, o );
   o.mode = 'head';
-  // return self._readGeneral( o );
-  if( o.sync )
-  return self._readGeneralBufferHeadSync( o );
-  else
-  return self._readGeneralBufferHeadAsync( o );
+  return self._readGeneral( o );
 }
 
 _readHead.defaults =
@@ -171,49 +163,6 @@ _read.defaults =
 
 //
 
-function _readGeneralBufferHeadAsync( o )
-{
-  let self = this;
-  let ready = new _.Consequence();
-  let data = {};
-  /* qqq : write proper code for mode : head */
-  try
-  {
-    Backend( _.bufferNodeFrom( o.data ) )
-    .metadata()
-    .then( ( metadata ) =>
-    {
-      data.metadata = metadata;
-      // console.log( metadata )
-      self._structureHandle({ originalStructure : data, op : o, mode : 'full' });
-      ready.take( o );
-    } )
-
-  }
-  catch( err )
-  {
-    throw _.err( err );
-  }
-
-  return ready;
-}
-
-
-function _readGeneralBufferHeadSync( o )
-{
-  let self = this;
-  // let backend = new Backend.PNG({})
-
-  /* qqq : write proper code for mode : head */
-  let ready = self._readGeneralBufferHeadAsync( o );
-
-  ready.deasync()
-
-  return ready;
-}
-
-//
-
 function _readGeneralBufferAsync( o )
 {
   let self = this;
@@ -222,23 +171,36 @@ function _readGeneralBufferAsync( o )
   /* qqq : write proper code for mode : head */
   try
   {
-    Backend( _.bufferNodeFrom( o.data ) )
-    .metadata()
-    .then( ( metadata ) =>
+    if( o.mode === 'head' )
     {
-      // console.log( metadata )
-      data.metadata = metadata;
-
       Backend( _.bufferNodeFrom( o.data ) )
-      .toBuffer()
-      .then( ( buffer ) =>
+      .metadata()
+      .then( ( metadata ) =>
       {
-        // console.log( buffer )
-        data.buffer = buffer;
-        self._structureHandle({ originalStructure : data, op : o, mode : 'full' });
+        self._structureHandle({ originalStructure : { metadata }, op : o, mode : 'full' });
         ready.take( o );
+      });
+    }
+    else
+    {
+      Backend( _.bufferNodeFrom( o.data ) )
+      .metadata()
+      .then( ( metadata ) =>
+      {
+        // console.log( metadata )
+        data.metadata = metadata;
+
+        Backend( _.bufferNodeFrom( o.data ) )
+        .toBuffer()
+        .then( ( buffer ) =>
+        {
+          // console.log( buffer )
+          data.buffer = buffer;
+          self._structureHandle({ originalStructure : data, op : o, mode : 'full' });
+          ready.take( o );
+        } )
       } )
-    } )
+    }
   }
   catch( err )
   {
@@ -248,32 +210,35 @@ function _readGeneralBufferAsync( o )
   return ready;
 }
 
+//
 
 function _readGeneralBufferSync( o )
 {
   let self = this;
-
-  /* qqq : write proper code for mode : head */
   let ready = self._readGeneralBufferAsync( o );
-
   ready.deasync()
+  return ready;
+}
+
+//
+
+function _readGeneralStreamAsync( o )
+{
+  let self = this;
+  let ready = bufferFromStream({ src : o.data });
+
+  ready.then( ( buffer ) =>
+  {
+    o.data = _.bufferNodeFrom( buffer );
+    return self._readGeneralBufferAsync( o );
+  } )
 
   return ready;
 }
 
+//
 
-function _readGeneralStreamAsync()
-{
-  Backend( _.bufferNodeFrom( o.data ) )
-  .on( 'info', function( info )
-  {
-    // console.log('Image height is ' + info.height);
-    console.log( info );
-  });
-}
-
-
-function _readGeneralStreamSync()
+function _readGeneralStreamSync( o )
 {
   let self = this;
   let ready = self._readGeneralStreamAsync( o );
@@ -285,8 +250,8 @@ function _readGeneralStreamSync()
 // relations
 // --
 
-let Formats = [ 'png' ];
-let Exts = [ 'png' ];
+let Formats = [ 'png', 'jpg', 'webp', 'gif', 'svg' ];
+let Exts = [ 'png', 'jpg', 'jpeg', 'webp', 'gif', 'svg' ];
 
 let Composes =
 {
@@ -308,10 +273,10 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsStream : 0,
+  SupportsStream : 1,
   SupportsAsync : 1,
-  SupportsSync : 1,
-  SupportsReadHead : 1
+  SupportsSync : 0,
+  SupportsReadHead : 0
 }
 
 let Forbids =
@@ -334,9 +299,7 @@ let Extension =
 {
   _structureHandle,
   _readGeneralBufferSync,
-  _readGeneralBufferHeadSync,
   _readGeneralBufferAsync,
-  _readGeneralBufferHeadAsync,
   _readGeneralStreamAsync,
   _readGeneralStreamSync,
   _readGeneral,
