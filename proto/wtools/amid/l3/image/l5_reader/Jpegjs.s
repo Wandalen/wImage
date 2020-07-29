@@ -14,8 +14,8 @@ let _ = _global_.wTools;
 let Backend = require( 'jpeg-js' );
 let Parent = _.image.reader.Abstract;
 let bufferFromStream = require( './BufferFromStream.s' );
-let Self = wImageReaderPngDashJs;
-function wImageReaderPngDashJs()
+let Self = wImageReaderJpegjs;
+function wImageReaderJpegjs()
 {
   return _.workpiece.construct( Self, this, arguments );
 }

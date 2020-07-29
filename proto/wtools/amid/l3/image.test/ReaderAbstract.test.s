@@ -1082,6 +1082,7 @@ function fileReadAsync( test )
     return op;
   });
 
+
   /* */
 
   return a.ready;
@@ -1094,6 +1095,15 @@ function fileReadAsync( test )
   }
 
 }
+
+//
+
+function experiment( test )
+{
+
+}
+
+experiment.experimental = true;
 
 // --
 // declare
@@ -1122,20 +1132,20 @@ var Proto =
   tests :
   {
 
-    readHeadBufferAsync,
-    readHeadStreamAsync,
-    readHeadBufferSync,
-    readHeadStreamSync,
+    // readHeadBufferAsync,
+    // readHeadStreamAsync,
+    // readHeadBufferSync,
+    // readHeadStreamSync,
 
     readBufferAsync,
-    readStreamAsync,
-    readBufferSync,
-    readStreamSync,
+    // readStreamAsync,
+    // readBufferSync,
+    // readStreamSync,
 
-    fileReadHeadSync,
-    fileReadHeadAsync,
-    fileReadSync,
-    fileReadAsync,
+    // fileReadHeadSync,
+    // fileReadHeadAsync,
+    // fileReadSync,
+    // fileReadAsync,
 
   },
 

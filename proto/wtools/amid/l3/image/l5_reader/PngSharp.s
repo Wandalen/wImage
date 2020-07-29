@@ -33,6 +33,7 @@ function _structureHandle( o )
   if( os === null )
   os = o.op.originalStructure;
   // logger.log( '_structureHandle', o.mode );
+  // console.log( os );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
 
@@ -72,6 +73,7 @@ function _structureHandle( o )
   o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
   o.op.structure.special.interlaced = os.metadata.isProgressive;
+  // o.op.structure.special.hasProfile = os.metadata.hasProfile;
   o.op.structure.hasPalette = os.palette !== undefined;
   o.op.headGot = true;
 
@@ -84,8 +86,17 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    // HACK: NO WAY TO GET BITS PER PIXEL
-    o.op.structure.channelsMap[ name ] = { name, bits : 8, order : o.op.structure.channelsArray.length };
+    const depthMap =
+    {
+      uchar : 8
+    }
+
+    o.op.structure.channelsMap[ name ] =
+    {
+      name,
+      bits : depthMap[ os.metadata.depth ],
+      order : o.op.structure.channelsArray.length
+    };
     o.op.structure.channelsArray.push( name );
   }
 
@@ -168,7 +179,7 @@ function _readGeneralBufferAsync( o )
   let self = this;
   let ready = new _.Consequence();
   let data = {};
-  /* qqq : write proper code for mode : head */
+
   try
   {
     if( o.mode === 'head' )
@@ -187,10 +198,11 @@ function _readGeneralBufferAsync( o )
       .metadata()
       .then( ( metadata ) =>
       {
-        // console.log( metadata )
+        console.log( metadata )
         data.metadata = metadata;
 
         Backend( _.bufferNodeFrom( o.data ) )
+        .raw()
         .toBuffer()
         .then( ( buffer ) =>
         {
