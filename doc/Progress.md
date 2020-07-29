@@ -10,7 +10,7 @@
 | [**omggif**](https://github.com/deanm/omggif) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 | [**utif**](https://github.com/photopea/UTIF.js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
 | [**png.js**](https://github.com/arian/pngjs) | **X+** | **+** | **X+** | **X+** | **X+** | **+** | **X+** | **X+** |
-| [**png-js**](https://github.com/foliojs/png.js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
+| [**png-js**](https://github.com/foliojs/png.js) | **X+** | **+** | **X+** | **X+** | **+** | **X+** | **ni** | **ni** |
 
 **Description:**
 * **S.** - Sync reading.

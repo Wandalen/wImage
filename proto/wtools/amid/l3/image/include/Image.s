@@ -11,8 +11,8 @@ if( typeof module !== 'undefined' )
   // require( './ReaderPngjs.s' );
   // require( './ReaderPngDotJs.s' );
   // require( './ReaderPngSharp.s' );
-  require( './ReaderPngNodeLib.s' );
-  // require( './ReaderPngDashJs.s' );
+  // require( './ReaderPngNodeLib.s' );
+  require( './ReaderPngDashJs.s' );
   // require( './Writer.s' );
 
   module[ 'exports' ] = _global_.wTools;

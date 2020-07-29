@@ -1,5 +1,5 @@
 ( function _PngPngDashJs_s_()
-{ // REWRITE STRUCTURE_HANDLE
+{
 
 'use strict';
 
@@ -13,13 +13,14 @@
 let _ = _global_.wTools;
 let Backend = require( 'png-js' );
 let Parent = _.image.reader.Abstract;
+let bufferFromStream = require( './BufferFromStream.s' );
 let Self = wImageReaderPngDashJs;
 function wImageReaderPngDashJs()
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'Png-js';
+Self.shortName = 'PngDashJs';
 
 // --
 // implementation
@@ -27,10 +28,8 @@ Self.shortName = 'Png-js';
 
 function _structureHandle( o )
 {
-  // REWRITE ACC. TO THIS MODULE
   let self = this;
   let os = o.originalStructure;
-
   if( os === null )
   os = o.op.originalStructure;
 
@@ -39,7 +38,7 @@ function _structureHandle( o )
   _.assert( _.objectIs( os ) );
 
   if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.data );
+  o.op.structure.buffer = _.bufferRawFrom( os.buffer );
   else
   o.op.structure.buffer = null;
 
@@ -48,13 +47,11 @@ function _structureHandle( o )
 
   o.op.structure.dims = [ os.width, os.height ];
 
-  os = os._parser ? os._parser._metaData : os;
-
   o.op.originalStructure = os;
 
-  _.assert( !os.palette, 'not implemented' );
+  // _.assert( !os.palette, 'not implemented' );
 
-  if( os.color )
+  if( os.colors === 3 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'red' );
@@ -62,22 +59,22 @@ function _structureHandle( o )
     channelAdd( 'blue' );
   }
 
-  if( os.colorType === 4 )
+  if( os.colors === 4 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
-  if( os.alpha )
+  if( os.hasAlphaChannel )
   {
     channelAdd( 'alpha' );
   }
 
-  o.op.structure.bytesPerPixel = os.bpp;
   o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
 
-  o.op.structure.special.interlaced = os.interlace;
-  o.op.structure.hasPalette = os.palette;
+  o.op.structure.special.interlaced = os.interlaceMethod === 1 ;
+  o.op.structure.hasPalette = os.palette.length > 0;
 
   o.op.headGot = true;
 
@@ -90,7 +87,7 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
+    o.op.structure.channelsMap[ name ] = { name, bits : os.bits, order : o.op.structure.channelsArray.length };
     o.op.structure.channelsArray.push( name );
   }
 
@@ -207,11 +204,8 @@ function _readGeneralBufferAsync( o )
     }
     else
     {
-      console.log( 'new backend: ', backend )
-      console.log( '----------' )
       backend.decode( ( buff ) =>
       {
-        console.log( 'OS: ', buff )
         backend.buffer = buff;
         self._structureHandle({ originalStructure : backend, op : o, mode : 'full' });
         ready.take( o );
