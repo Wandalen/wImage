@@ -14,7 +14,6 @@ _.image.reader = _.image.reader || Object.create( null );
 function reader_pre( routine, args )
 {
   let o = _.routineOptions( routine, args );
-  //debugger;
   _.assert( arguments.length === 2 );
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
