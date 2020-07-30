@@ -70,8 +70,10 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
+  // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
+  // NO BIT DEPTH
+  o.op.structure.bitsPerPixel = 8;
   o.op.structure.special.interlaced = os.metadata.isProgressive;
   // o.op.structure.special.hasProfile = os.metadata.hasProfile;
   o.op.structure.hasPalette = os.metadata.paletteBitDepth !== undefined;
@@ -86,17 +88,17 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    const depthMap =
-    {
-      uchar : 8
-    }
+    // const depthMap =
+    // {
+    //   uchar : 8
+    // }
 
-    o.op.structure.channelsMap[ name ] =
-    {
-      name,
-      bits : depthMap[ os.metadata.depth ],
-      order : o.op.structure.channelsArray.length
-    };
+    // o.op.structure.channelsMap[ name ] =
+    // {
+    //   name,
+    //   bits : depthMap[ os.metadata.depth ],
+    //   order : o.op.structure.channelsArray.length
+    // };
     o.op.structure.channelsArray.push( name );
   }
 

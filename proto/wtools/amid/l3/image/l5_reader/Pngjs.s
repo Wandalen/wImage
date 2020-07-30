@@ -51,7 +51,7 @@ function _structureHandle( o )
 
   o.op.originalStructure = os;
 
-  _.assert( !os.palette, 'not implemented' );
+  // _.assert( !os.palette, 'not implemented' );
 
   if( os.color )
   {
@@ -72,12 +72,12 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  o.op.structure.bytesPerPixel = os.bpp;
-  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // o.op.structure.bytesPerPixel = os.depth < 8 ? 1 : Math.floor( os.depth / 8 );
+  // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  o.op.structure.bitsPerPixel = os.depth;
 
   o.op.structure.special.interlaced = os.interlace;
   o.op.structure.hasPalette = os.palette;
-
   o.op.headGot = true;
 
   if( o.op.onHead )
@@ -89,7 +89,7 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
+    // o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
     o.op.structure.channelsArray.push( name );
   }
 

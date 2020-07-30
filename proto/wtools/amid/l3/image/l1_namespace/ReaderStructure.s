@@ -19,8 +19,8 @@ function from( o )
 
   if( !o.special )
   o.special = Object.create( null );
-  if( !o.channelsMap )
-  o.channelsMap = Object.create( null );
+  // if( !o.channelsMap )
+  // o.channelsMap = Object.create( null );
   if( !o.channelsArray )
   o.channelsArray = [];
 
@@ -30,7 +30,7 @@ function from( o )
 from.defaults =
 {
   special : null,
-  channelsMap : null,
+  // channelsMap : null,
   channelsArray : null,
 }
 
@@ -42,13 +42,13 @@ function validate( o )
 
   _.assert( _.longIs( o.dims ), 'Expects {- o.dims -}' );
   _.assert( o.buffer === null || _.bufferAnyIs( o.buffer ), 'Expects {- o.buffer -}' );
-  _.assert( _.mapIs( o.channelsMap ), 'Expects {- o.channelsMap -}' );
+  // _.assert( _.mapIs( o.channelsMap ), 'Expects {- o.channelsMap -}' );
   _.assert( _.longIs( o.channelsArray ), 'Expects {- o.channelsArray -}' );
-  _.assert
-  (
-    o.bytesPerPixel === Math.ceil( o.bitsPerPixel / 8 ),
-    `Mismatch of {- o.bytesPerPixel=${o.bytesPerPixel} -} and {- o.bitsPerPixel=${o.bitsPerPixel} -}`
-  );
+  // _.assert
+  // (
+  //   o.bytesPerPixel === Math.ceil( o.bitsPerPixel / 8 ),
+  //   `Mismatch of {- o.bytesPerPixel=${o.bytesPerPixel} -} and {- o.bitsPerPixel=${o.bitsPerPixel} -}`
+  // );
 
   return o;
 }
@@ -58,7 +58,7 @@ validate.defaults =
   ... from.defaults,
   buffer : null,
   dims : null,
-  bytesPerPixel : null,
+  // bytesPerPixel : null,
   bitsPerPixel : null,
   hasPalette : null,
 }
