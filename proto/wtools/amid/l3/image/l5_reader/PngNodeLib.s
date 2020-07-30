@@ -11,7 +11,7 @@
  */
 
 let _ = _global_.wTools;
-let { decode, readPngFile } = require( 'node-libpng' );
+let { decode } = require( 'node-libpng' );
 let Backend = { decode };
 let bufferFromStream = require( './BufferFromStream.s' );
 let Parent = _.image.reader.Abstract;
@@ -52,7 +52,7 @@ function _structureHandle( o )
 
   o.op.originalStructure = os;
 
-  _.assert( !os.palette, 'not implemented' );
+  // _.assert( !os.palette, 'not implemented' );
 
   if( os.colorType === 'rgb' )
   {

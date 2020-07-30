@@ -74,7 +74,7 @@ function _structureHandle( o )
   o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
   o.op.structure.special.interlaced = os.metadata.isProgressive;
   // o.op.structure.special.hasProfile = os.metadata.hasProfile;
-  o.op.structure.hasPalette = os.palette !== undefined;
+  o.op.structure.hasPalette = os.metadata.paletteBitDepth !== undefined;
   o.op.headGot = true;
 
   if( o.op.onHead )

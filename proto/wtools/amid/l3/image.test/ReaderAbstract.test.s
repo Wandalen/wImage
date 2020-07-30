@@ -1100,7 +1100,70 @@ function fileReadAsync( test )
 
 function experiment( test )
 {
+  var fs = require( 'fs' );
+  let context = this;
+  let a = test.assetFor( 'png' );
+  a.reflect();
 
+  var dim = [ 59, 7 ];
+  var colWidth = 26;
+  var rowHeight = 4;
+  var style = 'doubleBorder';
+
+  var files = fs.readdirSync( 'D:\\programming\\BFS\\wImage\\wImage\\proto\\wtools\\amid\\l3\\image.test\\_assets\\png' );
+  var dataHeader = [ 'Image Name', 'Dim', 'Chan&Bit', 'Buff', 'biPP', 'ByPP', 'Pal' ];
+  var data = [ ... dataHeader ]
+
+  for( let i = 0; i < files.length; i++ )
+  {
+    var res;
+    var imgData = parseImg( files[ i ] );
+    console.log( 'imgData: ', imgData )
+    try
+    {
+      res = _.image.fileRead({ filePath : a.abs( files[ i ] ), sync : 1 });
+    }
+    catch( err )
+    {
+      data.push( files[ i ] );
+      data.push( 'ERR' );
+      data.push( 'ERR' );
+      data.push( 'ERR' );
+      data.push( 'ERR' );
+      data.push( 'ERR' );
+      data.push( 'ERR' );
+      continue;
+    }
+
+    let channelsBits = [];
+    data.push( files[ i ].slice( 7, 16 ) + '\n' + files[ i ].slice( 16 ) );
+    data.push( res.structure.dims[ 0 ] + 'x' + res.structure.dims[ 1 ] );
+    for( let k in res.structure.channelsMap )
+    channelsBits.push( res.structure.channelsMap[ k ].name + ':' + res.structure.channelsMap[ k ].bits )
+    data.push( channelsBits.join( '\n' ) );
+    data.push( res.structure.buffer ? '+' : '-' );
+    data.push( '' + res.structure.bitsPerPixel );
+    data.push( '' + res.structure.bytesPerPixel );
+    data.push( res.structure.hasPalette ? '+' : '-' );
+  };
+  debugger;
+  var got = _.strTable({ data, dim, style, colWidth, rowHeight });
+  console.log( got.result )
+
+  test.identical( 1, 1 );
+
+  function parseImg( str )
+  {
+    let arr = str.split( '-' ).slice( 1 );
+    let img =
+    {
+      dims : arr[ 0 ].split( 'x' ).map( ( el ) => +el ),
+      depth : +arr[ 1 ].slice( 5 ),
+      interlaced : arr[ 2 ] === 'interlaced1',
+      channels : arr[ 3 ].split( '.' )[ 0 ].length > 4 ? 'palette' : arr[ 3 ].split( '.' )[ 0 ].length
+    }
+    return img;
+  }
 }
 
 experiment.experimental = true;
@@ -1132,20 +1195,22 @@ var Proto =
   tests :
   {
 
-    // readHeadBufferAsync,
-    // readHeadStreamAsync,
-    // readHeadBufferSync,
-    // readHeadStreamSync,
+    readHeadBufferAsync,
+    readHeadStreamAsync,
+    readHeadBufferSync,
+    readHeadStreamSync,
 
     readBufferAsync,
-    // readStreamAsync,
-    // readBufferSync,
-    // readStreamSync,
+    readStreamAsync,
+    readBufferSync,
+    readStreamSync,
 
-    // fileReadHeadSync,
-    // fileReadHeadAsync,
-    // fileReadSync,
-    // fileReadAsync,
+    fileReadHeadSync,
+    fileReadHeadAsync,
+    fileReadSync,
+    fileReadAsync,
+
+    experiment
 
   },
 
