@@ -22,6 +22,7 @@
 * **SSH** - Stream Sync Head.
 * **SAH** - Stream Async Head.
 * **yes** - Implemented.
+* **no** - Not implemented.
 * **X** - Not supported.
 * **yes+** - Not Supported, but implemented.
 * **-** - No info yet.
