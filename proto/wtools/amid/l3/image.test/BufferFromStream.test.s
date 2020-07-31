@@ -73,11 +73,12 @@ function bufferFromStreamThrowing( test )
   test.shouldThrowErrorSync( () => bufferFromStream( src ) );
 
   // test.case = 'throwing in stream reader'
-  // test.shouldThrowErrorSync( () => bufferFromStream({ src : _.fileProvider.streamRead
+  // var src = _.fileProvider.streamRead
   // ({
   //   filePath : '/WRONG',
   //   encoding : 'buffer.raw',
-  // })}) );
+  // });
+  // test.shouldThrowErrorOfAnyKind( () => bufferFromStream({ src }) );
 
 
 }

@@ -1,26 +1,26 @@
-( function _PngPngDashJs_s_()
+( function _UtifJs_s_()
 {
 
 'use strict';
 
 /**
  * @classdesc Abstract interface to read image.
- * @class wImageReaderPngDashjs
+ * @class wImageReaderUtifJs
  * @namespace wTools
  * @module Tools/mid/ImageReader
  */
 
 let _ = _global_.wTools;
-let Backend = require( 'png-js' );
-let Parent = _.image.reader.Abstract;
+let Backend = require( 'utif' );
 let bufferFromStream = require( './BufferFromStream.s' );
-let Self = wImageReaderPngDashJs;
-function wImageReaderPngDashJs()
+let Parent = _.image.reader.Abstract;
+let Self = wImageReaderUtifJs;
+function wImageReaderUtifJs()
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'PngDashJs';
+Self.shortName = 'UtifJs';
 
 // --
 // implementation
@@ -30,28 +30,35 @@ function _structureHandle( o )
 {
   let self = this;
   let os = o.originalStructure;
+
   if( os === null )
   os = o.op.originalStructure;
+  console.log( os )
 
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
 
   if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.buffer );
+  o.op.structure.buffer = _.bufferRawFrom( os.data );
   else
   o.op.structure.buffer = null;
 
   if( o.op.headGot )
   return o.op;
 
-  o.op.structure.dims = [ os.width, os.height ];
+  o.op.structure.dims = [ os.t256[ 0 ], os.t257[ 0 ] ];
 
   o.op.originalStructure = os;
 
-  // _.assert( !os.palette, 'not implemented' );
+  // if( os.t262[ 0 ] === 3 )
+  // o.op.structure.colors = 'palette';
+  // else if( os.t262[ 0 ] === 0 || os.t262[ 0 ] === 1 )
+  // o.op.structure.colors = 'gray';
+  // else
+  // o.op.structure.colors = 'rgb';
 
-  if( os.colors === 3 )
+  if( os.t262[ 0 ] === 2 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'red' );
@@ -59,22 +66,14 @@ function _structureHandle( o )
     channelAdd( 'blue' );
   }
 
-  if( os.colors === 4 )
+  if( os.t262[ 0 ] === 0 || os.t262[ 0 ] === 1 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
-  if( os.hasAlphaChannel )
-  {
-    channelAdd( 'alpha' );
-  }
-
-  // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  // o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
-  o.op.structure.bitsPerPixel = os.bits;
-  o.op.structure.special.interlaced = os.interlaceMethod === 1 ;
-  o.op.structure.hasPalette = os.palette.length > 0;
+  o.op.structure.bitsPerPixel = os.t258.reduce( ( a, b ) => a + b, 0 );
+  o.op.structure.special.compression = os.t259[ 0 ];
 
   o.op.headGot = true;
 
@@ -87,7 +86,6 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    // o.op.structure.channelsMap[ name ] = { name, bits : os.bits, order : o.op.structure.channelsArray.length };
     o.op.structure.channelsArray.push( name );
   }
 
@@ -98,6 +96,38 @@ _structureHandle.defaults =
   op : null,
   originalStructure : null,
   mode : null,
+}
+
+//
+
+function _read( o )
+{
+  let self = this;
+  _.assert( arguments.length === 1 );
+  _.assertRoutineOptions( _read, o );
+  o.mode = 'full';
+  return self._readGeneral( o );
+}
+
+_read.defaults =
+{
+  ... Parent.prototype._read.defaults,
+}
+
+//
+
+function _readHead ( o )
+{
+  let self = this;
+  _.assert( arguments.length === 1 );
+  _.assertRoutineOptions( _readHead, o );
+  o.mode = 'head';
+  return self._readGeneral( o );
+}
+
+_readHead.defaults =
+{
+  ... Parent.prototype._read.defaults,
 }
 
 //
@@ -114,7 +144,7 @@ function _readGeneral( o )
 
   if( _.streamIs( o.data ) )
   if( o.sync )
-  return self._readGeneralStreamSync( o );
+  return self._readGeneralStreamSync( o )
   else
   return self._readGeneralStreamAsync( o );
 
@@ -130,6 +160,7 @@ _readGeneral.defaults =
   ... Parent.prototype._read.defaults,
   mode : 'full',
 }
+
 //
 
 function _readGeneralStreamAsync( o )
@@ -161,28 +192,24 @@ function _readGeneralStreamSync( o )
 function _readGeneralBufferSync( o )
 {
   let self = this;
-
   try
   {
-    let os = new Backend( _.bufferNodeFrom( o.data ) );
-
+    let ifds = Backend.decode( _.bufferNodeFrom( o.data ) );
     if( o.mode === 'head' )
     {
-      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      return o;
+      self._structureHandle({ originalStructure : ifds[ 0 ], op : o, mode : 'head' });
     }
     else
     {
-      let ready = self._readGeneralBufferAsync( o );
-      ready.deasync()
-      return ready.sync();
+      Backend.decodeImage( _.bufferNodeFrom( o.data ), ifds[ 0 ] )
+      self._structureHandle({ originalStructure : ifds[ 0 ], op : o, mode : 'full' });
     }
   }
   catch( err )
   {
     throw _.err( err );
   }
-
+  return o;
 }
 
 //
@@ -191,85 +218,36 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  let done;
   try
   {
-    let backend = new Backend( _.bufferNodeFrom( o.data ) );
-
+    let ifds = Backend.decode( _.bufferNodeFrom( o.data ) );
     if( o.mode === 'head' )
     {
-      self._structureHandle({ originalStructure : backend, op : o, mode : 'head' });
+      self._structureHandle({ originalStructure : ifds[ 0 ], op : o, mode : 'head' });
       ready.take( o );
-      done = true;
     }
     else
     {
-      backend.decode( ( buff ) =>
-      {
-        backend.buffer = buff;
-        self._structureHandle({ originalStructure : backend, op : o, mode : 'full' });
-        ready.take( o );
-        done = true;
-      });
+      Backend.decodeImage( _.bufferNodeFrom( o.data ), ifds[ 0 ] )
+      self._structureHandle({ originalStructure : ifds[ 0 ], op : o, mode : 'full' });
+      ready.take( o );
     }
   }
   catch( err )
   {
-    errorHandle( err )
+    throw _.err( err );
   }
 
   return ready;
-
-  function errorHandle( err )
-  {
-    if( o.headGot )
-    return;
-    if( done )
-    return;
-    err = _.err( err )
-    done = err;
-    ready.error( err );
-  }
 }
 
-//
-
-function _readHead( o )
-{
-  let self = this;
-  _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _readHead, o );
-  o.mode = 'head';
-  return self._readGeneral( o );
-}
-
-_readHead.defaults =
-{
-  ... Parent.prototype._read.defaults,
-}
-
-//
-
-function _read( o )
-{
-  let self = this;
-  _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _read, o );
-  o.mode = 'full';
-  return self._readGeneral( o );
-}
-
-_read.defaults =
-{
-  ... Parent.prototype._read.defaults,
-}
 
 // --
 // relations
 // --
 
-let Formats = [ 'png' ];
-let Exts = [ 'png' ];
+let Formats = [ 'tif' ];
+let Exts = [ 'tif', 'tiff' ];
 
 let Composes =
 {
@@ -292,9 +270,9 @@ let Statics =
   Formats,
   Exts,
   SupportsStream : 0,
-  SupportsAsync : 1,
+  SupportsAsync : 0,
   SupportsSync : 1,
-  SupportsReadHead : 0
+  SupportsReadHead : 1
 }
 
 let Forbids =
@@ -315,12 +293,11 @@ let Medials =
 
 let Extension =
 {
-
   _structureHandle,
-  _readGeneralStreamSync,
-  _readGeneralStreamAsync,
   _readGeneralBufferSync,
   _readGeneralBufferAsync,
+  _readGeneralStreamAsync,
+  _readGeneralStreamSync,
   _readGeneral,
 
   _readHead,
