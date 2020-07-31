@@ -1116,16 +1116,17 @@ function experimentAll( test )
   var fs = require( 'fs' );
   let context = this;
   let a = test.assetFor( 'png' );
+  let failedNum = 0;
   // a.reflect();
 
-  var dim = [ 59, 8 ];
+  var dim = [ 59, 7 ];
   var colWidth = 23;
   var rowHeight = 7;
   var style = 'doubleBorder';
 
   var files = fs.readdirSync( 'D:\\programming\\BFS\\wImage\\wImage\\proto\\wtools\\amid\\l3\\image.test\\_assets\\png' );
   // console.log( files )
-  var dataHeader = [ 'Image Name', 'Dim', 'Chan&Bit', 'Buff', 'biPP', 'ByPP', 'Pal', 'Passed' ];
+  var dataHeader = [ 'Image Name', 'Dim', 'Chan&Bit', 'Buff', 'biPP', 'Pal', 'Passed' ];
   var data = [ ... dataHeader ];
 
   a.ready.then( () =>
@@ -1138,6 +1139,7 @@ function experimentAll( test )
     {
       // if( !files[ i ].includes( 'depth4' ) )
       // continue;
+      console.log( '=============================================================' );
       var imgData = parseImgFileName( files[ i ] );
       console.log( 'IMGDATA: ', imgData )
       try
@@ -1152,7 +1154,7 @@ function experimentAll( test )
         data.push( 'ERR' );
         data.push( 'ERR' );
         data.push( 'ERR' );
-        data.push( 'ERR' );
+        // data.push( 'ERR' );
         data.push( 'ERR' );
         data.push( 'ERR' );
         data.push( 'NOT PASS!' )
@@ -1168,17 +1170,19 @@ function experimentAll( test )
       data.push( channelsBits.join( '\n' ) );
       data.push( res.structure.buffer ? '+' : '-' );
       data.push( '' + res.structure.bitsPerPixel );
-      data.push( '' + res.structure.bytesPerPixel );
+      // data.push( '' + res.structure.bytesPerPixel );
       data.push( res.structure.hasPalette ? '+' : '-' );
       if( check( res.structure, imgData ) )
       data.push( 'PASS!' )
       else
       data.push( 'NOT PASS!' )
+      console.log( '=============================================================' );
     };
 
     debugger;
     var got = _.strTable({ data, dim, style, colWidth, rowHeight });
     console.log( got.result )
+    console.log( `FAILED: ${failedNum}/59` )
 
     // FOR TESTING PURPOSES
     test.identical( 1, 1 );
@@ -1189,7 +1193,7 @@ function experimentAll( test )
   {
     var a = err;
     console.log( 'err there was' )
-    // return 'there was an error';
+    return err;
   } );
 
   return a.ready;
@@ -1268,17 +1272,18 @@ function experimentAll( test )
 
     if( !result )
     {
-      console.log( '---------------------------------' );
+      ++failedNum;
+      console.log( '-------------------------------------------------------------' );
       console.log( 'IS: ', got );
       console.log( 'SHOULD BE: ', exp )
-      console.log( '---------------------------------' );
+      console.log( '-------------------------------------------------------------' );
     }
     return result;
   }
 }
 
 experimentAll.experimental = true;
-experimentAll.timeOut = 10000;
+experimentAll.timeOut = 20000;
 
 // --
 // declare

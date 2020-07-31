@@ -72,6 +72,7 @@ function _structureHandle( o )
 
   // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   // o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
+
   // NO BIT DEPTH
   o.op.structure.bitsPerPixel = 8;
   o.op.structure.special.interlaced = os.metadata.isProgressive;

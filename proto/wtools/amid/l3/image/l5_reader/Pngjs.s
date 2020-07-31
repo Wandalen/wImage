@@ -61,13 +61,13 @@ function _structureHandle( o )
     channelAdd( 'blue' );
   }
 
-  if( os.colorType === 4 )
+  if( os.colorType === 4 || os.colorType === 0 )
   {
     _.assert( o.op.structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
-  if( os.alpha )
+  if( os.alpha || os.colorType === 4 || os.colorType === 6 )
   {
     channelAdd( 'alpha' );
   }

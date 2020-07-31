@@ -1,24 +1,27 @@
 ### Reading images
 
-| **Name** | **Buffer S. f** | **Buffer A. f** | **Stream S. f** | **Stream A. f** | **Buffer S. h** | **Buffer A. h** | **Stream S. h** | **Stream A. h** |
+| **N** | **BSF** | **BAF** | **SSF** | **SAF** | **BSH** | **BAH** | **SSH** | **SAH** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [**sharp**](https://github.com/lovell/sharp) | **X** | **-** | **X** | **X** | **X** | **-** | **X** | **X** |
-| [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
-| [**pngjs**](https://github.com/lukeapage/pngjs) | **+** | **+** | **+** | **+** | **X+** | **X+** | **X+** | **X+** |
-| [**node-libpng**](https://github.com/Prior99/node-libpng) | **+** | **X+** | **X+** | **X+** | **X** | **X** | **X** | **X** |
-| [**bmp-js**](https://github.com/shaozilee/bmp-js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
-| [**omggif**](https://github.com/deanm/omggif) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
-| [**utif**](https://github.com/photopea/UTIF.js) | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** | **ni** |
-| [**png.js**](https://github.com/arian/pngjs) | **X+** | **+** | **X+** | **X+** | **X+** | **+** | **X+** | **X+** |
-| [**png-js**](https://github.com/foliojs/png.js) | **X+** | **+** | **X+** | **X+** | **+** | **X+** | **X+** | **X+** |
+| [**sharp**](https://github.com/lovell/sharp) | **X** | **no** | **X** | **X** | **X** | **-** | **X** | **X** |
+| [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **-** | **-** | **-** | **-** | **-** | **-** | **-** | **-** |
+| [**pngjs**](https://github.com/lukeapage/pngjs) | **yes** | **yes** | **yes** | **yes** | **yes+** | **yes+** | **yes+** | **yes+** |
+| [**node-libpng**](https://github.com/Prior99/node-libpng) | **yes** | **yes+** | **yes+** | **yes+** | **X** | **X** | **X** | **X** |
+| [**bmp-js**](https://github.com/shaozilee/bmp-js) | **-** | **-** | **-** | **-** | **-** | **-** | **-** | **-** |
+| [**omggif**](https://github.com/deanm/omggif) | **-** | **-** | **-** | **-** | **-** | **-** | **-** | **-** |
+| [**utif**](https://github.com/photopea/UTIF.js) | **-** | **-** | **-** | **-** | **-** | **-** | **-** | **-** |
+| [**png.js**](https://github.com/arian/pngjs) | **yes+** | **yes** | **yes+** | **yes+** | **yes+** | **yes** | **yes+** | **yes+** |
+| [**png-js**](https://github.com/foliojs/png.js) | **yes+** | **yes** | **yes+** | **yes+** | **yes** | **yes+** | **yes+** | **yes+** |
 
 **Description:**
-* **S.** - Sync reading.
-* **A.** - Async reading.
-* **f** - Full reading.
-* **h** - Head reading.
-* **-** - Not implemented.
-* **+** - Implemented.
+* **BSF** - Buffer Sync Full.
+* **BAF** - Buffer Async Full.
+* **SSF** - Stream Sync Full.
+* **SAF** - Stream Async Full.
+* **BSH** - Buffer Sync Head.
+* **BAH** - Buffer Async Head.
+* **SSH** - Stream Sync Head.
+* **SAH** - Stream Async Head.
+* **yes** - Implemented.
 * **X** - Not supported.
-* **X+** - Not Supported, but implemented.
-* **ni** - No info yet.
+* **yes+** - Not Supported, but implemented.
+* **-** - No info yet.
