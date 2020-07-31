@@ -1,4 +1,4 @@
-( function _ReaderPngDash_test_s_( )
+( function _ReaderOmggif_test_s_( )
 {
 
 'use strict';
@@ -6,7 +6,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../wtools/Tools.s' );
-  require( '../image/entry/ReaderPngDashJs.s' );
+  require( '../image/entry/ReaderOmggif.s' );
   require( './ReaderAbstract.test.s' );
 }
 
@@ -28,14 +28,14 @@ let Parent = _global_.wTests.ImageReadAbstract; /* xxx : rename */
 var Proto =
 {
 
-  name : 'ImageReadPngDashJs',
+  name : 'ImageReadOmggif',
   abstract : 0,
 
   context :
   {
-    ext : 'png',
-    format : 'png',
-    readerName : 'PngDashJs',
+    ext : 'gif',
+    format : 'gif',
+    readerName : 'Omggif',
   },
 
   tests :

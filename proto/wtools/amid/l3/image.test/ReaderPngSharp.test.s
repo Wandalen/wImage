@@ -1,4 +1,4 @@
-( function _ReaderPngjs_test_s_( )
+( function _ReaderSharp_test_s_( )
 {
 
 'use strict';
