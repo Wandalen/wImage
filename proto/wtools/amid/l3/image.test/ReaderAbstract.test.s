@@ -1124,7 +1124,7 @@ function experimentAll( test )
   var rowHeight = 7;
   var style = 'doubleBorder';
 
-  var files = fs.readdirSync( 'D:\\programming\\BFS\\wImage\\wImage\\proto\\wtools\\amid\\l3\\image.test\\_assets\\png' );
+  var files = fs.readdirSync( __dirname + '/_assets/png' );
   // console.log( files )
   var dataHeader = [ 'Image Name', 'Dim', 'Chan&Bit', 'Buff', 'biPP', 'Pal', 'Passed' ];
   var data = [ ... dataHeader ];
@@ -1339,4 +1339,5 @@ let Self = new wTestSuite( Proto )
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 
+//TEST 
 })();
