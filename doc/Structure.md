@@ -1,6 +1,6 @@
 ## Examples of data available through modules:
 
-#### **pngjs**
+### **pngjs**
 ```javascript
 {
   width : 2,
@@ -17,7 +17,7 @@
 }
 ```
 
-#### **png-js**
+### **png-js**
 ```javascript
 {
   data : <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 00 02 00 00 00 02 08 06 00 00 00 72 b6 0d 24 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 04 ... 77 more bytes>,
@@ -41,7 +41,7 @@
 }
 ```
 
-#### **png.js**
+### **png.js**
 ```javascript
 {
   width : 2,
@@ -60,7 +60,7 @@
 ```
 *Unable to parse some sorts of interlaced images (for example with Adam7 Interlacing )*
 
-#### **node-libpng**
+### **node-libpng**
 ```javascript
 {
   bitDepth : 8,
@@ -82,7 +82,7 @@
 }
 ```
 
-#### **sharp**
+### **sharp**
 ```javascript
 {
   metadata : {
@@ -103,7 +103,7 @@
 ```
 *No information about bit depth of an image*
 
-#### **bmp-js**
+### **bmp-js**
 ```javascript
 {
   pos : 70,
@@ -130,7 +130,7 @@
 ```
 *No information about color channels in image*
 
-#### **utif**
+### **utif**
 ```javascript
 {
   t254 : [ 0 ],
@@ -199,7 +199,7 @@
 }
 ```
 
-#### **omggif**
+### **omggif**
 ```javascript
 {
   metadata : {
@@ -221,7 +221,7 @@
 }
 ```
 
-#### **jpeg-js**
+### **jpeg-js**
 ```javascript
 {
   width : 2,
