@@ -1,7 +1,7 @@
 ## Examples of data available through modules:
 
 #### **pngjs**
-`javascript
+```javascript
 {
   width : 2,
   height : 2,
@@ -15,10 +15,10 @@
   data : <Buffer ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff ff ff ff>,
   gamma : 0.45455
 }
-`
+```
 
 #### **png-js**
-`javascript
+```javascript
 {
   data : <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 00 02 00 00 00 02 08 06 00 00 00 72 b6 0d 24 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 04 ... 77 more bytes>,
   pos : 123,
@@ -39,10 +39,10 @@
   colorSpace : 'DeviceRGB',
   buffer : <Buffer ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff ff ff ff>
 }
-`
+```
 
 #### **png.js**
-`javascript
+```javascript
 {
 	width : 2,
 	height : 2,
@@ -57,11 +57,11 @@
 	palette : null,
 	pixels : <Buffer ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff ff ff ff>
 }
-`
+```
 *Unable to parse some sorts of interlaced images (for example with Adam7 Interlacing )*
 
 #### **node-libpng**
-`javascript
+```javascript
 {
   bitDepth : 8,
   channels : 4,
@@ -80,10 +80,10 @@
   time : undefined,
   backgroundColor : undefined
 }
-`
+```
 
 #### **sharp**
-`javascript
+```javascript
 {
   metadata : {
     format : 'png',
@@ -100,11 +100,11 @@
   },
   buffer : <Buffer ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff ff ff ff>
 }
-`
+```
 *No information about bit depth of an image*
 
 #### **bmp-js**
-`javascript
+```javascript
 {
   pos : 70,
   buffer : <Buffer 42 4d 48 00 00 00 00 00 00 00 36 00 00 00 28 00 00 00 02 00 00 00 02 00 00 00 01 00 20 00 00 00 00 00 12 00 00 00 23 2e 00 00 23 2e 00 00 00 00 00 00 ... 22 more bytes>,
@@ -127,11 +127,11 @@
   importantColors : 0,
   data : <Buffer 00 00 00 ff 00 00 ff 00 00 ff 00 00 00 ff ff ff>
 }
-`
+```
 *No information about color channels in image*
 
 #### **utif**
-`javascript
+```javascript
 {
   t254 : [ 0 ],
   t256 : [ 2 ],
@@ -197,10 +197,10 @@
     255, 255
   ]
 }
-`
+```
 
 #### **omggif**
-`javascript
+```javascript
 {
   metadata : {
     x : 0,
@@ -219,14 +219,14 @@
   },
   buffer : <Buffer 08 07 00 a5 91 28 b0 2f 20 00>
 }
-`
+```
 
 #### **jpeg-js**
-`javascript
+```javascript
 {
   width : 2,
   height : 2,
   exifBuffer : undefined,
   data : <Buffer f9 00 00 ff 00 ff 00 ff 09 04 ff ff ff f9 ff ff>
 }
-`
+```
