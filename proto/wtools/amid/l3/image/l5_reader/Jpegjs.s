@@ -72,11 +72,11 @@ function _structureHandle( o )
 
   // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   // o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
-  o.op.structure.bitsPerPixel = 8;
+  // o.op.structure.bitsPerPixel = 8;
   // o.op.structure.bytesPerPixel = 1;
 
-  o.op.structure.special.interlaced = false;
-  o.op.structure.hasPalette = false;
+  // o.op.structure.special.interlaced = false;
+  // o.op.structure.hasPalette = false;
 
   o.op.headGot = true;
 

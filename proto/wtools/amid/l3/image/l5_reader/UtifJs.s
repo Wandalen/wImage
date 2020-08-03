@@ -33,7 +33,6 @@ function _structureHandle( o )
 
   if( os === null )
   os = o.op.originalStructure;
-  console.log( os )
 
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
@@ -73,13 +72,13 @@ function _structureHandle( o )
   }
 
   o.op.structure.bitsPerPixel = os.t258.reduce( ( a, b ) => a + b, 0 );
-  o.op.structure.special.compression = os.t259[ 0 ];
+  o.op.structure.special.compression = os.t259[ 0 ] !== 1;
 
   o.op.headGot = true;
 
   if( o.op.onHead )
   o.op.onHead( o.op );
-
+  console.log( 'Structure; ', o.op.structure )
   return o.op;
 
   /* */

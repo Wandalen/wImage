@@ -95,10 +95,10 @@ function readHeadBufferAsync( test )
         'structure' :
         {
           'buffer' : null,
-          'special' : {},
+          'special' : { 'compression' : false },
           'dims' : [ 2, 2 ],
-          'channelsArray' : [],
-          'bitsPerPixel' : null,
+          'channelsArray' : [ 'red', 'green', 'blue' ],
+          'bitsPerPixel' : 24,
           'hasPalette' : null
         }
       }
@@ -180,10 +180,10 @@ function readHeadStreamAsync( test )
         'structure' :
         {
           'buffer' : null,
-          'special' : {},
+          'special' : { 'compression' : false },
           'dims' : [ 2, 2 ],
-          'channelsArray' : [],
-          'bitsPerPixel' : null,
+          'channelsArray' : [ 'red', 'green', 'blue' ],
+          'bitsPerPixel' : 24,
           'hasPalette' : null
         }
       }
@@ -257,10 +257,10 @@ function readHeadBufferSync( test )
       'structure' :
       {
         'buffer' : null,
-        'special' : {},
+        'special' : { 'compression' : false },
         'dims' : [ 2, 2 ],
-        'channelsArray' : [],
-        'bitsPerPixel' : null,
+        'channelsArray' : [ 'red', 'green', 'blue' ],
+        'bitsPerPixel' : 24,
         'hasPalette' : null
       }
     }
@@ -331,10 +331,10 @@ function readHeadStreamSync( test )
       'structure' :
       {
         'buffer' : null,
-        'special' : {},
+        'special' : { 'compression' : false },
         'dims' : [ 2, 2 ],
-        'channelsArray' : [],
-        'bitsPerPixel' : null,
+        'channelsArray' : [ 'red', 'green', 'blue' ],
+        'bitsPerPixel' : 24,
         'hasPalette' : null
       }
     }
@@ -412,11 +412,11 @@ function readBufferAsync( test )
         'headGot' : true,
         'structure' :
         {
-          'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-          'special' : {},
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'compression' : false },
           'dims' : [ 2, 2 ],
-          'channelsArray' : [],
-          'bitsPerPixel' : null,
+          'channelsArray' : [ 'red', 'green', 'blue' ],
+          'bitsPerPixel' : 24,
           'hasPalette' : null
         }
       }
@@ -497,11 +497,11 @@ function readStreamAsync( test )
         'headGot' : true,
         'structure' :
         {
-          'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-          'special' : {},
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'compression' : false },
           'dims' : [ 2, 2 ],
-          'channelsArray' : [],
-          'bitsPerPixel' : null,
+          'channelsArray' : [ 'red', 'green', 'blue' ],
+          'bitsPerPixel' : 24,
           'hasPalette' : null
         }
       }
@@ -574,12 +574,12 @@ function readBufferSync( test )
       'headGot' : true,
       'structure' :
       {
-        'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-        'special' : {},
-        'channelsArray' : [],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'compression' : false },
+        'channelsArray' : [ 'red', 'green', 'blue' ],
         'dims' : [ 2, 2 ],
         'hasPalette' : null,
-        'bitsPerPixel' : null
+        'bitsPerPixel' : 24
       }
     }
 
@@ -648,12 +648,12 @@ function readStreamSync( test )
       'headGot' : true,
       'structure' :
       {
-        'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-        'special' : {},
-        'channelsArray' : [],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'compression' : false },
+        'channelsArray' : [ 'red', 'green', 'blue' ],
         'dims' : [ 2, 2 ],
         'hasPalette' : null,
-        'bitsPerPixel' : null
+        'bitsPerPixel' : 24
       }
     }
 
@@ -713,11 +713,11 @@ function fileReadHeadSync( test )
     'structure' :
     {
       'buffer' : null,
-      'special' : {},
-      'channelsArray' : [],
+      'special' : { 'compression' : false },
+      'channelsArray' : [ 'red', 'green', 'blue' ],
       'dims' : [ 2, 2 ],
       'hasPalette' : null,
-      'bitsPerPixel' : null
+      'bitsPerPixel' : 24
     }
   }
 
@@ -781,11 +781,11 @@ function fileReadHeadAsync( test )
       'structure' :
       {
         'buffer' : null,
-        'special' : {},
-        'channelsArray' : [],
+        'special' : { 'compression' : false },
+        'channelsArray' : [ 'red', 'green', 'blue' ],
         'dims' : [ 2, 2 ],
         'hasPalette' : null,
-        'bitsPerPixel' : null
+        'bitsPerPixel' : 24
       }
     }
 
@@ -847,12 +847,12 @@ function fileReadSync( test )
     'headGot' : true,
     'structure' :
     {
-      'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-      'special' : {},
-      'channelsArray' : [],
+      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+      'special' : { 'compression' : false },
+      'channelsArray' : [ 'red', 'green', 'blue' ],
       'dims' : [ 2, 2 ],
       'hasPalette' : null,
-      'bitsPerPixel' : null
+      'bitsPerPixel' : 24
     }
   }
 
@@ -889,12 +889,12 @@ function fileReadSync( test )
     'headGot' : true,
     'structure' :
     {
-      'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-      'special' : {},
-      'channelsArray' : [],
+      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+      'special' : { 'compression' : false },
       'dims' : [ 2, 2 ],
-      'hasPalette' : null,
-      'bitsPerPixel' : null
+      'channelsArray' : [ 'red', 'green', 'blue' ],
+      'bitsPerPixel' : 24,
+      'hasPalette' : null
     }
   }
 
@@ -960,12 +960,12 @@ function fileReadAsync( test )
       onHead,
       'structure' :
       {
-        'buffer' : ( new U8x([ 0xf9, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x9, 0x4, 0xff, 0xff, 0xff, 0xf9, 0xff, 0xff ]) ).buffer,
-        'special' : {},
-        'channelsArray' : [],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'compression' : false },
         'dims' : [ 2, 2 ],
-        'hasPalette' : null,
-        'bitsPerPixel' : null
+        'channelsArray' : [ 'red', 'green', 'blue' ],
+        'bitsPerPixel' : 24,
+        'hasPalette' : null
       }
     }
 
@@ -992,14 +992,13 @@ function fileReadAsync( test )
 
 }
 
-// --
 // declare
 // --
 
 var Proto =
 {
 
-  name : 'ImageReadAbstractJpg',
+  name : 'ImageReadAbstractTif',
   abstract : 1,
   silencing : 1,
 

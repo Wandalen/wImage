@@ -7,12 +7,12 @@ if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../wtools/Tools.s' );
   require( '../image/entry/ReaderJpegjs.s' );
-  require( './ReaderAbstract.test.s' );
+  require( './ReaderAbstractJpg.test.s' );
 }
 
 let _ = _global_.wTools;
-let Parent = _global_.wTests.ImageReadAbstract; /* xxx : rename */
-
+let Parent = _global_.wTests.ImageReadAbstractJpg;
+// console.log( Parent )
 // --
 // context
 // --
