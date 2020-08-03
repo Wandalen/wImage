@@ -44,18 +44,18 @@
 #### **png.js**
 ```javascript
 {
-	width : 2,
-	height : 2,
-	bitDepth : 8,
-	colorType : 6,
-	compressionMethod : 0,
-	filterMethod : 0,
-	interlaceMethod : 0,
-	colors : 4,
-	alpha : true,
-	pixelBits : 0,
-	palette : null,
-	pixels : <Buffer ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff ff ff ff>
+  width : 2,
+  height : 2,
+  bitDepth : 8,
+  colorType : 6,
+  compressionMethod : 0,
+  filterMethod : 0,
+  interlaceMethod : 0,
+  colors : 4,
+  alpha : true,
+  pixelBits : 0,
+  palette : null,
+  pixels : <Buffer ff 00 00 ff 00 ff 00 ff 00 00 ff ff ff ff ff ff>
 }
 ```
 *Unable to parse some sorts of interlaced images (for example with Adam7 Interlacing )*
