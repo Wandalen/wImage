@@ -32,7 +32,7 @@ function _structureHandle( o )
   let os = o.originalStructure;
   if( os === null )
   os = o.op.originalStructure;
-
+  console.log( 'OS: ', os )
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );

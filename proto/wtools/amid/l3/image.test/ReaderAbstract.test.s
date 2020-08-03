@@ -1137,7 +1137,7 @@ function experimentAll( test )
 
     for( let i = 0; i < files.length; i++ )
     {
-      // if( !files[ i ].includes( 'depth4' ) )
+      // if( !files[ i ].includes( 'Pixels-2x2-depth16-interlaced1-ga' ) )
       // continue;
       console.log( '=============================================================' );
       var imgData = parseImgFileName( files[ i ] );
@@ -1285,6 +1285,32 @@ function experimentAll( test )
 experimentAll.experimental = true;
 experimentAll.timeOut = 20000;
 
+//
+
+// function experimentOneImgWithAll( test )
+// {
+//   let name = 'Pixels-2x2-depth';
+
+//   try
+//   {
+//     res = _.image.fileRead({ filePath : a.abs( files[ i ] ), sync : 1 });
+//     console.log( 'STRUCTURE: ', res.structure );
+//   }
+//   catch( err )
+//   {
+//     data.push( files[ i ] );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'NOT PASS!' )
+//   }
+// }
+
+// experimentOneImgWithAll.experimental = true;
+
 // --
 // declare
 // --
@@ -1312,23 +1338,23 @@ var Proto =
   tests :
   {
 
-    readHeadBufferAsync,
-    readHeadStreamAsync,
-    readHeadBufferSync,
-    readHeadStreamSync,
+    // readHeadBufferAsync,
+    // readHeadStreamAsync,
+    // readHeadBufferSync,
+    // readHeadStreamSync,
 
-    readBufferAsync,
-    readStreamAsync,
+    // readBufferAsync,
+    // readStreamAsync,
     readBufferSync,
-    readStreamSync,
+    // readStreamSync,
 
-    fileReadHeadSync,
-    fileReadHeadAsync,
-    fileReadSync,
-    fileReadAsync,
+    // fileReadHeadSync,
+    // fileReadHeadAsync,
+    // fileReadSync,
+    // fileReadAsync,
 
     experimentAll,
-
+    // experimentOneImgWithAll
   },
 
 }

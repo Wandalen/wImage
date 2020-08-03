@@ -32,7 +32,7 @@ function _structureHandle( o )
 {
   let self = this;
   let os = o.originalStructure;
-
+  console.log( 'OS: ', os )
   if( os === null )
   os = o.op.originalStructure;
 
