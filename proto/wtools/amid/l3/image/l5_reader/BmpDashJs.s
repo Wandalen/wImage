@@ -33,7 +33,7 @@ function _structureHandle( o )
 
   if( os === null )
   os = o.op.originalStructure;
-  console.log( os );
+  console.log( 'OS: ', os );
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
@@ -51,14 +51,14 @@ function _structureHandle( o )
 
   _.assert( !os.palette, 'not implemented' );
 
-  if( os.colorType === 'rgb' )
-  {
-    _.assert( o.op.structure.channelsArray.length === 0 );
-    channelAdd( 'red' );
-    channelAdd( 'green' );
-    channelAdd( 'blue' );
-  }
-  else if( os.is_with_alpha )
+  // if( os.colorType === 'rgb' )
+  // {
+  //   _.assert( o.op.structure.channelsArray.length === 0 );
+  //   channelAdd( 'red' );
+  //   channelAdd( 'green' );
+  //   channelAdd( 'blue' );
+  // }
+  if( os.is_with_alpha )
   {
     channelAdd( 'alpha' );
   }
@@ -69,18 +69,16 @@ function _structureHandle( o )
     channelAdd( 'gray' );
   }
 
-  // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  // o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
-
-  o.op.structure.bitsPerPixel = Math.floor( os.bitPP / ( os.width * os.height ) );
-  o.op.structure.special.interlaced = false;
+  // o.op.structure.bitsPerPixel = Math.floor( os.bitPP / ( os.width * os.height ) );
+  o.op.structure.bitsPerPixel = os.bitPP;
+  o.op.structure.special.compressed = os.compress !== 0;
   o.op.structure.hasPalette = os.palette !== undefined;
 
   o.op.headGot = true;
 
   if( o.op.onHead )
   o.op.onHead( o.op );
-
+  console.log( 'STRUCTURE: ', o.op.structure )
   return o.op;
 
   /* */

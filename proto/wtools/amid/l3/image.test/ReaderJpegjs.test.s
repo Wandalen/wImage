@@ -12,7 +12,7 @@ if( typeof module !== 'undefined' )
 
 let _ = _global_.wTools;
 let Parent = _global_.wTests.ImageReadAbstractJpg;
-// console.log( Parent )
+
 // --
 // context
 // --

@@ -12,7 +12,6 @@
 
 let _ = _global_.wTools;
 let Backend = require( 'omggif' );
-// let Backend = { decode };
 let bufferFromStream = require( './BufferFromStream.s' );
 let Parent = _.image.reader.Abstract;
 let Self = wImageReaderOmggif;
@@ -35,7 +34,7 @@ function _structureHandle( o )
   console.log( 'OS: ', os )
   if( os === null )
   os = o.op.originalStructure;
-
+  console.log( os )
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
@@ -54,31 +53,31 @@ function _structureHandle( o )
 
   // _.assert( !os.palette, 'not implemented' );
 
-  if( os.colorType === 'rgb' )
-  {
-    _.assert( o.op.structure.channelsArray.length === 0 );
-    channelAdd( 'red' );
-    channelAdd( 'green' );
-    channelAdd( 'blue' );
-  }
-  else if( os.colorType === 'rgba' )
-  {
-    _.assert( o.op.structure.channelsArray.length === 0 );
-    channelAdd( 'red' );
-    channelAdd( 'green' );
-    channelAdd( 'blue' );
-    channelAdd( 'alpha' );
-  }
+  // if( os.colorType === 'rgb' )
+  // {
+  //   _.assert( o.op.structure.channelsArray.length === 0 );
+  //   channelAdd( 'red' );
+  //   channelAdd( 'green' );
+  //   channelAdd( 'blue' );
+  // }
+  // else if( os.colorType === 'rgba' )
+  // {
+  //   _.assert( o.op.structure.channelsArray.length === 0 );
+  //   channelAdd( 'red' );
+  //   channelAdd( 'green' );
+  //   channelAdd( 'blue' );
+  //   channelAdd( 'alpha' );
+  // }
 
-  if( os.colorType === 'gray-scale' )
-  {
-    _.assert( o.op.structure.channelsArray.length === 0 );
-    channelAdd( 'gray' );
-  }
+  // if( os.colorType === 'gray-scale' )
+  // {
+  //   _.assert( o.op.structure.channelsArray.length === 0 );
+  //   channelAdd( 'gray' );
+  // }
 
   // o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   // o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
-  o.op.structure.bitsPerPixel = os.bitDepth;
+  // o.op.structure.bitsPerPixel = os.bitDepth;
   o.op.structure.special.interlaced = os.metadata.interlaced;
   o.op.structure.special.transparentIndex = os.metadata.transparent_index;
   o.op.structure.hasPalette = os.metadata.has_local_palette;

@@ -1,4 +1,4 @@
-( function _ReaderAbstractTif_test_s_( )
+( function _ReaderAbstractPng_test_s_( )
 {
 
 'use strict';
@@ -95,11 +95,20 @@ function readHeadBufferAsync( test )
         'structure' :
         {
           'buffer' : null,
-          'special' : { 'compression' : false },
+          'special' : { 'interlaced' : false },
+          // 'channelsMap' :
+          // {
+          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          // },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'channelsArray' : [ 'red', 'green', 'blue' ],
-          'bitsPerPixel' : 24,
-          'hasPalette' : null
+          // 'bytesPerPixel' : 4,
+          // 'bitsPerPixel' : 32,
+          'bitsPerPixel' : 8,
+          'hasPalette' : false,
         }
       }
 
@@ -180,11 +189,20 @@ function readHeadStreamAsync( test )
         'structure' :
         {
           'buffer' : null,
-          'special' : { 'compression' : false },
+          'special' : { 'interlaced' : false },
+          // 'channelsMap' :
+          // {
+          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          // },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'channelsArray' : [ 'red', 'green', 'blue' ],
-          'bitsPerPixel' : 24,
-          'hasPalette' : null
+          // 'bytesPerPixel' : 4,
+          // 'bitsPerPixel' : 32,
+          'bitsPerPixel' : 8,
+          'hasPalette' : false,
         }
       }
 
@@ -257,11 +275,20 @@ function readHeadBufferSync( test )
       'structure' :
       {
         'buffer' : null,
-        'special' : { 'compression' : false },
+        'special' : { 'interlaced' : false },
+        // 'channelsMap' :
+        // {
+        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        // },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'channelsArray' : [ 'red', 'green', 'blue' ],
-        'bitsPerPixel' : 24,
-        'hasPalette' : null
+        // 'bytesPerPixel' : 4,
+        // 'bitsPerPixel' : 32,
+        'bitsPerPixel' : 8,
+        'hasPalette' : false,
       }
     }
 
@@ -331,11 +358,20 @@ function readHeadStreamSync( test )
       'structure' :
       {
         'buffer' : null,
-        'special' : { 'compression' : false },
+        'special' : { 'interlaced' : false },
+        // 'channelsMap' :
+        // {
+        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        // },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'channelsArray' : [ 'red', 'green', 'blue' ],
-        'bitsPerPixel' : 24,
-        'hasPalette' : null
+        // 'bytesPerPixel' : 4,
+        // 'bitsPerPixel' : 32,
+        'bitsPerPixel' : 8,
+        'hasPalette' : false,
       }
     }
 
@@ -412,12 +448,21 @@ function readBufferAsync( test )
         'headGot' : true,
         'structure' :
         {
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'special' : { 'compression' : false },
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'interlaced' : false },
+          // 'channelsMap' :
+          // {
+          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          // },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'channelsArray' : [ 'red', 'green', 'blue' ],
-          'bitsPerPixel' : 24,
-          'hasPalette' : null
+          // 'bytesPerPixel' : 4,
+          // 'bitsPerPixel' : 32,
+          'bitsPerPixel' : 8,
+          'hasPalette' : false,
         }
       }
 
@@ -497,12 +542,21 @@ function readStreamAsync( test )
         'headGot' : true,
         'structure' :
         {
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'special' : { 'compression' : false },
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'interlaced' : false },
+          // 'channelsMap' :
+          // {
+          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          // },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'channelsArray' : [ 'red', 'green', 'blue' ],
-          'bitsPerPixel' : 24,
-          'hasPalette' : null
+          // 'bytesPerPixel' : 4,
+          // 'bitsPerPixel' : 32,
+          'bitsPerPixel' : 8,
+          'hasPalette' : false,
         }
       }
 
@@ -574,12 +628,21 @@ function readBufferSync( test )
       'headGot' : true,
       'structure' :
       {
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'special' : { 'compression' : false },
-        'channelsArray' : [ 'red', 'green', 'blue' ],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'interlaced' : false },
+        // 'channelsMap' :
+        // {
+        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        // },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'hasPalette' : null,
-        'bitsPerPixel' : 24
+        // 'bytesPerPixel' : 4,
+        // 'bitsPerPixel' : 32,
+        'bitsPerPixel' : 8,
+        'hasPalette' : false,
       }
     }
 
@@ -648,12 +711,21 @@ function readStreamSync( test )
       'headGot' : true,
       'structure' :
       {
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'special' : { 'compression' : false },
-        'channelsArray' : [ 'red', 'green', 'blue' ],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'special' : { 'interlaced' : false },
+        // 'channelsMap' :
+        // {
+        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        // },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'hasPalette' : null,
-        'bitsPerPixel' : 24
+        // 'bytesPerPixel' : 4,
+        // 'bitsPerPixel' : 32,
+        'bitsPerPixel' : 8,
+        'hasPalette' : false,
       }
     }
 
@@ -713,11 +785,20 @@ function fileReadHeadSync( test )
     'structure' :
     {
       'buffer' : null,
-      'special' : { 'compression' : false },
-      'channelsArray' : [ 'red', 'green', 'blue' ],
+      'special' : { 'interlaced' : false },
+      // 'channelsMap' :
+      // {
+      //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+      //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+      //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+      //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+      // },
+      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
       'dims' : [ 2, 2 ],
-      'hasPalette' : null,
-      'bitsPerPixel' : 24
+      // 'bytesPerPixel' : 4,
+      // 'bitsPerPixel' : 32,
+      'bitsPerPixel' : 8,
+      'hasPalette' : false,
     }
   }
 
@@ -781,11 +862,20 @@ function fileReadHeadAsync( test )
       'structure' :
       {
         'buffer' : null,
-        'special' : { 'compression' : false },
-        'channelsArray' : [ 'red', 'green', 'blue' ],
+        'special' : { 'interlaced' : false },
+        // 'channelsMap' :
+        // {
+        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        // },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'hasPalette' : null,
-        'bitsPerPixel' : 24
+        // 'bytesPerPixel' : 4,
+        // 'bitsPerPixel' : 32,
+        'bitsPerPixel' : 8,
+        'hasPalette' : false,
       }
     }
 
@@ -847,12 +937,21 @@ function fileReadSync( test )
     'headGot' : true,
     'structure' :
     {
-      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-      'special' : { 'compression' : false },
-      'channelsArray' : [ 'red', 'green', 'blue' ],
+      'special' : { 'interlaced' : false },
+      // 'channelsMap' :
+      // {
+      //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+      //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+      //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+      //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+      // },
+      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
       'dims' : [ 2, 2 ],
-      'hasPalette' : null,
-      'bitsPerPixel' : 24
+      // 'bytesPerPixel' : 4,
+      // 'bitsPerPixel' : 32,
+      'bitsPerPixel' : 8,
+      'hasPalette' : false,
     }
   }
 
@@ -889,12 +988,21 @@ function fileReadSync( test )
     'headGot' : true,
     'structure' :
     {
-      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-      'special' : { 'compression' : false },
+      'special' : { 'interlaced' : false },
+      // 'channelsMap' :
+      // {
+      //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+      //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+      //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+      //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+      // },
+      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
       'dims' : [ 2, 2 ],
-      'channelsArray' : [ 'red', 'green', 'blue' ],
-      'bitsPerPixel' : 24,
-      'hasPalette' : null
+      // 'bytesPerPixel' : 4,
+      // 'bitsPerPixel' : 32,
+      'bitsPerPixel' : 8,
+      'hasPalette' : false,
     }
   }
 
@@ -960,12 +1068,21 @@ function fileReadAsync( test )
       onHead,
       'structure' :
       {
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'special' : { 'compression' : false },
+        'special' : { 'interlaced' : false },
+        // 'channelsMap' :
+        // {
+        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        // },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
         'dims' : [ 2, 2 ],
-        'channelsArray' : [ 'red', 'green', 'blue' ],
-        'bitsPerPixel' : 24,
-        'hasPalette' : null
+        // 'bytesPerPixel' : 4,
+        // 'bitsPerPixel' : 32,
+        'bitsPerPixel' : 8,
+        'hasPalette' : false,
       }
     }
 
@@ -992,13 +1109,216 @@ function fileReadAsync( test )
 
 }
 
+//
+
+function experimentAll( test )
+{
+  var fs = require( 'fs' );
+  let context = this;
+  let a = test.assetFor( 'png' );
+  let failedNum = 0;
+  // a.reflect();
+
+  var dim = [ 59, 7 ];
+  var colWidth = 23;
+  var rowHeight = 7;
+  var style = 'doubleBorder';
+
+  var files = fs.readdirSync( __dirname + '/_assets/png' );
+  // console.log( files )
+  var dataHeader = [ 'Image Name', 'Dim', 'Chan&Bit', 'Buff', 'biPP', 'Pal', 'Passed' ];
+  var data = [ ... dataHeader ];
+
+  a.ready.then( () =>
+  {
+    test.case = 'test all';
+    var res;
+    a.reflect();
+
+    for( let i = 0; i < files.length; i++ )
+    {
+      // if( !files[ i ].includes( 'Pixels-2x2-depth16-interlaced1-ga' ) )
+      // continue;
+      console.log( '=============================================================' );
+      var imgData = parseImgFileName( files[ i ] );
+      console.log( 'IMGDATA: ', imgData )
+      try
+      {
+        res = _.image.fileRead({ filePath : a.abs( files[ i ] ), sync : 1 });
+        // res.deasync()
+        console.log( 'OR_STRUCTURE: ', res.originalStructure );
+      }
+      catch( err )
+      {
+        data.push( files[ i ] );
+        data.push( 'ERR' );
+        data.push( 'ERR' );
+        data.push( 'ERR' );
+        // data.push( 'ERR' );
+        data.push( 'ERR' );
+        data.push( 'ERR' );
+        data.push( 'NOT PASS!' )
+        continue;
+      }
+
+      let channelsBits = [];
+      data.push( files[ i ].slice( 7, 16 ) + '\n' + files[ i ].slice( 16, 25 ) + '\n' + files[ i ].slice( 25 ) );
+      data.push( res.structure.dims[ 0 ] + 'x' + res.structure.dims[ 1 ] );
+      // for( let k in res.structure.channelsMap )
+      // channelsBits.push( res.structure.channelsMap[ k ].name + ':' + res.structure.channelsMap[ k ].bits )
+      res.structure.channelsArray.forEach( ( el ) => channelsBits.push( el ))
+      data.push( channelsBits.join( '\n' ) );
+      data.push( res.structure.buffer ? '+' : '-' );
+      data.push( '' + res.structure.bitsPerPixel );
+      // data.push( '' + res.structure.bytesPerPixel );
+      data.push( res.structure.hasPalette ? '+' : '-' );
+      if( check( res.structure, imgData ) )
+      data.push( 'PASS!' )
+      else
+      data.push( 'NOT PASS!' )
+      console.log( '=============================================================' );
+    };
+
+    debugger;
+    var got = _.strTable({ data, dim, style, colWidth, rowHeight });
+    console.log( got.result )
+    console.log( `FAILED: ${failedNum}/59` )
+
+    // FOR TESTING PURPOSES
+    test.identical( 1, 1 );
+    return res;
+  } )
+
+  a.ready.catch( ( err ) =>
+  {
+    var a = err;
+    console.log( 'err there was' )
+    return err;
+  } );
+
+  return a.ready;
+
+  // for( let i = 0; i < files.length; i++ )
+  // {
+  //   var res;
+  //   var imgData = parseImgFileName( files[ i ] );
+  //   console.log( 'IMGDATA: ', imgData )
+  //   try
+  //   {
+  //     res = _.image.fileRead({ filePath : a.abs( files[ i ] ), sync : 1 });
+  //     console.log( 'STRUCTURE: ', res.structure );
+  //   }
+  //   catch( err )
+  //   {
+  //     data.push( files[ i ] );
+  //     data.push( 'ERR' );
+  //     data.push( 'ERR' );
+  //     data.push( 'ERR' );
+  //     data.push( 'ERR' );
+  //     data.push( 'ERR' );
+  //     data.push( 'ERR' );
+  //     data.push( 'NOT PASS!' )
+  //     continue;
+  //   }
+
+  //   let channelsBits = [];
+  //   data.push( files[ i ].slice( 7, 16 ) + '\n' + files[ i ].slice( 16, 25 ) + '\n' + files[ i ].slice( 25 ) );
+  //   data.push( res.structure.dims[ 0 ] + 'x' + res.structure.dims[ 1 ] );
+  //   for( let k in res.structure.channelsMap )
+  //   channelsBits.push( res.structure.channelsMap[ k ].name + ':' + res.structure.channelsMap[ k ].bits )
+  //   data.push( channelsBits.join( '\n' ) );
+  //   data.push( res.structure.buffer ? '+' : '-' );
+  //   data.push( '' + res.structure.bitsPerPixel );
+  //   data.push( '' + res.structure.bytesPerPixel );
+  //   data.push( res.structure.hasPalette ? '+' : '-' );
+  //   if( check( res.structure, imgData ) )
+  //   data.push( 'PASS!' )
+  //   else
+  //   data.push( 'NOT PASS!' )
+  // };
+  // debugger;
+  // var got = _.strTable({ data, dim, style, colWidth, rowHeight });
+  // console.log( got.result )
+
+  // test.identical( 1, 1 );
+
+  /* */
+
+  function parseImgFileName( str )
+  {
+    let arr = str.split( '-' ).slice( 1 );
+    let img =
+    {
+      dims : arr[ 0 ].split( 'x' ).map( ( el ) => +el )
+      .reverse(),
+      depth : +arr[ 1 ].slice( 5 ),
+      interlaced : arr[ 2 ] === 'interlaced1',
+      channels : arr[ 3 ].split( '.' )[ 0 ].length > 4 ? 'palette' : arr[ 3 ].split( '.' )[ 0 ].length
+    }
+    return img;
+  }
+
+  //
+
+  function check( got, exp )
+  {
+    let result = (
+      got.special.interlaced === exp.interlaced
+      && ( got.dims[ 0 ] === exp.dims[ 0 ] && got.dims[ 1 ] === exp.dims[ 1 ] )
+      // && Math.floor( got.bitsPerPixel / got.channelsArray.length ) === exp.depth
+      && got.bitsPerPixel === exp.depth
+      && ( exp.channels !== 'palette' ? got.channelsArray.length === exp.channels : true )
+    )
+
+    if( !result )
+    {
+      ++failedNum;
+      console.log( '-------------------------------------------------------------' );
+      console.log( 'IS: ', got );
+      console.log( 'SHOULD BE: ', exp )
+      console.log( '-------------------------------------------------------------' );
+    }
+    return result;
+  }
+}
+
+experimentAll.experimental = true;
+experimentAll.timeOut = 20000;
+
+//
+
+// function experimentOneImgWithAll( test )
+// {
+//   let name = 'Pixels-2x2-depth';
+
+//   try
+//   {
+//     res = _.image.fileRead({ filePath : a.abs( files[ i ] ), sync : 1 });
+//     console.log( 'STRUCTURE: ', res.structure );
+//   }
+//   catch( err )
+//   {
+//     data.push( files[ i ] );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'ERR' );
+//     data.push( 'NOT PASS!' )
+//   }
+// }
+
+// experimentOneImgWithAll.experimental = true;
+
+// --
 // declare
 // --
 
 var Proto =
 {
 
-  name : 'ImageReadAbstractTif',
+  name : 'ImageReadAbstractPng',
   abstract : 1,
   silencing : 1,
 
@@ -1033,6 +1353,7 @@ var Proto =
     fileReadSync,
     fileReadAsync,
 
+    experimentAll,
   },
 
 }
@@ -1042,5 +1363,6 @@ var Proto =
 let Self = new wTestSuite( Proto )
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
+
 
 })();

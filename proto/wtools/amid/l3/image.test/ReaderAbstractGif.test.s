@@ -1,4 +1,4 @@
-( function _ReaderAbstractTif_test_s_( )
+( function _ReaderAbstractGif_test_s_( )
 {
 
 'use strict';
@@ -998,7 +998,7 @@ function fileReadAsync( test )
 var Proto =
 {
 
-  name : 'ImageReadAbstractTif',
+  name : 'ImageReadAbstractGif',
   abstract : 1,
   silencing : 1,
 
