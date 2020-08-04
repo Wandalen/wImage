@@ -1117,6 +1117,7 @@ function experimentAll( test )
   let context = this;
   let a = test.assetFor( 'png' );
   let failedNum = 0;
+  let failedFiles = [];
   // a.reflect();
 
   var dim = [ 59, 7 ];
@@ -1173,15 +1174,21 @@ function experimentAll( test )
       // data.push( '' + res.structure.bytesPerPixel );
       data.push( res.structure.hasPalette ? '+' : '-' );
       if( check( res.structure, imgData ) )
-      data.push( 'PASS!' )
+      {
+        data.push( 'PASS!' )
+      }
       else
-      data.push( 'NOT PASS!' )
+      {
+        failedFiles.push( files[ i ] );
+        data.push( 'NOT PASS!' )
+      }
       console.log( '=============================================================' );
     };
 
     debugger;
     var got = _.strTable({ data, dim, style, colWidth, rowHeight });
     console.log( got.result )
+    console.log( `Failed files:\n${failedFiles.join( '\n' )}` )
     console.log( `FAILED: ${failedNum}/59` )
 
     // FOR TESTING PURPOSES
