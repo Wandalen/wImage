@@ -26,4 +26,4 @@
 * **X** - Not supported.
 * **yes+** - Not Supported, but implemented.
 * **-** - No info yet.
-* **Lims** - Limitations. What information about an image a module can not extract. '-' - no limitations.
+* **Lims** - Limitations of the module. '-' - no limitations.
