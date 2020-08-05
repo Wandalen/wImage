@@ -1,26 +1,26 @@
-( function _PngDotJs_s_()
+( function _JpgPixel_s_()
 {
 
 'use strict';
 
 /**
  * @classdesc Abstract interface to read image.
- * @class wImageReaderPngdotjs
+ * @class wImageReaderJpgPixels
  * @namespace wTools
  * @module Tools/mid/ImageReader
  */
 
 let _ = _global_.wTools;
-let Backend = require( 'png.js' );
+let Backend = require( 'pixel-jpg' );
 let Parent = _.image.reader.Abstract;
 let bufferFromStream = require( './BufferFromStream.s' );
-let Self = wImageReaderPngDotJs;
-function wImageReaderPngDotJs()
+let Self = wImageReaderJpgPixels;
+function wImageReaderJpgPixels()
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'PngDotJs';
+Self.shortName = 'JpgPixel';
 
 // --
 // implementation
@@ -33,7 +33,7 @@ function _structureHandle( o )
 
   if( os === null )
   os = o.op.originalStructure;
-
+  console.log( 'OS: ', os )
   // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
@@ -168,44 +168,15 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  let backend = new Backend( _.bufferNodeFrom( o.data ) );
-  let done;
-
-  if( o.mode === 'head' )
+  // let backend = new Backend( _.bufferNodeFrom( o.data ) );
+  // let done;
+  Backend.parse( ( os ) =>
   {
-    backend.parse( { data : false }, ( err, os ) =>
-    {
-      if( err )
-      console.log( 'ERROR: ', err );
-      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      ready.take( o );
-      done = true;
-    });
-  }
-  else
-  {
-    backend.parse( ( err, os ) =>
-    {
-      if( err )
-      return errorHandle( err );
-      self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-      ready.take( o );
-      done = true;
-    });
-  }
-
+    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
+    ready.take( o );
+    done = true;
+  });
   return ready;
-
-  function errorHandle( err )
-  {
-    if( o.headGot )
-    return;
-    if( done )
-    return;
-    err = _.err( err )
-    done = err;
-    ready.error( err );
-  }
 
 }
 
@@ -257,8 +228,8 @@ _read.defaults =
 // relations
 // --
 
-let Formats = [ 'png' ];
-let Exts = [ 'png' ];
+let Formats = [ 'jpg' ];
+let Exts = [ 'jpg' ];
 
 let Composes =
 {
@@ -280,13 +251,12 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsDimensions : 1,
-  SupportsBuffer : 1,
-  SupportsDepth : 1,
-  SupportsColor : 1,
-  SupportsSpecial : 1,
+  SupportsDimensions : 0,
+  SupportsBuffer : 0,
+  SupportsDepth : 0,
+  SupportsColor : 0,
+  SupportsSpecial : 0,
   LimitationsRead : 1,
-  MethodsNativeCount : 1
 }
 
 let Forbids =

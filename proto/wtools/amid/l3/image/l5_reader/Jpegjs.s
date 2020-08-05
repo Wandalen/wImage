@@ -255,10 +255,12 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsStream : 0,
-  SupportsAsync : 1,
-  SupportsSync : 1,
-  SupportsReadHead : 0
+  SupportsDimensions : 1,
+  SupportsBuffer : 1,
+  SupportsDepth : 0,
+  SupportsColor : 0,
+  SupportsSpecial : 0,
+  LimitationsRead : 0,
 }
 
 let Forbids =

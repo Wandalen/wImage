@@ -113,12 +113,38 @@ function readerDeduce( o )
     if( !Reader.Formats )
     continue;
     let supports = Reader.Supports( _.mapBut( o, [ 'single' ] ) );
+    supports.score = calculateScore( _.image.reader[ n ] )
     if( supports )
     result.push( supports );
   }
 
+  result.sort( ( a, b ) =>
+  {
+    if( b.score - a.score > 0 )
+    {
+      return 1;
+    }
+    else if( b.score - a.score === 0 )
+    {
+      if( b.MethodsNativeCount > a.MethodsNativeCount )
+      return 1
+      else
+      return 0
+    }
+    else
+    {
+      return -1;
+    }
+  });
+
+  // console.log( 'RESULTS_ARRAY: ', result );
+  // result = result.slice( 0, 1 );
+  // console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
+
   if( o.single )
   {
+    /*
+    result = result.slice( 0, 1 );
     _.assert
     (
       result.length >= 1,
@@ -129,6 +155,7 @@ function readerDeduce( o )
       result.length <= 1,
       () => `Found ${result.length} readers for format:${o.format} ext:${o.ext} filePath:${o.filePath}, but need only one.`
     );
+    */
     return result[ 0 ]
   }
 
@@ -142,6 +169,30 @@ readerDeduce.defaults =
   filePath : null,
   ext : null,
   single : 1,
+}
+
+//
+
+function calculateScore( reader )
+{
+  let self = this;
+  let score = 0;
+
+  if( reader.LimitationsRead )
+  return 0;
+  if( reader.SupportsDimensions )
+  score += 20;
+  if( reader.SupportsBuffer )
+  score += 20;
+  if( reader.SupportsDepth )
+  score += 5;
+  if( reader.SupportsColor )
+  score += 5;
+  if( reader.SupportsSpecial )
+  score += 2;
+
+  return score;
+
 }
 
 // --

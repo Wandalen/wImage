@@ -12,7 +12,7 @@
 | [**png.js**](https://github.com/arian/pngjs) | **yes+** | **yes** | **yes+** | **yes+** | **yes+** | **yes** | **yes+** | **yes+** | unable to read 1 bit img, img with some kinds of interlacing  |
 | [**png-js**](https://github.com/foliojs/png.js) | **yes+** | **yes** | **yes+** | **yes+** | **yes** | **yes+** | **yes+** | **yes+** | unable to read images with some kinds of filter algorithms |
 | [**fast-png**](https://github.com/image-js/fast-png) | **+** | **yes+** | **yes+** | **yes+** | **yes** | **yes+** | **yes+** | **yes+** | unable to read images with some kinds of filter algorithms, unable to read interlacing |
-
+| [**pixel-jpg**](https://github.com/59naga/pixel-jpg/) | **-** | **-** | **-** | **-** | **-** | **-** | **-** | **-** | - |
 **Description:**
 * **BSF** - Buffer Sync Full.
 * **BAF** - Buffer Async Full.
