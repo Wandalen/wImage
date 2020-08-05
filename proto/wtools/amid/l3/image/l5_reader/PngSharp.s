@@ -266,8 +266,8 @@ function _readGeneralStreamSync( o )
 // relations
 // --
 
-let Formats = [ 'png', 'jpg', 'webp', 'gif', 'svg' ];
-let Exts = [ 'png', 'jpg', 'jpeg', 'webp', 'gif', 'svg' ];
+let Formats = [ 'png', 'jpg', 'webp', 'gif', 'svg', 'tif' ];
+let Exts = [ 'png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'tif', 'tiff' ];
 
 let Composes =
 {

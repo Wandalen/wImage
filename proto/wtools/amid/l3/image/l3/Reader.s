@@ -152,11 +152,11 @@ function Supports( o )
 
   if( o.format )
   if( _.longHas( cls.Formats, o.format ) )
-  return { readerClass : cls, format : cls.Formats[ 0 ] };
+  return { readerClass : cls, format : o.format };
 
   if( o.ext )
   if( _.longHas( cls.Exts, o.ext ) )
-  return { readerClass : cls, format : cls.Formats[ 0 ] };
+  return { readerClass : cls, format : o.ext };
 
   return cls._Supports( o );
 }

@@ -12,7 +12,12 @@ if( typeof module !== 'undefined' )
   require( './ReaderPngDotJs.s' );
   require( './ReaderPngSharp.s' );
   require( './ReaderPngNodeLib.s' );
-  require( './ReaderPngDashJs.s' );
+  require( './ReaderPngFast.s' );
+  require( './ReaderBmpDashJs.s' );
+  require( './ReaderJpegjs.s' );
+  require( './ReaderJpgPixel.s' );
+  require( './ReaderOmggif.s' );
+  require( './ReaderUtifJs.s' );
   // require( './Writer.s' );
 
   module[ 'exports' ] = _global_.wTools;

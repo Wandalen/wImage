@@ -108,14 +108,16 @@ function readerDeduce( o )
 
   for( let n in _.image.reader )
   {
-    // console.log( _.image.reader[ n ] )
+    //console.log( _.image.reader[ n ] )
     let Reader = _.image.reader[ n ];
     if( !Reader.Formats )
     continue;
     let supports = Reader.Supports( _.mapBut( o, [ 'single' ] ) );
-    supports.score = calculateScore( _.image.reader[ n ] )
     if( supports )
-    result.push( supports );
+    {
+      supports.score = calculateScore( _.image.reader[ n ] )
+      result.push( supports );
+    }
   }
 
   result.sort( ( a, b ) =>
@@ -137,9 +139,9 @@ function readerDeduce( o )
     }
   });
 
-  // console.log( 'RESULTS_ARRAY: ', result );
+  console.log( 'RESULTS_ARRAY: ', result );
   // result = result.slice( 0, 1 );
-  // console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
+  console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
 
   if( o.single )
   {
