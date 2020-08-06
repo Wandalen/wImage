@@ -143,6 +143,8 @@ function readerDeduce( o )
   // result = result.slice( 0, 1 );
   //console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
 
+  result.forEach( ( el ) => delete el.score )
+
   if( o.single )
   {
     /*
