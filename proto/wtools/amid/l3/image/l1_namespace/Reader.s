@@ -139,9 +139,9 @@ function readerDeduce( o )
     }
   });
 
-  console.log( 'RESULTS_ARRAY: ', result );
+  // console.log( 'RESULTS_ARRAY: ', result );
   // result = result.slice( 0, 1 );
-  console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
+  //console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
 
   if( o.single )
   {

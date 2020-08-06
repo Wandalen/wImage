@@ -2,7 +2,7 @@
 
 | **N** | **BSF** | **BAF** | **SSF** | **SAF** | **BSH** | **BAH** | **SSH** | **SAH** | **Lims** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| [**sharp**](https://github.com/lovell/sharp) | **X** | **no** | **X** | **X** | **X** | **-** | **X** | **X** | unable to get bit depth |
+| [**sharp**](https://github.com/lovell/sharp) | **yes+** | **yes** | **yes+** | **yes+** | **X** | **X** | **X** | **X** | unable to get bit depth |
 | [**jpeg-js**](https://github.com/eugeneware/jpeg-js) | **yes** | **yes+** | **yes+** | **yes+** | **yes+** | **yes+** | **yes+** | **yes+** | unable to get color data |
 | [**pngjs**](https://github.com/lukeapage/pngjs) | **yes** | **yes** | **yes** | **yes** | **yes+** | **yes+** | **yes+** | **yes+** | - |
 | [**node-libpng**](https://github.com/Prior99/node-libpng) | **yes** | **yes+** | **yes+** | **yes+** | **X** | **X** | **X** | **X** | - |
