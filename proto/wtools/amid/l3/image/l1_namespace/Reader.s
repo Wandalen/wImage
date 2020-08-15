@@ -35,14 +35,18 @@ function read_body( o )
     let o2 = _.mapOnly( o, self.readerDeduce.defaults );
     o2.single = 1;
     let selected = self.readerDeduce( o2 );
-    _.mapExtend( o, selected );
-    o.reader = new o.readerClass();
-    debugger;
+    _.assert( selected instanceof _.gdf.Context, `Cant deduce reader` );
+    o.reader = selected;
   }
 
   let methodName = o.mode === 'full' ? 'read' : 'readHead';
   let o2 = _.mapOnly( o, o.reader[ methodName ].defaults );
-  o2.onHead = handleHead;
+  o2.params = o2.params || Object.create( null );
+  o2.params.onHead = o.onHead;
+  // o2.params.sync = o.sync;
+  o2.params.mode = o.mode;
+  o2.format = o.inFormat;
+
   let result = o.reader[ methodName ]( o2 );
 
   if( o.sync )
@@ -52,24 +56,13 @@ function read_body( o )
 
   /* */
 
-  function handleHead( result )
-  {
-
-    for( let k in result )
-    if( o[ k ] === undefined )
-    o[ k ] = result[ k ];
-
-    if( o.onHead )
-    o.onHead( o );
-  }
-
   function end( result )
   {
-    for( let k in result )
-    if( o[ k ] === undefined )
-    o[ k ] = result[ k ];
-    return o;
+    return result;
   }
+
+  /* */
+
 }
 
 read_body.defaults =
@@ -77,12 +70,11 @@ read_body.defaults =
   reader : null,
   data : null,
   filePath : null,
-  format : null,
+  inFormat : null,
   ext : null,
   sync : 1,
   mode : null,
   onHead : null,
-  // withStream : null,
 }
 
 //
@@ -100,45 +92,16 @@ read.defaults.mode = 'full';
 function readerDeduce( o )
 {
   let self = this;
-  let result = [];
-
   o = _.routineOptions( readerDeduce, arguments );
-
-  if( o.filePath && !o.ext )
-  o.ext = _.path.ext( o.filePath ).toLowerCase();
-
-  for( let n in _.image.reader )
-  {
-    let Reader = _.image.reader[ n ];
-    if( !Reader.Formats )
-    continue;
-    let supports = Reader.Supports( _.mapBut( o, [ 'single' ] ) );
-    if( supports )
-    result.push( supports );
-  }
-
-  if( o.single )
-  {
-    _.assert
-    (
-      result.length >= 1,
-      () => `Found no reader for format:${o.format} ext:${o.ext} filePath:${o.filePath}.`
-    );
-    _.assert
-    (
-      result.length <= 1,
-      () => `Found ${result.length} readers for format:${o.format} ext:${o.ext} filePath:${o.filePath}, but need only one.`
-    );
-    return result[ 0 ]
-  }
-
+  o.outFormat = 'structure.image';
+  let result = _.gdf.selectSingleContext( o );
   return result;
 }
 
 readerDeduce.defaults =
 {
   data : null,
-  format : null,
+  inFormat : null,
   filePath : null,
   ext : null,
   single : 1,
@@ -156,7 +119,7 @@ let Extension =
   readerDeduce,
 
 }
-debugger;
+
 _.mapExtend( Self, Extension );
 
 //

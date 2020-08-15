@@ -12,6 +12,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wCopyable' );
   _.include( 'wFiles' );
   _.include( 'wConsequence' );
+  _.include( 'wGdf' );
 
   module[ 'exports' ] = _global_.wTools;
 }

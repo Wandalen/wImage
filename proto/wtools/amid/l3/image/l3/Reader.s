@@ -11,7 +11,7 @@
  */
 
 let _ = _global_.wTools;
-let Parent = null;
+let Parent = _.gdf.Encoder;
 let Self = wImageReaderAbstract;
 function wImageReaderAbstract()
 {
@@ -22,35 +22,17 @@ Self.shortName = 'Abstract';
 
 //
 
-function init( o )
-{
-  let self = this;
-
-  _.assert( arguments.length === 0 || arguments.length === 1 );
-  // find out
-  _.workpiece.initFields( self );
-  Object.preventExtensions( self )
-
-  if( o )
-  self.copy( o );
-
-  self.form();
-  return self;
-}
-
-//
-
 function form()
 {
   let self = this;
 
   _.assert( !self.formed );
   _.assert( arguments.length === 0, 'Expects no arguments' );
+  _.assert( _.image.reader[ self.Self.name ] === undefined );
 
-  // self.formAssociates();
+  _.image.reader[ self.Self.shortName ] = self;
 
-  self.formed = 1;
-  return self;
+  return Parent.prototype.form.apply( this, arguments );
 }
 
 //
@@ -59,8 +41,7 @@ let _readHead = Object.create( null );
 
 _readHead.defaults =
 {
-  ... _.mapBut( _.image.read.defaults, [ 'mode' ] ),
-  structure : null,
+  ... Parent.prototype._encode.defaults,
 }
 
 //
@@ -71,17 +52,12 @@ function readHead( o )
   let ready = new _.Consequence().take( null );
   let result;
 
-  o = _.routineOptions( readHead, o );
-  o.structure = _.image.rstructure.from( o.structure );
-  debugger;
-  ready.then( () => self._readHead( o ) );
-  debugger;
-  ready.then( () => _.image.rstructure.validate( o.structure ) && o );
-  ready.catch( ( err ) =>
-  {
-    o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
-    throw o.err;
-  });
+  o = _.routineOptions( read, o );
+  o.params = o.params || Object.create( null );
+  if( !o.params.mode )
+  o.params.mode = 'head';
+
+  ready.then( () => self.encode( o ) );
 
   if( o.sync )
   return ready.sync();
@@ -90,7 +66,7 @@ function readHead( o )
 
 readHead.defaults =
 {
-  ... _readHead.defaults,
+  ... Parent.prototype.encode.defaults,
 }
 
 //
@@ -99,7 +75,7 @@ let _read = Object.create( null );
 
 _read.defaults =
 {
-  ... _readHead.defaults,
+  ... Parent.prototype._encode.defaults,
 }
 
 //
@@ -111,10 +87,38 @@ function read( o )
   let result;
 
   o = _.routineOptions( read, o );
-  o.structure = _.image.rstructure.from( o.structure );
+  o.params = o.params || Object.create( null );
+  if( !o.params.mode )
+  o.params.mode = 'full';
+
+  ready.then( () => self.encode( o ) );
+
+  if( o.sync )
+  return ready.sync();
+  return ready;
+}
+
+read.defaults =
+{
+  ... Parent.prototype.encode.defaults,
+}
+
+//
+
+function _encode( o )
+{
+  let self = this;
+  let ready = new _.Consequence().take( null );
+  let result;
+
+  o = _.assertRoutineOptions( _encode, o );
+  o.out.data = _.image.rstructure.from( o.out.data );
 
   ready.then( () => self._read( o ) );
-  ready.then( () => _.image.rstructure.validate( o.structure ) && o );
+  ready.then( ( op ) =>
+  {
+    return _.image.rstructure.validate( o.out.data ) && o;
+  });
   ready.catch( ( err ) =>
   {
     o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
@@ -126,9 +130,9 @@ function read( o )
   return ready;
 }
 
-read.defaults =
+_encode.defaults =
 {
-  ... _read.defaults,
+  ... Parent.prototype._encode.defaults,
 }
 
 //
@@ -145,24 +149,24 @@ function Supports( o )
   if( o.ext )
   o.ext = o.ext.toLowerCase()
 
-  if( o.format )
-  if( _.longHas( cls.Formats, o.format ) )
+  if( o.inFormat )
+  if( _.longHas( cls.Formats, o.inFormat ) )
   console.log();
 
-  if( o.format )
-  if( _.longHas( cls.Formats, o.format ) )
-  return { readerClass : cls, format : cls.Formats[ 0 ] };
+  if( o.inFormat )
+  if( _.longHas( cls.Formats, o.inFormat ) )
+  return { readerClass : cls, inFormat : cls.Formats[ 0 ] };
 
   if( o.ext )
   if( _.longHas( cls.Exts, o.ext ) )
-  return { readerClass : cls, format : cls.Formats[ 0 ] };
+  return { readerClass : cls, inFormat : cls.Formats[ 0 ] };
 
   return cls._Supports( o );
 }
 
 Supports.defaults =
 {
-  format : null,
+  inFormat : null,
   ext : null,
   filePath : null,
   data : null,
@@ -181,6 +185,33 @@ _Supports.defaults =
   ... Supports.defaults,
 }
 
+//
+
+function onEncode( op )
+{
+  let self = this;
+  _.assert( _.strIs( op.in.data ) );
+  let ready = new _.Consequence().take( null );
+
+  _.assert( 0, 'not tested' );
+
+  let o2 =
+  {
+    data : op.in.data,
+  }
+
+  ready.then( () => self.read( o2 ) );
+
+  ready.then( ( op2 ) =>
+  {
+    debugger;
+    op.out.data = op2.out.data;
+    return op;
+  });
+
+  return ready;
+}
+
 // --
 // relations
 // --
@@ -190,6 +221,7 @@ let Exts = null;
 
 let Composes =
 {
+  onEncode,
 }
 
 let Aggregates =
@@ -232,7 +264,8 @@ let Medials =
 let Extension =
 {
 
-  init,
+  //
+
   form,
 
   _readHead,
@@ -240,6 +273,8 @@ let Extension =
 
   _read,
   read,
+
+  _encode,
 
   Supports,
   _Supports,
@@ -270,8 +305,6 @@ _.classDeclare
   parent : Parent,
   extend : Extension,
 });
-
-_.Copyable.mixin( Self );
 
 //
 

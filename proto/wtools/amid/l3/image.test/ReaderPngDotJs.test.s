@@ -34,7 +34,7 @@
 //   context :
 //   {
 //     ext : 'png',
-//     format : 'png',
+//     inFormat : 'png',
 //     readerName : 'PngDotJs',
 //   },
 

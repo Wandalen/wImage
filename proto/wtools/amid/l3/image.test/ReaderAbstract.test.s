@@ -40,6 +40,87 @@ function onSuiteEnd( test )
 // tests
 // --
 
+function encode( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+  let callbacks = [];
+
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
+
+  return a.ready;
+
+  function act( o )
+  {
+
+    /* */
+
+    test.case = `src:${o.encoding}`;
+    callbacks = [];
+    a.reflect();
+    var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
+    test.is( o.is( data ) );
+
+    test.description = 'operation';
+
+    var params = {}
+    var encoder = _.gdf.selectSingleContext({ ext : context.ext })
+    var op = encoder.encode({ data : data, params });
+    test.is( o.is( op.in.data ) );
+    test.is( _.objectIs( op.params.originalStructure ) );
+
+    var exp =
+    {
+      'in' :
+      {
+        'data' : op.in.data,
+        'filePath' : null,
+        'ext' : null,
+        'format' : 'buffer.png'
+      },
+      'out' :
+      {
+        'data' :
+        {
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
+        },
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'mode' : 'full',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : true,
+      'err' : null,
+    }
+
+    test.identical( op, exp );
+
+  }
+
+  /* */
+
+}
+
+//
+
 function readHeadBufferAsync( test )
 {
   let context = this;
@@ -71,44 +152,50 @@ function readHeadBufferAsync( test )
 
     a.ready.then( ( op ) =>
     {
-
       test.description = 'operation';
 
-      test.is( o.is( op.data ) );
-      test.is( op.reader instanceof op.readerClass );
-      test.is( _.objectIs( op.originalStructure ) );
-
-      delete op.data;
-      delete op.originalStructure;
-      delete op.reader;
+      test.is( o.is( op.in.data ) );
+      test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
-        'filePath' : null,
-        'format' : context.format,
-        'ext' : context.ext,
-        'mode' : 'head',
-        'sync' : 0,
-        'readerClass' : _.image.reader[ context.readerName ],
-        onHead,
-        'headGot' : true,
-        'structure' :
+        'in' :
         {
-          'buffer' : null,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
+          'data' : op.in.data,
+          'filePath' : null,
+          'ext' : 'png',
+          'format' : 'buffer.png'
+        },
+        'out' :
+        {
+          'data' :
           {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            'buffer' : null,
+            'special' : { 'interlaced' : false },
+            'channelsMap' :
+            {
+              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            },
+            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+            'dims' : [ 2, 2 ],
+            'bytesPerPixel' : 4,
+            'bitsPerPixel' : 32,
+            'hasPalette' : false,
           },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        }
+          'format' : 'structure.image',
+        },
+        'params' :
+        {
+          'onHead' : onHead,
+          'mode' : 'head',
+          'headGot' : true,
+          'originalStructure' : op.params.originalStructure,
+        },
+        'sync' : 0,
+        'err' : null,
       }
 
       test.identical( op, exp );
@@ -167,41 +254,48 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-      test.is( _.streamIs( op.data ) );
-      test.is( op.reader instanceof op.readerClass );
-      test.is( _.objectIs( op.originalStructure ) );
-
-      delete op.data;
-      delete op.originalStructure;
-      delete op.reader;
+      test.is( _.streamIs( op.in.data ) );
+      test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
-        'filePath' : null,
-        'format' : context.format,
-        'ext' : context.ext,
-        'mode' : 'head',
-        'sync' : 0,
-        'readerClass' : _.image.reader[ context.readerName ],
-        onHead,
-        'headGot' : true,
-        'structure' :
+        'in' :
         {
-          'buffer' : null,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
+          'data' : op.in.data,
+          'filePath' : null,
+          'ext' : 'png',
+          'format' : 'stream.png'
+        },
+        'out' :
+        {
+          'data' :
           {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            'buffer' : null,
+            'special' : { 'interlaced' : false },
+            'channelsMap' :
+            {
+              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            },
+            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+            'dims' : [ 2, 2 ],
+            'bytesPerPixel' : 4,
+            'bitsPerPixel' : 32,
+            'hasPalette' : false,
           },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        }
+          'format' : 'structure.image',
+        },
+        'params' :
+        {
+          'onHead' : onHead,
+          'mode' : 'head',
+          'headGot' : true,
+          'originalStructure' : op.params.originalStructure,
+        },
+        'sync' : 0,
+        'err' : null
       }
 
       test.identical( op, exp );
@@ -252,41 +346,48 @@ function readHeadBufferSync( test )
 
     test.description = 'operation';
 
-    test.is( o.is( op.data ) );
-    test.is( op.reader instanceof op.readerClass );
-    test.is( _.objectIs( op.originalStructure ) );
-
-    delete op.data;
-    delete op.originalStructure;
-    delete op.reader;
+    test.is( o.is( op.in.data ) );
+    test.is( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
-      'filePath' : null,
-      'format' : context.format,
-      'ext' : context.ext,
-      'mode' : 'head',
-      'sync' : 1,
-      'readerClass' : _.image.reader[ context.readerName ],
-      onHead,
-      'headGot' : true,
-      'structure' :
+      'in' :
       {
-        'buffer' : null,
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' : op.in.data,
+        'filePath' : null,
+        'ext' : 'png',
+        'format' : 'buffer.png'
+      },
+      'out' :
+      {
+        'data' :
         {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          'buffer' : null,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      }
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'onHead' : onHead,
+        'mode' : 'head',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : 1,
+      'err' : null
     }
 
     test.identical( op, exp );
@@ -335,40 +436,47 @@ function readHeadStreamSync( test )
     test.description = 'operation';
 
     test.is( _.streamIs( data ) );
-    test.is( op.reader instanceof op.readerClass );
-    test.is( _.objectIs( op.originalStructure ) );
-
-    delete op.data;
-    delete op.originalStructure;
-    delete op.reader;
+    test.is( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
-      'filePath' : null,
-      'format' : context.format,
-      'ext' : context.ext,
-      'mode' : 'head',
-      'sync' : 1,
-      'readerClass' : _.image.reader[ context.readerName ],
-      onHead,
-      'headGot' : true,
-      'structure' :
+      'in' :
       {
-        'buffer' : null,
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' : op.in.data,
+        'filePath' : null,
+        'ext' : 'png',
+        'format' : 'stream.png'
+      },
+      'out' :
+      {
+        'data' :
         {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'buffer' : null,
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      }
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'onHead' : onHead,
+        'mode' : 'head',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : 1,
+      'err' : null,
     }
 
     test.identical( op, exp );
@@ -421,44 +529,50 @@ function readBufferAsync( test )
 
     a.ready.then( ( op ) =>
     {
-
       test.description = 'operation';
 
-      test.is( o.is( op.data ) );
-      test.is( op.reader instanceof op.readerClass );
-      test.is( _.objectIs( op.originalStructure ) );
-
-      delete op.data;
-      delete op.originalStructure;
-      delete op.reader;
+      test.is( o.is( op.in.data ) );
+      test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
-        'filePath' : null,
-        'format' : context.format,
-        'ext' : context.ext,
-        'mode' : 'full',
-        'sync' : 0,
-        'readerClass' : _.image.reader[ context.readerName ],
-        onHead,
-        'headGot' : true,
-        'structure' :
+        'in' :
         {
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
+          'data' : op.in.data,
+          'filePath' : null,
+          'ext' : 'png',
+          'format' : 'buffer.png'
+        },
+        'out' :
+        {
+          'data' :
           {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+            'special' : { 'interlaced' : false },
+            'channelsMap' :
+            {
+              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            },
+            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+            'dims' : [ 2, 2 ],
+            'bytesPerPixel' : 4,
+            'bitsPerPixel' : 32,
+            'hasPalette' : false,
           },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        }
+          'format' : 'structure.image',
+        },
+        'params' :
+        {
+          'onHead' : onHead,
+          'mode' : 'full',
+          'headGot' : true,
+          'originalStructure' : op.params.originalStructure,
+        },
+        'sync' : 0,
+        'err' : null
       }
 
       test.identical( op, exp );
@@ -489,8 +603,8 @@ function readStreamAsync( test )
   let a = test.assetFor( 'basic' );
   let callbacks = [];
 
-  // act({ encoding : 'buffer.raw', is : _.bufferRawIs });
-  // act({ encoding : 'buffer.node', is : _.bufferNodeIs });
+  act({ encoding : 'buffer.raw', is : _.bufferRawIs });
+  act({ encoding : 'buffer.node', is : _.bufferNodeIs });
   act({ encoding : 'buffer.bytes', is : _.bufferBytesIs });
 
   return a.ready;
@@ -514,44 +628,50 @@ function readStreamAsync( test )
 
     a.ready.then( ( op ) =>
     {
-
       test.description = 'operation';
 
-      test.is( _.streamIs( op.data ) );
-      test.is( op.reader instanceof op.readerClass );
-      test.is( _.objectIs( op.originalStructure ) );
-
-      delete op.data;
-      delete op.originalStructure;
-      delete op.reader;
+      test.is( _.streamIs( op.in.data ) );
+      test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
-        'filePath' : null,
-        'format' : context.format,
-        'ext' : context.ext,
-        'mode' : 'full',
-        'sync' : 0,
-        'readerClass' : _.image.reader[ context.readerName ],
-        onHead,
-        'headGot' : true,
-        'structure' :
+        'in' :
         {
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
+          'data' : op.in.data,
+          'filePath' : null,
+          'ext' : 'png',
+          'format' : 'stream.png'
+        },
+        'out' :
+        {
+          'data' :
           {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+            'special' : { 'interlaced' : false },
+            'channelsMap' :
+            {
+              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+            },
+            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+            'dims' : [ 2, 2 ],
+            'bytesPerPixel' : 4,
+            'bitsPerPixel' : 32,
+            'hasPalette' : false,
           },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        }
+          'format' : 'structure.image',
+        },
+        'params' :
+        {
+          'onHead' : onHead,
+          'mode' : 'full',
+          'headGot' : true,
+          'originalStructure' : op.params.originalStructure,
+        },
+        'sync' : 0,
+        'err' : null
       }
 
       test.identical( op, exp );
@@ -598,45 +718,55 @@ function readBufferSync( test )
     a.reflect();
     var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
     test.is( o.is( data ) );
+
+    debugger;
     var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
+    debugger;
 
     test.description = 'operation';
 
-    test.is( o.is( op.data ) );
-    test.is( op.reader instanceof op.readerClass );
-    test.is( _.objectIs( op.originalStructure ) );
-
-    delete op.data;
-    delete op.originalStructure;
-    delete op.reader;
+    test.is( o.is( op.in.data ) );
+    test.is( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
-      'filePath' : null,
-      'format' : context.format,
-      'ext' : context.ext,
-      'mode' : 'full',
-      'sync' : 1,
-      'readerClass' : _.image.reader[ context.readerName ],
-      onHead,
-      'headGot' : true,
-      'structure' :
+      'in' :
       {
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' : op.in.data,
+        'filePath' : null,
+        'ext' : 'png',
+        'format' : 'buffer.png'
+      },
+      'out' :
+      {
+        'data' :
         {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      }
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'onHead' : onHead,
+        'mode' : 'full',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : 1,
+      'err' : null
     }
 
     test.identical( op, exp );
@@ -685,40 +815,47 @@ function readStreamSync( test )
     test.description = 'operation';
 
     test.is( _.streamIs( data ) );
-    test.is( op.reader instanceof op.readerClass );
-    test.is( _.objectIs( op.originalStructure ) );
-
-    delete op.data;
-    delete op.originalStructure;
-    delete op.reader;
+    test.is( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
-      'filePath' : null,
-      'format' : context.format,
-      'ext' : context.ext,
-      'mode' : 'full',
-      'sync' : 1,
-      'readerClass' : _.image.reader[ context.readerName ],
-      onHead,
-      'headGot' : true,
-      'structure' :
+      'in' :
       {
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' : op.in.data,
+        'filePath' : null,
+        'ext' : 'png',
+        'format' : 'stream.png'
+      },
+      'out' :
+      {
+        'data' :
         {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      }
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'onHead' : onHead,
+        'mode' : 'full',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : 1,
+      'err' : null,
     }
 
     test.identical( op, exp );
@@ -756,41 +893,48 @@ function fileReadHeadSync( test )
 
   test.description = 'operation';
 
-  test.is( _.streamIs( op.data ) );
-  test.is( op.reader instanceof op.readerClass );
-  test.is( _.objectIs( op.originalStructure ) );
-
-  delete op.data;
-  delete op.originalStructure;
-  delete op.reader;
+  test.is( _.streamIs( op.in.data ) );
+  test.is( _.objectIs( op.params.originalStructure ) );
 
   var exp =
   {
-    'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-    'format' : context.format,
-    'ext' : context.ext,
-    'mode' : 'head',
-    'sync' : 1,
-    'readerClass' : _.image.reader[ context.readerName ],
-    onHead,
-    'headGot' : true,
-    'structure' :
+    'in' :
     {
-      'buffer' : null,
-      'special' : { 'interlaced' : false },
-      'channelsMap' :
+      'data' : op.in.data,
+      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+      'ext' : 'png',
+      'format' : 'stream.png'
+    },
+    'out' :
+    {
+      'data' :
       {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'buffer' : null,
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
       },
-      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-      'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
-      'hasPalette' : false,
-    }
+      'format' : 'structure.image',
+    },
+    'params' :
+    {
+      'onHead' : onHead,
+      'mode' : 'head',
+      'headGot' : true,
+      'originalStructure' : op.params.originalStructure,
+    },
+    'sync' : 1,
+    'err' : null,
   }
 
   test.identical( op, exp );
@@ -829,44 +973,50 @@ function fileReadHeadAsync( test )
 
   a.ready.then( ( op ) =>
   {
-
     test.description = 'operation';
 
-    test.is( _.streamIs( op.data ) );
-    test.is( op.reader instanceof op.readerClass );
-    test.is( _.objectIs( op.originalStructure ) );
-
-    delete op.data;
-    delete op.originalStructure;
-    delete op.reader;
+    test.is( _.streamIs( op.in.data ) );
+    test.is( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
-      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-      'format' : context.format,
-      'ext' : context.ext,
-      'mode' : 'head',
-      'sync' : 0,
-      'readerClass' : _.image.reader[ context.readerName ],
-      onHead,
-      'headGot' : true,
-      'structure' :
+      'in' :
       {
-        'buffer' : null,
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' : op.in.data,
+        'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+        'ext' : 'png',
+        'format' : 'stream.png'
+      },
+      'out' :
+      {
+        'data' :
         {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'buffer' : null,
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      }
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'onHead' : onHead,
+        'mode' : 'head',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : 0,
+      'err' : null,
     }
 
     test.identical( op, exp );
@@ -907,41 +1057,48 @@ function fileReadSync( test )
 
   test.description = 'operation';
 
-  test.is( _.bufferRawIs( op.data ) );
-  test.is( op.reader instanceof op.readerClass );
-  test.is( _.objectIs( op.originalStructure ) );
-
-  delete op.data;
-  delete op.originalStructure;
-  delete op.reader;
+  test.is( _.bufferRawIs( op.in.data ) );
+  test.is( _.objectIs( op.params.originalStructure ) );
 
   var exp =
   {
-    'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-    'format' : context.format,
-    'ext' : context.ext,
-    'readerClass' : _.image.reader[ context.readerName ],
-    'mode' : 'full',
-    'sync' : 1,
-    'onHead' : null,
-    'headGot' : true,
-    'structure' :
+    'in' :
     {
-      'special' : { 'interlaced' : false },
-      'channelsMap' :
+      'data' : op.in.data,
+      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+      'ext' : 'png',
+      'format' : 'buffer.png'
+    },
+    'out' :
+    {
+      'data' :
       {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
       },
-      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-      'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
-      'hasPalette' : false,
-    }
+      'format' : 'structure.image',
+    },
+    'params' :
+    {
+      'onHead' : null,
+      'mode' : 'full',
+      'headGot' : true,
+      'originalStructure' : op.params.originalStructure,
+    },
+    'sync' : 1,
+    'err' : null,
   }
 
   test.identical( op, exp );
@@ -957,41 +1114,48 @@ function fileReadSync( test )
 
   test.description = 'operation';
 
-  test.is( _.bufferRawIs( op.data ) );
-  test.is( op.reader instanceof op.readerClass );
-  test.is( _.objectIs( op.originalStructure ) );
-
-  delete op.data;
-  delete op.originalStructure;
-  delete op.reader;
+  test.is( _.bufferRawIs( op.in.data ) );
+  test.is( _.objectIs( op.params.originalStructure ) );
 
   var exp =
   {
-    'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-    'format' : context.format,
-    'ext' : context.ext,
-    'readerClass' : _.image.reader[ context.readerName ],
-    'mode' : 'full',
-    'sync' : 1,
-    onHead,
-    'headGot' : true,
-    'structure' :
+    'in' :
     {
-      'special' : { 'interlaced' : false },
-      'channelsMap' :
+      'data' : op.in.data,
+      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+      'ext' : 'png',
+      'format' : 'buffer.png'
+    },
+    'out' :
+    {
+      'data' :
       {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+        'special' : { 'interlaced' : false },
+        'channelsMap' :
+        {
+          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+        },
+        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+        'dims' : [ 2, 2 ],
+        'bytesPerPixel' : 4,
+        'bitsPerPixel' : 32,
+        'hasPalette' : false,
       },
-      'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-      'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-      'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
-      'hasPalette' : false,
-    }
+      'format' : 'structure.image',
+    },
+    'params' :
+    {
+      'onHead' : onHead,
+      'mode' : 'full',
+      'headGot' : true,
+      'originalStructure' : op.params.originalStructure,
+    },
+    'sync' : 1,
+    'err' : null,
   }
 
   test.identical( op, exp );
@@ -1036,41 +1200,48 @@ function fileReadAsync( test )
 
     test.description = 'operation';
 
-    test.is( _.bufferRawIs( op.data ) );
-    test.is( op.reader instanceof op.readerClass );
-    test.is( _.objectIs( op.originalStructure ) );
-
-    delete op.data;
-    delete op.originalStructure;
-    delete op.reader;
+    test.is( _.bufferRawIs( op.in.data ) );
+    test.is( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
-      'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-      'format' : context.format,
-      'ext' : context.ext,
-      'readerClass' : _.image.reader[ context.readerName ],
-      'mode' : 'full',
-      'sync' : 0,
-      'headGot' : true,
-      onHead,
-      'structure' :
+      'in' :
       {
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' : op.in.data,
+        'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
+        'ext' : 'png',
+        'format' : 'buffer.png',
+      },
+      'out' :
+      {
+        'data' :
         {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 4,
+          'bitsPerPixel' : 32,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      }
+        'format' : 'structure.image',
+      },
+      'params' :
+      {
+        'onHead' : onHead,
+        'mode' : 'full',
+        'headGot' : true,
+        'originalStructure' : op.params.originalStructure,
+      },
+      'sync' : 0,
+      'err' : null,
     }
 
     test.identical( op, exp );
@@ -1115,12 +1286,14 @@ var Proto =
     assetsOriginalPath : null,
     appJsPath : null,
     ext : null,
-    format : null,
+    inFormat : null,
     readerName : null
   },
 
   tests :
   {
+
+    encode,
 
     readHeadBufferAsync,
     readHeadStreamAsync,

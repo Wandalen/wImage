@@ -33,29 +33,31 @@ function _structureHandle( o )
   if( os === null )
   os = o.op.originalStructure;
 
-  // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
+  _.assert( _.strIs( o.mode ) );
 
-  if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.data );
+  let structure = o.op.out.data;
+
+  if( o.mode === 'full' && o.op.params.mode === 'full' )
+  structure.buffer = _.bufferRawFrom( os.data );
   else
-  o.op.structure.buffer = null;
+  structure.buffer = null;
 
-  if( o.op.headGot )
+  if( o.op.params.headGot )
   return o.op;
 
-  o.op.structure.dims = [ os.width, os.height ];
+  structure.dims = [ os.width, os.height ];
 
   os = os._parser ? os._parser._metaData : os;
 
-  o.op.originalStructure = os;
+  o.op.params.originalStructure = os;
 
   _.assert( !os.palette, 'not implemented' );
 
   if( os.color )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'red' );
     channelAdd( 'green' );
     channelAdd( 'blue' );
@@ -63,7 +65,7 @@ function _structureHandle( o )
 
   if( os.colorType === 4 )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
@@ -72,16 +74,15 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  o.op.structure.bytesPerPixel = os.bpp;
-  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  structure.bytesPerPixel = os.bpp;
+  structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
 
-  o.op.structure.special.interlaced = os.interlace;
-  o.op.structure.hasPalette = os.palette;
+  structure.special.interlaced = os.interlace;
+  structure.hasPalette = os.palette;
 
-  o.op.headGot = true;
-
-  if( o.op.onHead )
-  o.op.onHead( o.op );
+  o.op.params.headGot = true;
+  if( o.op.params.onHead )
+  o.op.params.onHead( o.op );
 
   return o.op;
 
@@ -89,8 +90,8 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
-    o.op.structure.channelsArray.push( name );
+    structure.channelsMap[ name ] = { name, bits : os.depth, order : structure.channelsArray.length };
+    structure.channelsArray.push( name );
   }
 
 }
@@ -102,6 +103,7 @@ _structureHandle.defaults =
   mode : null,
 }
 
+
 //
 
 function _readGeneral( o )
@@ -110,12 +112,19 @@ function _readGeneral( o )
 
   _.assertRoutineOptions( _readGeneral, o );
   _.assert( arguments.length === 1 );
-  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
+  _.assert( _.longHas( [ 'full', 'head' ], o.params.mode ) );
+  _.assert( o.in.format === null || _.strIs( o.in.format ) );
+  _.assert( o.out.format === null || _.strIs( o.out.format ) );
+  _.assert( o.in.data !== undefined );
 
-  o.headGot = false;
+  o.params.headGot = false;
 
-  if( _.streamIs( o.data ) )
+  if( _.streamIs( o.in.data ) )
   {
+
+    if( o.in.format === null )
+    o.in.format = 'stream.png';
+
     if( o.sync )
     return self._readGeneralStreamSync( o );
     else
@@ -123,6 +132,10 @@ function _readGeneral( o )
   }
   else
   {
+
+    if( o.in.format === null )
+    o.in.format = 'buffer.png';
+
     if( o.sync )
     return self._readGeneralBufferSync( o );
     else
@@ -134,7 +147,6 @@ function _readGeneral( o )
 _readGeneral.defaults =
 {
   ... Parent.prototype._read.defaults,
-  mode : 'full',
 }
 
 //
@@ -160,14 +172,14 @@ function _readGeneralStreamAsync( o )
   .on( 'error', ( err ) => errorHandle( err ) )
   .on( 'metadata', function ( os )
   {
-    if( o.mode === 'head' )
+    if( o.params.mode === 'head' )
     {
-      o.data.close();
+      o.in.data.close();
       backend._parser._paused = true;
       backend._parser._buffered = 0;
     }
     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    if( o.mode === 'head' )
+    if( o.params.mode === 'head' )
     {
       done = true;
       ready.take( o );
@@ -175,24 +187,25 @@ function _readGeneralStreamAsync( o )
   })
   .on( 'parsed', function ( data )
   {
-    if( o.mode === 'head' )
+    if( o.params.mode === 'head' )
     return;
     if( done )
     return;
-    _.assert( !!o.headGot );
-    o.originalStructure.data = data;
-    self._structureHandle({ originalStructure : o.originalStructure, op : o, mode : 'full' });
+    _.assert( !!o.params.headGot );
+    o.params.originalStructure.data = data;
+    self._structureHandle({ originalStructure : o.params.originalStructure, op : o, mode : 'full' });
     ready.take( o );
     done = true;
   })
 
-  o.data.pipe( backend );
+  o.in.data.pipe( backend );
 
   return ready;
 
   function errorHandle( err )
   {
-    if( o.headGot )
+    debugger;
+    if( o.params.headGot )
     return;
     if( done )
     return;
@@ -210,7 +223,8 @@ function _readGeneralBufferSync( o )
   /* qqq : write proper code for mode : head */
   try
   {
-    let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
+    let os;
+    os = Backend.PNG.sync.read( _.bufferNodeFrom( o.in.data ) );
     self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
   }
   catch( err )
@@ -233,24 +247,25 @@ function _readGeneralBufferAsync( o )
   .on( 'error', ( err ) => errorHandle( err ) )
   .on( 'metadata', ( os ) =>
   {
-    if( o.mode === 'head' )
+    if( o.params.mode === 'head' )
     {
       backend._parser._paused = true;
       backend._parser._buffered = 0;
     }
     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    if( o.mode === 'head' )
+    if( o.params.mode === 'head' )
     {
       ready.take( o );
       done = true;
     }
   })
 
-  backend.parse( _.bufferNodeFrom( o.data ), ( err, os ) =>
+  backend.parse( _.bufferNodeFrom( o.in.data ), ( err, os ) =>
   {
+    debugger;
     if( err )
     return errorHandle( err );
-    if( o.mode === 'head' )
+    if( o.params.mode === 'head' )
     return;
     self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
     ready.take( o );
@@ -278,14 +293,33 @@ function _readHead( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _readHead, o );
-  o.mode = 'head';
+  debugger;
+  if( !o.params.mode )
+  o.params.mode = 'head';
   return self._readGeneral( o );
 }
 
 _readHead.defaults =
 {
-  ... Parent.prototype._read.defaults,
+  ... Parent.prototype._readHead.defaults,
+  // ... Parent.prototype._read.defaults,
 }
+
+// //
+//
+// function _read( o )
+// {
+//   let self = this;
+//   _.assert( arguments.length === 1 );
+//   _.assertRoutineOptions( _read, o );
+//   o.params.mode = 'full';
+//   return self._readGeneral( o );
+// }
+//
+// _read.defaults =
+// {
+//   ... Parent.prototype._read.defaults,
+// }
 
 //
 
@@ -294,7 +328,8 @@ function _read( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
-  o.mode = 'full';
+  if( !o.params.mode )
+  o.params.mode = 'full';
   return self._readGeneral( o );
 }
 
@@ -312,6 +347,13 @@ let Exts = [ 'png' ];
 
 let Composes =
 {
+
+  shortName : 'pngjs',
+  ext : _.define.own([ 'png' ]),
+  inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
+  outFormat : _.define.own([ 'structure.image' ]),
+  feature : _.define.own({}),
+
 }
 
 let Aggregates =
@@ -359,11 +401,13 @@ let Extension =
   _readGeneralStreamSync,
   _readGeneralStreamAsync,
   _readGeneralBufferSync,
+  // _readGeneralBufferSync2,
   _readGeneralBufferAsync,
   _readGeneral,
 
   _readHead,
   _read,
+  // _read2,
 
   //
 
@@ -394,7 +438,11 @@ _.classDeclare
 
 //
 
-_.image.reader[ Self.shortName ] = Self;
+_.assert( !_.image.reader[ Self.shortName ] );
+new Self();
+_.assert( !!_.image.reader[ Self.shortName ] );
+
+// _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 

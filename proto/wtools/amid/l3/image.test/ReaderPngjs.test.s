@@ -11,7 +11,7 @@ if( typeof module !== 'undefined' )
 }
 
 let _ = _global_.wTools;
-let Parent = _global_.wTests.ImageReadAbstract; /* xxx : rename */
+let Parent = _global_.wTests.ImageReadAbstract;
 
 // --
 // context
@@ -34,14 +34,12 @@ var Proto =
   context :
   {
     ext : 'png',
-    format : 'png',
+    inFormat : 'buffer.png',
     readerName : 'Pngjs',
   },
 
   tests :
   {
-
-
   },
 
 }

@@ -82,7 +82,7 @@ var Proto =
     assetsOriginalPath : null,
     appJsPath : null,
     ext : 'png',
-    format : 'png',
+    inFormat : 'png',
   },
 
   tests :
