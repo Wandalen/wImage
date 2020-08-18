@@ -1,6 +1,6 @@
 {
   "name" : "wimage",
-  "version" : "0.3.34",
+  "version" : "0.3.35",
   "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
@@ -19,7 +19,8 @@
     "wTools" : "alpha",
     "wCopyable" : "alpha",
     "wFiles" : "alpha",
-    "wConsequence" : "alpha"
+    "wConsequence" : "alpha",
+    "wgdf" : "alpha"
   },
   "devDependencies" : { "eslint" : "7.1.0", "wimage" : "file:.", "wTesting" : "alpha" },
   "keywords" : [ "wTools" ]
