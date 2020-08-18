@@ -13,6 +13,9 @@ submodule :
   wConsequence :
     path : npm:///wConsequence
     enabled : 0 # submodule
+  wGdf :
+    path : npm:///wgdf
+    enabled : 0 # submodule
 
   pngjs :
     path : npm:///pngjs#5.0.0

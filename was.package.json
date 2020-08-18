@@ -18,6 +18,7 @@
     "wCopyable" : "",
     "wFiles" : "",
     "wConsequence" : "",
+    "wgdf" : "",
     "pngjs" : "=5.0.0",
     "png.js" : "=0.2.1"
   },
