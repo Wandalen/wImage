@@ -31,12 +31,12 @@ var Proto =
   name : 'ImageReadPngDashJs',
   abstract : 0,
 
-  context :
-  {
-    ext : 'png',
-    format : 'png',
-    readerName : 'PngDashJs',
-  },
+  //   context :
+  //   {
+  //     ext : 'png',
+  //     inFormat : 'png',
+  //     readerName : 'PngDashJs',
+  //   },
 
   tests :
   {

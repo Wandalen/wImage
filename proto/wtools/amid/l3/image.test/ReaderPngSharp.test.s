@@ -31,12 +31,12 @@ var Proto =
   name : 'ImageReadPngSharp',
   abstract : 0,
 
-  context :
-  {
-    ext : 'png',
-    format : 'png',
-    readerName : 'PngSharp',
-  },
+  //   context :
+  //   {
+  //     ext : 'png',
+  //     inFormat : 'png',
+  //     readerName : 'PngSharp',
+  //   },
 
   tests :
   {

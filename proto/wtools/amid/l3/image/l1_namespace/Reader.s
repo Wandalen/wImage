@@ -35,14 +35,18 @@ function read_body( o )
     let o2 = _.mapOnly( o, self.readerDeduce.defaults );
     o2.single = 1;
     let selected = self.readerDeduce( o2 );
-    _.mapExtend( o, selected );
-    o.reader = new o.readerClass();
-    //debugger;
+    _.assert( selected instanceof _.gdf.Context, `Cant deduce reader` );
+    o.reader = selected;
   }
 
   let methodName = o.mode === 'full' ? 'read' : 'readHead';
   let o2 = _.mapOnly( o, o.reader[ methodName ].defaults );
-  o2.onHead = handleHead;
+  o2.params = o2.params || Object.create( null );
+  o2.params.onHead = o.onHead;
+  // o2.params.sync = o.sync;
+  o2.params.mode = o.mode;
+  o2.format = o.inFormat;
+
   let result = o.reader[ methodName ]( o2 );
   //debugger;
   if( o.sync )
@@ -52,23 +56,13 @@ function read_body( o )
 
   /* */
 
-  function handleHead( result )
-  {
-    for( let k in result )
-    if( o[ k ] === undefined )
-    o[ k ] = result[ k ];
-
-    if( o.onHead )
-    o.onHead( o );
-  }
-
   function end( result )
   {
-    for( let k in result )
-    if( o[ k ] === undefined )
-    o[ k ] = result[ k ];
-    return o;
+    return result;
   }
+
+  /* */
+
 }
 
 read_body.defaults =
@@ -76,7 +70,7 @@ read_body.defaults =
   reader : null,
   data : null,
   filePath : null,
-  format : null,
+  inFormat : null,
   ext : null,
   sync : 1,
   mode : null,
@@ -98,105 +92,19 @@ read.defaults.mode = 'full';
 function readerDeduce( o )
 {
   let self = this;
-  let result = [];
-  debugger;
-
   o = _.routineOptions( readerDeduce, arguments );
-
-  if( o.filePath && !o.ext )
-  o.ext = _.path.ext( o.filePath ).toLowerCase();
-
-  for( let n in _.image.reader )
-  {
-    //console.log( _.image.reader[ n ] )
-    let Reader = _.image.reader[ n ];
-    if( !Reader.Formats )
-    continue;
-    let supports = Reader.Supports( _.mapBut( o, [ 'single' ] ) );
-    if( supports )
-    {
-      supports.score = calculateScore( _.image.reader[ n ] )
-      result.push( supports );
-    }
-  }
-
-  result.sort( ( a, b ) =>
-  {
-    if( b.score - a.score > 0 )
-    {
-      return 1;
-    }
-    else if( b.score - a.score === 0 )
-    {
-      if( b.MethodsNativeCount > a.MethodsNativeCount )
-      return 1
-      else
-      return 0
-    }
-    else
-    {
-      return -1;
-    }
-  });
-
-  // console.log( 'RESULTS_ARRAY: ', result );
-  // result = result.slice( 0, 1 );
-  //console.log( 'RESULTS_ARRAY 1 ELEM: ', result );
-
-  result.forEach( ( el ) => delete el.score )
-
-  if( o.single )
-  {
-    /*
-    result = result.slice( 0, 1 );
-    _.assert
-    (
-      result.length >= 1,
-      () => `Found no reader for format:${o.format} ext:${o.ext} filePath:${o.filePath}.`
-    );
-    _.assert
-    (
-      result.length <= 1,
-      () => `Found ${result.length} readers for format:${o.format} ext:${o.ext} filePath:${o.filePath}, but need only one.`
-    );
-    */
-    return result[ 0 ]
-  }
-
+  o.outFormat = 'structure.image';
+  let result = _.gdf.selectSingleContext( o );
   return result;
 }
 
 readerDeduce.defaults =
 {
   data : null,
-  format : null,
+  inFormat : null,
   filePath : null,
   ext : null,
   single : 1,
-}
-
-//
-
-function calculateScore( reader )
-{
-  let self = this;
-  let score = 0;
-
-  if( reader.LimitationsRead )
-  return 0;
-  if( reader.SupportsDimensions )
-  score += 20;
-  if( reader.SupportsBuffer )
-  score += 20;
-  if( reader.SupportsDepth )
-  score += 5;
-  if( reader.SupportsColor )
-  score += 5;
-  if( reader.SupportsSpecial )
-  score += 2;
-
-  return score;
-
 }
 
 // --

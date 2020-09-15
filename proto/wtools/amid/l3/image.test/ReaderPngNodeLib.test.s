@@ -31,12 +31,12 @@ var Proto =
   name : 'ImageReadPngNodeLib',
   abstract : 0,
 
-  context :
-  {
-    ext : 'png',
-    format : 'png',
-    readerName : 'PngNodeLib',
-  },
+  //   context :
+  //   {
+  //     ext : 'png',
+  //     inFormat : 'png',
+  //     readerName : 'PngNodeLib',
+  //   },
 
   tests :
   {

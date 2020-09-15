@@ -31,12 +31,12 @@ var Proto =
   name : 'ImageReadPngDotJs',
   abstract : 0,
 
-  context :
-  {
-    ext : 'png',
-    format : 'png',
-    readerName : 'PngDotJs',
-  },
+  //   context :
+  //   {
+  //     ext : 'png',
+  //     inFormat : 'png',
+  //     readerName : 'PngDotJs',
+  //   },
 
   tests :
   {

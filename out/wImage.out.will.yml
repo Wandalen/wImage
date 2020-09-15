@@ -3,14 +3,14 @@ root:
   - wImage.out
 consistency:
   wImage.out.will.yml: &ref_0
-    hash: f79288775c318b047610433d4e2e2b7e
-    size: 50150
+    hash: e328808b0cf211e88601041f046f30ec
+    size: 51139
   ../.ex.will.yml: &ref_1
     hash: 6b9afa69a13b607ca9418472bff4473e
     size: 1733
   ../.im.will.yml: &ref_2
-    hash: 31178345906e8a31dbf0bde84df0f60e
-    size: 5485
+    hash: 340f530cd7eff9a0445aff1bcf8679de
+    size: 5545
   ../.module/AssetsImagesPng/will.yml: &ref_3
     hash: 3d78fa89530a262abb542ae8f7a0f209
     size: 349
@@ -229,6 +229,10 @@ module:
         enabled: 0
       wConsequence:
         path: 'npm:///wConsequence'
+        autoExporting: 0
+        enabled: 0
+      wGdf:
+        path: 'npm:///wgdf'
         autoExporting: 0
         enabled: 0
       pngjs:
@@ -1036,6 +1040,10 @@ module:
         path: 'npm:///wConsequence'
         autoExporting: 0
         enabled: 0
+      wGdf:
+        path: 'npm:///wgdf'
+        autoExporting: 0
+        enabled: 0
       pngjs:
         path: 'npm:///pngjs#5.0.0'
         autoExporting: 0
@@ -1611,8 +1619,8 @@ module:
         hash: 6b9afa69a13b607ca9418472bff4473e
         size: 1733
       ../.im.will.yml:
-        hash: 31178345906e8a31dbf0bde84df0f60e
-        size: 5485
+        hash: 340f530cd7eff9a0445aff1bcf8679de
+        size: 5545
       wImage.out.will.yml: *ref_0
   ../.module/AssetsImagesPng/:
     about:

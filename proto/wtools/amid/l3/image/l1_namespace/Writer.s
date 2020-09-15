@@ -25,7 +25,7 @@ function write( o )
 write.defaults =
 {
   filePath : null,
-  format : null,
+  outFormat : null,
 }
 
 // --
