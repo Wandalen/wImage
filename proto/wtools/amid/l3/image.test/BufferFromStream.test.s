@@ -55,7 +55,7 @@ function bufferFromStream_( test )
 
   ready.then( ( data ) =>
   {
-    test.is( _.bufferRawIs( data ) );
+    test.is( _.bufferNodeIs( data ) );
     return null;
   } );
 

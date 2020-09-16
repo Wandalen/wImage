@@ -19,8 +19,8 @@ function from( o )
 
   if( !o.special )
   o.special = Object.create( null );
-  // if( !o.channelsMap )
-  // o.channelsMap = Object.create( null );
+  if( !o.channelsMap )
+  o.channelsMap = Object.create( null );
   if( !o.channelsArray )
   o.channelsArray = [];
 
@@ -30,7 +30,7 @@ function from( o )
 from.defaults =
 {
   special : null,
-  // channelsMap : null,
+  channelsMap : null,
   channelsArray : null,
 }
 
@@ -58,7 +58,7 @@ validate.defaults =
   ... from.defaults,
   buffer : null,
   dims : null,
-  // bytesPerPixel : null,
+  bytesPerPixel : null,
   bitsPerPixel : null,
   hasPalette : null,
 }

@@ -32,6 +32,7 @@ function _structureHandle( o )
 
   if( os === null )
   os = o.op.originalStructure;
+
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
   _.assert( _.strIs( o.mode ) );
@@ -52,7 +53,7 @@ function _structureHandle( o )
 
   o.op.params.originalStructure = os;
 
-  // _.assert( !os.palette, 'not implemented' );
+  _.assert( !os.palette, 'not implemented' );
 
   if( os.color )
   {
@@ -86,6 +87,7 @@ function _structureHandle( o )
   return o.op;
 
   /* */
+
 
   function channelAdd( name )
   {

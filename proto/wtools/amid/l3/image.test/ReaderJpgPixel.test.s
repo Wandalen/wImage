@@ -30,6 +30,7 @@ var Proto =
 
   name : 'ImageReadJpgpixel',
   abstract : 0,
+  enabled : 0,
 
   context :
   {

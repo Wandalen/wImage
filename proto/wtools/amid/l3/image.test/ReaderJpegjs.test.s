@@ -30,6 +30,7 @@ var Proto =
 
   name : 'ImageReadJpegjs',
   abstract : 0,
+  enabled : 0,
 
   context :
   {

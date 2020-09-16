@@ -11,7 +11,7 @@ if( typeof module !== 'undefined' )
 }
 
 let _ = _global_.wTools;
-let Parent = _global_.wTests.ImageReadAbstract;
+let Parent = _global_.wTests.ImageReadAbstractPng;
 
 // --
 // context
