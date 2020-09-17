@@ -11,7 +11,7 @@ if( typeof module !== 'undefined' )
 }
 
 let _ = _global_.wTools;
-let Parent = _global_.wTests.ImageReadAbstractPng; /* xxx : rename */
+let Parent = _global_.wTests.ImageReadAbstractPng;
 
 // --
 // context
@@ -30,19 +30,17 @@ var Proto =
 
   name : 'ImageReadPngDashJs',
   abstract : 0,
-  enabled : 0,
+  // enabled : 0,
 
-  //   context :
-  //   {
-  //     ext : 'png',
-  //     inFormat : 'png',
-  //     readerName : 'PngDashJs',
-  //   },
+  context :
+  {
+    ext : 'png',
+    inFormat : 'buffer.png',
+    readerName : 'PngDashJs',
+  },
 
   tests :
   {
-
-
   },
 
 }

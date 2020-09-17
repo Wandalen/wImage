@@ -35,7 +35,6 @@ function _structureHandle( o )
   if( os === null )
   os = o.op.originalStructure;
 
-  // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
   _.assert( _.strIs( o.mode ) );

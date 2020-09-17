@@ -376,7 +376,6 @@ let Statics =
   Exts,
   SupportsDimensions : 1,
   SupportsBuffer : 1,
-  SupportsStream : 1,
   SupportsDepth : 1,
   SupportsColor : 1,
   SupportsSpecial : 1,
