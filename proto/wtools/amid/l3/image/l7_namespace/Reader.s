@@ -42,6 +42,7 @@ function fileReadHead_body( o )
   // or fileRead
   // if( o.reader.SupportsStream )
   // {
+  // console.log( o )
   data = _.fileProvider.streamRead
   ({
     filePath : o.filePath,
@@ -132,9 +133,9 @@ let Extension =
   fileRead,
 
 }
-//debugger
+debugger
 _.mapExtend( Self, Extension );
-//debugger
+debugger
 //
 
 if( typeof module !== 'undefined' )

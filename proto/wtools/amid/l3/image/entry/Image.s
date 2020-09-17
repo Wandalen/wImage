@@ -10,6 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
+  debugger;
   let _ = require( '../include/Image.s' )
   module[ 'exports' ] = _global_.wTools;
 }

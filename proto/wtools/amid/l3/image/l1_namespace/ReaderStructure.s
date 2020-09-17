@@ -74,9 +74,9 @@ let Extension =
   validate,
 
 }
-
+debugger
 _.mapExtend( Self, Extension );
-
+debugger
 //
 
 if( typeof module !== 'undefined' )

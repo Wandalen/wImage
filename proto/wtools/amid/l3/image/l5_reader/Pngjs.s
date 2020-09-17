@@ -376,6 +376,7 @@ let Statics =
   Exts,
   SupportsDimensions : 1,
   SupportsBuffer : 1,
+  SupportsStream : 1,
   SupportsDepth : 1,
   SupportsColor : 1,
   SupportsSpecial : 1,
@@ -442,11 +443,11 @@ _.classDeclare
 });
 
 //
-
+debugger
 _.assert( !_.image.reader[ Self.shortName ] );
 new Self();
 _.assert( !!_.image.reader[ Self.shortName ] );
-
+debugger
 // _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
