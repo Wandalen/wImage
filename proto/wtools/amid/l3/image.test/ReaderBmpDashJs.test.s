@@ -30,19 +30,17 @@ var Proto =
 
   name : 'ImageReadBmpDashJs',
   abstract : 0,
-  enabled : 0,
+  // enabled : 0,
 
   context :
   {
     ext : 'bmp',
-    format : 'bmp',
+    format : 'buffer.bmp',
     readerName : 'BmpDashJs',
   },
 
   tests :
   {
-
-
   },
 
 }
