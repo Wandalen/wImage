@@ -6,7 +6,7 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( '../../../../wtools/Tools.s' );
-  require( '../image/entry/ReaderJpgpixel.s' );
+  require( '../image/entry/ReaderJpgPixel.s' );
   require( './ReaderAbstractJpg.test.s' );
 }
 
@@ -28,14 +28,14 @@ let Parent = _global_.wTests.ImageReadAbstractJpg;
 var Proto =
 {
 
-  name : 'ImageReadJpgpixel',
+  name : 'ImageReadJpgPixel',
   abstract : 0,
-  enabled : 0,
+  // enabled : 0,
 
   context :
   {
     ext : 'jpg',
-    format : 'jpg',
+    format : 'buffer.jpg',
     readerName : 'JpgPixel',
   },
 

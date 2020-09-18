@@ -30,12 +30,12 @@ var Proto =
 
   name : 'ImageReadJpegjs',
   abstract : 0,
-  enabled : 0,
+  // enabled : 0,
 
   context :
   {
     ext : 'jpg',
-    format : 'jpg',
+    format : 'buffer.jpg',
     readerName : 'Jpegjs',
   },
 

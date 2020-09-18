@@ -1,4 +1,4 @@
-( function _ReaderAbstract_test_s_( )
+( function _ReaderAbstractPng_test_s_( )
 {
 
 'use strict';
