@@ -254,9 +254,9 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-      console.log( 'OP: ', op );
-      console.log( 'data: ', op.in.data );
-      console.log( 'OS: ', op.params.originalStructure );
+      // console.log( 'OP: ', op );
+      // console.log( 'data: ', op.in.data );
+      // console.log( 'OS: ', op.params.originalStructure );
       // test.is( _.streamIs( op.in.data ) );
       test.is( _.objectIs( op.params.originalStructure ) );
 
