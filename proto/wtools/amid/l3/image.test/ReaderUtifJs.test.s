@@ -30,19 +30,17 @@ var Proto =
 
   name : 'ImageReadUtifJs',
   abstract : 0,
-  enabled : 0,
+  // enabled : 0,
 
   context :
   {
     ext : 'tif',
-    format : 'tif',
+    format : 'buffer.tif',
     readerName : 'UtifJs',
   },
 
   tests :
   {
-
-
   },
 
 }
