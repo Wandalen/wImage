@@ -552,7 +552,6 @@ function readStreamAsync( test )
     {
       test.description = 'operation';
 
-      // test.is( _.streamIs( op.in.data ) );
       test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
