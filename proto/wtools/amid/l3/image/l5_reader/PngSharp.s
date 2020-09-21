@@ -30,7 +30,7 @@ function _structureHandle( o )
 {
   let self = this;
   let os = o.originalStructure;
-  // console.log( 'OS: ', os )
+
   if( os === null )
   os = o.op.originalStructure;
 
@@ -73,13 +73,11 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
+  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
 
   // NO BIT DEPTH
-  // structure.bitsPerPixel = 8;
   structure.special.interlaced = os.metadata.isProgressive;
-  // structure.special.hasProfile = os.metadata.hasProfile;
   structure.hasPalette = os.metadata.paletteBitDepth !== undefined;
   o.op.params.headGot = true;
 
@@ -92,13 +90,13 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    // NO BIT DEPTH. TEST WITH 8
-    structure.channelsMap[ name ] =
-    {
-      name,
-      bits : 8,
-      order : structure.channelsArray.length
-    };
+    // NO BIT DEPTH.
+    // structure.channelsMap[ name ] =
+    // {
+    //   name,
+    //   bits : 8,
+    //   order : structure.channelsArray.length
+    // };
     structure.channelsArray.push( name );
   }
 

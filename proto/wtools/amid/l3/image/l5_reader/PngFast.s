@@ -86,8 +86,8 @@ function _structureHandle( o )
   // structure.bitsPerPixel = os.depth;
   structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
-  // TEST: no info about interlacing
-  structure.special.interlaced = false;
+  // NO INFO ABOUT INTELACING
+  // structure.special.interlaced = ;
   structure.hasPalette = os.palette !== undefined;
 
   o.op.params.headGot = true;
