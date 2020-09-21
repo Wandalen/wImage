@@ -347,9 +347,9 @@ _read.defaults =
 let Formats = [ 'png' ];
 let Exts = [ 'png' ];
 
+debugger
 let Composes =
 {
-
   shortName : 'pngjs',
   ext : _.define.own([ 'png' ]),
   inFormat : _.define.own([ 'buffer.any', 'string.any' ]),

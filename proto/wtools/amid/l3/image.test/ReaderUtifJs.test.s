@@ -30,7 +30,7 @@ var Proto =
 
   name : 'ImageReadUtifJs',
   abstract : 0,
-  // enabled : 0,
+  enabled : 0,
 
   context :
   {

@@ -82,23 +82,6 @@ function encode( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -111,7 +94,11 @@ function encode( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
   }
 
@@ -168,23 +155,6 @@ function readHeadBufferAsync( test )
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : null,
-            'special' : { 'interlaced' : false },
-            'channelsMap' :
-            {
-              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            },
-            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -198,7 +168,11 @@ function readHeadBufferAsync( test )
         'err' : null,
       }
 
-      test.identical( op, exp );
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -254,10 +228,6 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-      console.log( 'OP: ', op );
-      console.log( 'data: ', op.in.data );
-      console.log( 'OS: ', op.params.originalStructure );
-      // test.is( _.streamIs( op.in.data ) );
       test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
@@ -271,23 +241,6 @@ function readHeadStreamAsync( test )
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : null,
-            'special' : { 'interlaced' : false },
-            'channelsMap' :
-            {
-              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            },
-            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -301,7 +254,11 @@ function readHeadStreamAsync( test )
         'err' : null
       }
 
-      test.identical( op, exp );
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -363,23 +320,6 @@ function readHeadBufferSync( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'buffer' : null,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -393,7 +333,11 @@ function readHeadBufferSync( test )
       'err' : null
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -452,23 +396,6 @@ function readHeadStreamSync( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'buffer' : null,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -482,7 +409,11 @@ function readHeadStreamSync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -548,23 +479,6 @@ function readBufferAsync( test )
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-            'special' : { 'interlaced' : false },
-            'channelsMap' :
-            {
-              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            },
-            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -578,7 +492,12 @@ function readBufferAsync( test )
         'err' : null
       }
 
-      test.identical( op, exp );
+
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -647,23 +566,6 @@ function readStreamAsync( test )
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-            'special' : { 'interlaced' : false },
-            'channelsMap' :
-            {
-              'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-              'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-              'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-              'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            },
-            'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -677,7 +579,12 @@ function readStreamAsync( test )
         'err' : null
       }
 
-      test.identical( op, exp );
+
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -742,23 +649,6 @@ function readBufferSync( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -772,7 +662,11 @@ function readBufferSync( test )
       'err' : null
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -831,23 +725,6 @@ function readStreamSync( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -861,7 +738,11 @@ function readStreamSync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -910,23 +791,6 @@ function fileReadHeadSync( test )
     },
     'out' :
     {
-      'data' :
-      {
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'buffer' : null,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      },
       'format' : 'structure.image',
     },
     'params' :
@@ -940,7 +804,11 @@ function fileReadHeadSync( test )
     'err' : null,
   }
 
-  test.identical( op, exp );
+  test.identical( op.in, exp.in );
+  test.identical( op.out.format, exp.out.format );
+  test.identical( op.params, exp.params );
+  test.identical( op.sync, exp.sync );
+  test.identical( op.error, exp.error );
 
   test.description = 'onHead';
   test.is( callbacks[ 0 ] === op );
@@ -992,23 +860,6 @@ function fileReadHeadAsync( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'buffer' : null,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -1022,7 +873,11 @@ function fileReadHeadAsync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -1074,23 +929,6 @@ function fileReadSync( test )
     },
     'out' :
     {
-      'data' :
-      {
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      },
       'format' : 'structure.image',
     },
     'params' :
@@ -1104,7 +942,11 @@ function fileReadSync( test )
     'err' : null,
   }
 
-  test.identical( op, exp );
+  test.identical( op.in, exp.in );
+  test.identical( op.out.format, exp.out.format );
+  test.identical( op.params, exp.params );
+  test.identical( op.sync, exp.sync );
+  test.identical( op.error, exp.error );
 
   /* */
 
@@ -1131,23 +973,6 @@ function fileReadSync( test )
     },
     'out' :
     {
-      'data' :
-      {
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      },
       'format' : 'structure.image',
     },
     'params' :
@@ -1161,7 +986,11 @@ function fileReadSync( test )
     'err' : null,
   }
 
-  test.identical( op, exp );
+  test.identical( op.in, exp.in );
+  test.identical( op.out.format, exp.out.format );
+  test.identical( op.params, exp.params );
+  test.identical( op.sync, exp.sync );
+  test.identical( op.error, exp.error );
 
   test.description = 'onHead';
   test.is( callbacks[ 0 ] === op );
@@ -1217,23 +1046,6 @@ function fileReadAsync( test )
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          },
-          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -1247,7 +1059,11 @@ function fileReadAsync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
