@@ -77,7 +77,7 @@ function _structureHandle( o )
   }
 
   structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
+  structure.bytesPerPixel = Math.ceil( structure.bitsPerPixel / 8 );
   // structure.bitsPerPixel = os.bitDepth;
   structure.special.interlaced = os.interlaceMethod !== 0;
   structure.hasPalette = os.palette !== null;

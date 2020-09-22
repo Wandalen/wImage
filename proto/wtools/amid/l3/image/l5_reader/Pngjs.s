@@ -52,7 +52,7 @@ function _structureHandle( o )
   os = os._parser ? os._parser._metaData : os;
 
   o.op.params.originalStructure = os;
-
+  // console.log( 'OS: ', os )
   _.assert( !os.palette, 'not implemented' );
 
   if( os.color )
@@ -428,7 +428,8 @@ let Extension =
 }
 
 //
-
+let temp = _.gdf;
+debugger;
 _.classDeclare
 ({
   cls : Self,
@@ -436,10 +437,13 @@ _.classDeclare
   extend : Extension,
 });
 
+debugger;
+
 //
 _.assert( !_.image.reader[ Self.shortName ] );
 new Self();
 _.assert( !!_.image.reader[ Self.shortName ] );
+debugger;
 // _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
