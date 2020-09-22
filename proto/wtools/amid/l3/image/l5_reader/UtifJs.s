@@ -73,13 +73,14 @@ function _structureHandle( o )
   }
 
   structure.bitsPerPixel = os.t258.reduce( ( a, b ) => a + b, 0 );
+  structure.bytesPerPixel = Math.ceil( structure.bitsPerPixel / 8 );
   structure.special.compression = os.t259[ 0 ] !== 1;
 
   o.op.params.headGot = true;
 
   if( o.op.params.onHead )
   o.op.params.onHead( o.op );
-  console.log( 'Structure; ', o.op )
+  // console.log( 'Structure; ', o.op )
   return o.op;
 
   /* */

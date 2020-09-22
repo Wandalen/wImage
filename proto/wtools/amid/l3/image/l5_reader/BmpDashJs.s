@@ -54,8 +54,6 @@ function _structureHandle( o )
 
   o.op.params.originalStructure = os;
 
-  _.assert( !os.palette, 'not implemented' );
-
   if( os.is_with_alpha )
   {
     channelAdd( 'alpha' );
@@ -68,7 +66,7 @@ function _structureHandle( o )
   }
 
   structure.bitsPerPixel = os.bitPP;
-  structure.bytesPerPixel = Math.floor( os.bitPP / 8 );
+  structure.bytesPerPixel = Math.ceil( os.bitPP / 8 );
   structure.special.compressed = os.compress !== 0;
   structure.hasPalette = os.palette !== undefined;
 

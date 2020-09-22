@@ -74,9 +74,9 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  structure.bytesPerPixel = os.bpp;
-  structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-
+  structure.bytesPerPixel = Math.ceil( os.depth / 8 ) ;
+  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  structure.bitsPerPixel = os.depth;
   structure.special.interlaced = os.interlace;
   structure.hasPalette = os.palette;
 
@@ -91,7 +91,7 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    structure.channelsMap[ name ] = { name, bits : os.depth, order : structure.channelsArray.length };
+    // structure.channelsMap[ name ] = { name, bits : os.depth, order : structure.channelsArray.length };
     structure.channelsArray.push( name );
   }
 

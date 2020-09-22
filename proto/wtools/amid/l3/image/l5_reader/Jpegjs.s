@@ -32,7 +32,6 @@ function _structureHandle( o )
   let os = o.originalStructure;
   if( os === null )
   os = o.op.originalStructure;
-  console.log( 'OS: ', os )
 
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
@@ -56,16 +55,8 @@ function _structureHandle( o )
 
   if( o.op.params.onHead )
   o.op.params.onHead( o.op );
-  // console.log( structure )
+
   return o.op;
-
-  /* */
-
-  // function channelAdd( name )
-  // {
-  //   structure.channelsMap[ name ] = { name, bits : 8, order : structure.channelsArray.length };
-  //   structure.channelsArray.push( name );
-  // }
 
 }
 

@@ -55,17 +55,11 @@ function encode_( test )
       {
         'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       },
     }
@@ -117,17 +111,11 @@ function readHeadBufferAsync_( test )
         {
           'buffer' : null,
           'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          },
+          'channelsMap' : {},
           'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
+          'bytesPerPixel' : 1,
+          'bitsPerPixel' : 8,
           'hasPalette' : false,
         },
       }
@@ -193,17 +181,11 @@ function readHeadStreamAsync_( test )
         {
           'buffer' : null,
           'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          },
+          'channelsMap' : {},
           'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
+          'bytesPerPixel' : 1,
+          'bitsPerPixel' : 8,
           'hasPalette' : false,
         },
       }
@@ -262,17 +244,11 @@ function readHeadBufferSync_( test )
       {
         'buffer' : null,
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       },
     }
@@ -322,18 +298,12 @@ function readHeadStreamSync_( test )
       'data' :
       {
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'buffer' : null,
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       },
     }
@@ -390,17 +360,11 @@ function readBufferAsync_( test )
         {
           'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
           'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          },
+          'channelsMap' : {},
           'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
+          'bytesPerPixel' : 1,
+          'bitsPerPixel' : 8,
           'hasPalette' : false,
         },
       }
@@ -461,17 +425,11 @@ function readStreamAsync_( test )
         {
           'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
           'special' : { 'interlaced' : false },
-          'channelsMap' :
-          {
-            'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          },
+          'channelsMap' : {},
           'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
           'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
+          'bytesPerPixel' : 1,
+          'bitsPerPixel' : 8,
           'hasPalette' : false,
         },
       }
@@ -526,17 +484,11 @@ function readBufferSync_( test )
       {
         'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       }
     }
@@ -588,18 +540,12 @@ function readStreamSync_( test )
       'data' :
       {
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       },
     }
@@ -641,18 +587,12 @@ function fileReadHeadSync_( test )
     'data' :
     {
       'special' : { 'interlaced' : false },
-      'channelsMap' :
-      {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-      },
+      'channelsMap' : {},
       'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
       'buffer' : null,
       'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
+      'bytesPerPixel' : 1,
+      'bitsPerPixel' : 8,
       'hasPalette' : false,
     },
   }
@@ -697,18 +637,12 @@ function fileReadHeadAsync_( test )
       'data' :
       {
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'buffer' : null,
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       }
     }
@@ -752,18 +686,12 @@ function fileReadSync_( test )
     'data' :
     {
       'special' : { 'interlaced' : false },
-      'channelsMap' :
-      {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-      },
+      'channelsMap' : {},
       'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
       'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
       'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
+      'bytesPerPixel' : 1,
+      'bitsPerPixel' : 8,
       'hasPalette' : false,
     },
   }
@@ -786,18 +714,12 @@ function fileReadSync_( test )
     'data' :
     {
       'special' : { 'interlaced' : false },
-      'channelsMap' :
-      {
-        'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-      },
+      'channelsMap' : {},
       'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
       'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
       'dims' : [ 2, 2 ],
-      'bytesPerPixel' : 4,
-      'bitsPerPixel' : 32,
+      'bytesPerPixel' : 1,
+      'bitsPerPixel' : 8,
       'hasPalette' : false,
     },
   }
@@ -844,18 +766,12 @@ function fileReadAsync_( test )
       'data' :
       {
         'special' : { 'interlaced' : false },
-        'channelsMap' :
-        {
-          'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        },
+        'channelsMap' : {},
         'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
         'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
         'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
+        'bytesPerPixel' : 1,
+        'bitsPerPixel' : 8,
         'hasPalette' : false,
       }
     }
