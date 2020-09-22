@@ -34,7 +34,6 @@ function read_body( o )
   {
     let o2 = _.mapOnly( o, self.readerDeduce.defaults );
     o2.single = 1;
-    debugger;
     let selected = self.readerDeduce( o2 );
 
     _.assert( selected instanceof _.gdf.Context, `Cant deduce reader` );
