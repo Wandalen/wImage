@@ -1,4 +1,4 @@
-( function _ReaderAbstractBmp_test_s_( )
+( function _ReaderAbstract_test_s_( )
 {
 
 'use strict';
@@ -78,29 +78,10 @@ function encode( test )
         'data' : op.in.data,
         'filePath' : null,
         'ext' : null,
-        'format' : 'buffer.bmp'
+        'format' : `buffer.${context.ext}`
       },
       'out' :
       {
-        'data' :
-        {
-          'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -113,7 +94,11 @@ function encode( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
   }
 
@@ -165,30 +150,11 @@ function readHeadBufferAsync( test )
         {
           'data' : op.in.data,
           'filePath' : null,
-          'ext' : 'bmp',
-          'format' : 'buffer.bmp'
+          'ext' : context.ext,
+          'format' : `buffer.${context.ext}`
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : null,
-            'special' : { compressed : false },
-            // 'channelsMap' :
-            // {
-            //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            // },
-            // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'channelsMap' : {},
-            'channelsArray' : [],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -202,7 +168,11 @@ function readHeadBufferAsync( test )
         'err' : null,
       }
 
-      test.identical( op, exp );
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -258,7 +228,6 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-      // test.is( _.streamIs( op.in.data ) );
       test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
@@ -267,30 +236,11 @@ function readHeadStreamAsync( test )
         {
           'data' : op.in.data,
           'filePath' : null,
-          'ext' : 'bmp',
-          'format' : 'stream.bmp'
+          'ext' : context.ext,
+          'format' : `stream.${context.ext}`
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : null,
-            'special' : { compressed : false },
-            // 'channelsMap' :
-            // {
-            //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            // },
-            // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'channelsMap' : {},
-            'channelsArray' : [],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -304,7 +254,11 @@ function readHeadStreamAsync( test )
         'err' : null
       }
 
-      test.identical( op, exp );
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -361,30 +315,11 @@ function readHeadBufferSync( test )
       {
         'data' : op.in.data,
         'filePath' : null,
-        'ext' : 'bmp',
-        'format' : 'buffer.bmp'
+        'ext' : context.ext,
+        'format' : `buffer.${context.ext}`
       },
       'out' :
       {
-        'data' :
-        {
-          'buffer' : null,
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -398,7 +333,11 @@ function readHeadBufferSync( test )
       'err' : null
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -452,30 +391,11 @@ function readHeadStreamSync( test )
       {
         'data' : op.in.data,
         'filePath' : null,
-        'ext' : 'bmp',
-        'format' : 'stream.bmp'
+        'ext' : context.ext,
+        'format' : `stream.${context.ext}`
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'buffer' : null,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -489,7 +409,11 @@ function readHeadStreamSync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -550,30 +474,11 @@ function readBufferAsync( test )
         {
           'data' : op.in.data,
           'filePath' : null,
-          'ext' : 'bmp',
-          'format' : 'buffer.bmp'
+          'ext' : context.ext,
+          'format' : `buffer.${context.ext}`
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-            'special' : { compressed : false },
-            // 'channelsMap' :
-            // {
-            //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            // },
-            // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'channelsMap' : {},
-            'channelsArray' : [],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -587,7 +492,12 @@ function readBufferAsync( test )
         'err' : null
       }
 
-      test.identical( op, exp );
+
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -642,7 +552,6 @@ function readStreamAsync( test )
     {
       test.description = 'operation';
 
-      // test.is( _.streamIs( op.in.data ) );
       test.is( _.objectIs( op.params.originalStructure ) );
 
       var exp =
@@ -651,30 +560,11 @@ function readStreamAsync( test )
         {
           'data' : op.in.data,
           'filePath' : null,
-          'ext' : 'bmp',
-          'format' : 'stream.bmp'
+          'ext' : context.ext,
+          'format' : `stream.${context.ext}`
         },
         'out' :
         {
-          'data' :
-          {
-            'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-            'special' : { compressed : false },
-            // 'channelsMap' :
-            // {
-            //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-            //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-            //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-            //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-            // },
-            // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-            'channelsMap' : {},
-            'channelsArray' : [],
-            'dims' : [ 2, 2 ],
-            'bytesPerPixel' : 4,
-            'bitsPerPixel' : 32,
-            'hasPalette' : false,
-          },
           'format' : 'structure.image',
         },
         'params' :
@@ -688,7 +578,12 @@ function readStreamAsync( test )
         'err' : null
       }
 
-      test.identical( op, exp );
+
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
 
       test.description = 'onHead';
       test.is( callbacks[ 0 ] === op );
@@ -748,30 +643,11 @@ function readBufferSync( test )
       {
         'data' : op.in.data,
         'filePath' : null,
-        'ext' : 'bmp',
-        'format' : 'buffer.bmp'
+        'ext' : context.ext,
+        'format' : `buffer.${context.ext}`
       },
       'out' :
       {
-        'data' :
-        {
-          'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 }
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -785,7 +661,11 @@ function readBufferSync( test )
       'err' : null
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -839,30 +719,11 @@ function readStreamSync( test )
       {
         'data' : op.in.data,
         'filePath' : null,
-        'ext' : 'bmp',
-        'format' : 'stream.bmp'
+        'ext' : context.ext,
+        'format' : `stream.${context.ext}`
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -876,7 +737,11 @@ function readStreamSync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -920,30 +785,11 @@ function fileReadHeadSync( test )
     {
       'data' : op.in.data,
       'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-      'ext' : 'bmp',
-      'format' : 'stream.bmp'
+      'ext' : context.ext,
+      'format' : `stream.${context.ext}`
     },
     'out' :
     {
-      'data' :
-      {
-        'special' : { compressed : false },
-        // 'channelsMap' :
-        // {
-        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        // },
-        // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'channelsMap' : {},
-        'channelsArray' : [],
-        'buffer' : null,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      },
       'format' : 'structure.image',
     },
     'params' :
@@ -957,7 +803,11 @@ function fileReadHeadSync( test )
     'err' : null,
   }
 
-  test.identical( op, exp );
+  test.identical( op.in, exp.in );
+  test.identical( op.out.format, exp.out.format );
+  test.identical( op.params, exp.params );
+  test.identical( op.sync, exp.sync );
+  test.identical( op.error, exp.error );
 
   test.description = 'onHead';
   test.is( callbacks[ 0 ] === op );
@@ -1004,30 +854,11 @@ function fileReadHeadAsync( test )
       {
         'data' : op.in.data,
         'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-        'ext' : 'bmp',
-        'format' : 'stream.bmp'
+        'ext' : context.ext,
+        'format' : `stream.${context.ext}`
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'buffer' : null,
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -1041,7 +872,11 @@ function fileReadHeadAsync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -1088,30 +923,11 @@ function fileReadSync( test )
     {
       'data' : op.in.data,
       'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-      'ext' : 'bmp',
-      'format' : 'buffer.bmp'
+      'ext' : context.ext,
+      'format' : `buffer.${context.ext}`
     },
     'out' :
     {
-      'data' :
-      {
-        'special' : { compressed : false },
-        // 'channelsMap' :
-        // {
-        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        // },
-        // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'channelsMap' : {},
-        'channelsArray' : [],
-        'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      },
       'format' : 'structure.image',
     },
     'params' :
@@ -1125,7 +941,11 @@ function fileReadSync( test )
     'err' : null,
   }
 
-  test.identical( op, exp );
+  test.identical( op.in, exp.in );
+  test.identical( op.out.format, exp.out.format );
+  test.identical( op.params, exp.params );
+  test.identical( op.sync, exp.sync );
+  test.identical( op.error, exp.error );
 
   /* */
 
@@ -1147,30 +967,11 @@ function fileReadSync( test )
     {
       'data' : op.in.data,
       'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-      'ext' : 'bmp',
-      'format' : 'buffer.bmp'
+      'ext' : context.ext,
+      'format' : `buffer.${context.ext}`
     },
     'out' :
     {
-      'data' :
-      {
-        'special' : { compressed : false },
-        // 'channelsMap' :
-        // {
-        //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-        //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-        //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-        //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-        // },
-        // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'channelsMap' : {},
-        'channelsArray' : [],
-        'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 4,
-        'bitsPerPixel' : 32,
-        'hasPalette' : false,
-      },
       'format' : 'structure.image',
     },
     'params' :
@@ -1184,7 +985,11 @@ function fileReadSync( test )
     'err' : null,
   }
 
-  test.identical( op, exp );
+  test.identical( op.in, exp.in );
+  test.identical( op.out.format, exp.out.format );
+  test.identical( op.params, exp.params );
+  test.identical( op.sync, exp.sync );
+  test.identical( op.error, exp.error );
 
   test.description = 'onHead';
   test.is( callbacks[ 0 ] === op );
@@ -1235,31 +1040,11 @@ function fileReadAsync( test )
       {
         'data' : op.in.data,
         'filePath' : a.abs( `Pixels-2x2.${context.ext}` ),
-        'ext' : 'bmp',
-        'format' : 'buffer.bmp',
+        'ext' : context.ext,
+        'format' : `buffer.${context.ext}`,
       },
       'out' :
       {
-        'data' :
-        {
-          'special' : { compressed : false },
-          // 'channelsMap' :
-          // {
-          //   'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          //   'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          //   'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          //   'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
-          // },
-          // 'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-          'channelsMap' : {},
-          'channelsArray' : [],
-          'buffer' : ( new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer,
-          //  new U8x([ 0xff, 0xff, 0xff, 0x0, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0xff, 0x0, 0x0, 0x0 ]) ).buffer
-          'dims' : [ 2, 2 ],
-          'bytesPerPixel' : 4,
-          'bitsPerPixel' : 32,
-          'hasPalette' : false,
-        },
         'format' : 'structure.image',
       },
       'params' :
@@ -1273,7 +1058,11 @@ function fileReadAsync( test )
       'err' : null,
     }
 
-    test.identical( op, exp );
+    test.identical( op.in, exp.in );
+    test.identical( op.out.format, exp.out.format );
+    test.identical( op.params, exp.params );
+    test.identical( op.sync, exp.sync );
+    test.identical( op.error, exp.error );
 
     test.description = 'onHead';
     test.is( callbacks[ 0 ] === op );
@@ -1281,7 +1070,6 @@ function fileReadAsync( test )
 
     return op;
   });
-
 
   /* */
 
@@ -1296,13 +1084,14 @@ function fileReadAsync( test )
 
 }
 
+// --
 // declare
 // --
 
 var Proto =
 {
 
-  name : 'ImageReadAbstractBmp',
+  name : 'ImageReadAbstract',
   abstract : 1,
   silencing : 1,
 

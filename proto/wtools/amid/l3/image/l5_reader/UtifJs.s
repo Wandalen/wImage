@@ -53,12 +53,10 @@ function _structureHandle( o )
 
   o.op.params.originalStructure = os;
 
-  // if( os.t262[ 0 ] === 3 )
-  // structure.colors = 'palette';
-  // else if( os.t262[ 0 ] === 0 || os.t262[ 0 ] === 1 )
-  // structure.colors = 'gray';
-  // else
-  // structure.colors = 'rgb';
+  if( os.t262[ 0 ] === 3 )
+  structure.hasPalette = true;
+  else
+  structure.hasPalette = false;
 
   if( os.t262[ 0 ] === 2 )
   {

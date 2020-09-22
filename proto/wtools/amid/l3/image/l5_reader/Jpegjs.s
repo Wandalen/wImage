@@ -52,35 +52,6 @@ function _structureHandle( o )
 
   o.op.params.originalStructure = os;
 
-  // _.assert( !os.palette, 'not implemented' );
-
-  // if( os.colors === 3 )
-  // {
-  //   _.assert( structure.channelsArray.length === 0 );
-  //   channelAdd( 'red' );
-  //   channelAdd( 'green' );
-  //   channelAdd( 'blue' );
-  // }
-
-  // if( os.colors === 4 )
-  // {
-  //   _.assert( structure.channelsArray.length === 0 );
-  //   channelAdd( 'gray' );
-  // }
-
-  // if( os.hasAlphaChannel )
-  // {
-  //   channelAdd( 'alpha' );
-  // }
-
-  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  // structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
-  // structure.bitsPerPixel = 8;
-  // structure.bytesPerPixel = 1;
-
-  // structure.special.interlaced = false;
-  // structure.hasPalette = false;
-
   o.op.params.headGot = true;
 
   if( o.op.params.onHead )

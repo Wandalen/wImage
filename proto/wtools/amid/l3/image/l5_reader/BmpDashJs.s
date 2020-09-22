@@ -56,13 +56,6 @@ function _structureHandle( o )
 
   _.assert( !os.palette, 'not implemented' );
 
-  // if( os.colorType === 'rgb' )
-  // {
-  //   _.assert( structure.channelsArray.length === 0 );
-  //   channelAdd( 'red' );
-  //   channelAdd( 'green' );
-  //   channelAdd( 'blue' );
-  // }
   if( os.is_with_alpha )
   {
     channelAdd( 'alpha' );
@@ -74,7 +67,6 @@ function _structureHandle( o )
     channelAdd( 'gray' );
   }
 
-  // structure.bitsPerPixel = Math.floor( os.bitPP / ( os.width * os.height ) );
   structure.bitsPerPixel = os.bitPP;
   structure.bytesPerPixel = Math.floor( os.bitPP / 8 );
   structure.special.compressed = os.compress !== 0;
@@ -84,7 +76,6 @@ function _structureHandle( o )
   if( o.op.params.onHead )
   o.op.params.onHead( o.op );
 
-  // console.log( 'OP: ', o.op )
   return o.op;
 
   /* */
