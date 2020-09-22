@@ -803,7 +803,7 @@ var Proto =
 
   name : 'ImageReadPngSharp',
   abstract : 0,
-  // enabled : 0,
+  enabled : 0,
 
   context :
   {

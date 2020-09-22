@@ -887,7 +887,7 @@ var Proto =
 
   name : 'ImageReadPngDashJs',
   abstract : 0,
-  // enabled : 0,
+  enabled : 0,
 
   context :
   {

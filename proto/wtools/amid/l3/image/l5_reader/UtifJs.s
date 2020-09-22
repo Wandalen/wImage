@@ -324,8 +324,8 @@ let Extension =
   _readGeneralStreamSync,
   _readGeneral,
 
-  _readHead,
   _read,
+  _readHead,
 
   //
 

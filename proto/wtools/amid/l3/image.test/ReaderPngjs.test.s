@@ -888,6 +888,7 @@ var Proto =
 
   name : 'ImageReadPngjs',
   abstract : 0,
+  enabled : 0,
 
   context :
   {
