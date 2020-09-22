@@ -205,7 +205,6 @@ function _readGeneralStreamAsync( o )
 
   function errorHandle( err )
   {
-    debugger;
     if( o.params.headGot )
     return;
     if( done )
@@ -263,7 +262,6 @@ function _readGeneralBufferAsync( o )
 
   backend.parse( _.bufferNodeFrom( o.in.data ), ( err, os ) =>
   {
-    debugger;
     if( err )
     return errorHandle( err );
     if( o.params.mode === 'head' )
@@ -294,7 +292,6 @@ function _readHead( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _readHead, o );
-  debugger;
   if( !o.params.mode )
   o.params.mode = 'head';
   return self._readGeneral( o );
@@ -326,7 +323,6 @@ _readHead.defaults =
 
 function _read( o )
 {
-  //debugger;
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
@@ -347,7 +343,6 @@ _read.defaults =
 let Formats = [ 'png' ];
 let Exts = [ 'png' ];
 
-debugger
 let Composes =
 {
   shortName : 'pngjs',
@@ -442,11 +437,9 @@ _.classDeclare
 });
 
 //
-debugger
 _.assert( !_.image.reader[ Self.shortName ] );
 new Self();
 _.assert( !!_.image.reader[ Self.shortName ] );
-debugger
 // _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;

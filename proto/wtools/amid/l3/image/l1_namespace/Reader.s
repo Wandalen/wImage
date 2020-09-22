@@ -26,7 +26,7 @@ function read_body( o )
 {
 
   let self = this;
-  debugger
+
   if( o.filePath && !o.ext )
   o.ext = _.path.ext( o.filePath ).toLowerCase();
 
@@ -34,9 +34,9 @@ function read_body( o )
   {
     let o2 = _.mapOnly( o, self.readerDeduce.defaults );
     o2.single = 1;
-    debugger
+  
     let selected = self.readerDeduce( o2 );
-    debugger
+  
     _.assert( selected instanceof _.gdf.Context, `Cant deduce reader` );
     o.reader = selected;
   }
@@ -50,7 +50,7 @@ function read_body( o )
   o2.format = o.inFormat;
 
   let result = o.reader[ methodName ]( o2 );
-  //debugger;
+  /;
   if( o.sync )
   return end( result );
   result.then( end );
@@ -96,9 +96,9 @@ function readerDeduce( o )
   let self = this;
   o = _.routineOptions( readerDeduce, arguments );
   o.outFormat = 'structure.image';
-  debugger
+
   let result = _.gdf.selectSingleContext( o );
-  debugger;
+;
   return result;
 }
 
@@ -123,10 +123,9 @@ let Extension =
   readerDeduce,
 
 }
-debugger
+
 _.mapExtend( Self, Extension );
-debugger
-//
+
 
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = _global_.wTools;

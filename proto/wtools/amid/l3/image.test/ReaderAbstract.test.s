@@ -628,9 +628,7 @@ function readBufferSync( test )
     var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
     test.is( o.is( data ) );
 
-    debugger;
     var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
-    debugger;
 
     test.description = 'operation';
 

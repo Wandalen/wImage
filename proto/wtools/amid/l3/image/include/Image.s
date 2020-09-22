@@ -6,7 +6,6 @@
 if( typeof module !== 'undefined' )
 {
   let _ = require( './Basic.s' );
-  // debugger;
   require( './Reader.s' );
   require( './ReaderPngjs.s' );
   // require( './ReaderPngDotJs.s' );

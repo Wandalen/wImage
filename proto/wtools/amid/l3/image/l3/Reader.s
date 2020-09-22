@@ -82,7 +82,7 @@ _read.defaults =
 
 function read( o )
 {
-  //debugger;
+
   let self = this;
   let ready = new _.Consequence().take( null );
   let result;
@@ -125,7 +125,7 @@ function _encode( o )
     o.err = _.err( err, '\n', `Failed to read image ${o.filePath}` );
     throw o.err;
   });
-  //debugger;
+
   if( o.sync )
   return ready.sync();
   return ready;
@@ -205,7 +205,7 @@ function onEncode( op )
 
   ready.then( ( op2 ) =>
   {
-    debugger;
+
     op.out.data = op2.out.data;
     return op;
   });
