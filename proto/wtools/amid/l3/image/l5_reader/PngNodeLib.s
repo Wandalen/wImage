@@ -77,9 +77,10 @@ function _structureHandle( o )
     channelAdd( 'gray' );
   }
 
-  structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
-  // o.op.structure.bitsPerPixel = os.bitDepth;
+  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
+  structure.bitsPerPixel = os.bitDepth;
+  structure.bytesPerPixel = Math.ceil( structure.bitsPerPixel / 8 );
   structure.special.interlaced = os.interlaceType !== 'none';
   structure.hasPalette = os.palette !== undefined;
 
@@ -94,7 +95,7 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    structure.channelsMap[ name ] = { name, bits : os.bitDepth, order : structure.channelsArray.length };
+    // structure.channelsMap[ name ] = { name, bits : os.bitDepth, order : structure.channelsArray.length };
     structure.channelsArray.push( name );
   }
 

@@ -73,9 +73,6 @@ function _structureHandle( o )
     channelAdd( 'alpha' );
   }
 
-  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  // structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
-
   // NO BIT DEPTH
   structure.special.interlaced = os.metadata.isProgressive;
   structure.hasPalette = os.metadata.paletteBitDepth !== undefined;
@@ -90,13 +87,6 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    // NO BIT DEPTH.
-    // structure.channelsMap[ name ] =
-    // {
-    //   name,
-    //   bits : 8,
-    //   order : structure.channelsArray.length
-    // };
     structure.channelsArray.push( name );
   }
 
@@ -286,7 +276,7 @@ let Exts = [ 'png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'tif', 'tiff' ];
 let Composes =
 {
   shortName : 'pngSharp',
-  ext : _.define.own([ 'png' ]),
+  ext : _.define.own([ 'png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'tif', 'tiff' ]),
   inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
   outFormat : _.define.own([ 'structure.image' ]),
   feature : _.define.own({}),
