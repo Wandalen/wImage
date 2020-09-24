@@ -14,7 +14,7 @@ if( typeof module !== 'undefined' )
   require( './ReaderPngFast.s' );
   require( './ReaderBmpDashJs.s' );
   require( './ReaderJpegjs.s' );
-  require( './ReaderOmggif.s' );
+  // require( './ReaderOmggif.s' );
   require( './ReaderUtifJs.s' );
   // require( './Writer.s' );
 
