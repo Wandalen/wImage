@@ -19,7 +19,8 @@ let _ = _global_.wTools;
 function onSuiteBegin( test )
 {
   let context = this;
-
+  deleteDefault();
+  _.image.reader[ context.readerName ].feature.default = 1;
   context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
   context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
 
@@ -30,7 +31,7 @@ function onSuiteBegin( test )
 function onSuiteEnd( test )
 {
   let context = this;
-
+  _.image.reader[ context.readerName ].finit();
   _.assert( _.strHas( context.suiteTempPath, '/ImageRead' ) )
   _.path.tempClose( context.suiteTempPath );
 
@@ -1080,6 +1081,21 @@ function fileReadAsync( test )
     callbacks.push( op );
   }
 
+}
+
+//
+
+function deleteDefault()
+{
+  _.image.reader[ 'Pngjs' ] ? _.image.reader[ 'Pngjs' ].feature.default = 0 : null;
+  _.image.reader[ 'BmpDashJs' ] ? _.image.reader[ 'BmpDashJs' ].feature.default = 0 : null;
+  _.image.reader[ 'JpegJs' ] ? _.image.reader[ 'JpegJs' ].feature.default = 0 : null;
+  _.image.reader[ 'PngDashJs' ] ? _.image.reader[ 'PngDashJs' ].feature.default = 0 : null;
+  _.image.reader[ 'PngDotJs' ] ? _.image.reader[ 'PngDotJs' ].feature.default = 0 : null;
+  _.image.reader[ 'PngFast' ] ? _.image.reader[ 'PngFast' ].feature.default = 0 : null;
+  _.image.reader[ 'PngNodeLib' ] ? _.image.reader[ 'PngNodeLib' ].feature.default = 0 : null;
+  _.image.reader[ 'PngSharp' ] ? _.image.reader[ 'PngSharp' ].feature.default = 0 : null;
+  _.image.reader[ 'UtifJs' ] ? _.image.reader[ 'UtifJs' ].feature.default = 0 : null;
 }
 
 // --

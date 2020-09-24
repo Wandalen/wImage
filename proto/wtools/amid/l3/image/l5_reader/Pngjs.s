@@ -349,7 +349,7 @@ let Composes =
   ext : _.define.own([ 'png' ]),
   inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
   outFormat : _.define.own([ 'structure.image' ]),
-  feature : _.define.own({}),
+  feature : _.define.own({ default : 1 }),
 
 }
 
@@ -428,8 +428,7 @@ let Extension =
 }
 
 //
-let temp = _.gdf;
-debugger;
+
 _.classDeclare
 ({
   cls : Self,
@@ -437,14 +436,12 @@ _.classDeclare
   extend : Extension,
 });
 
-debugger;
 
 //
 _.assert( !_.image.reader[ Self.shortName ] );
 new Self();
 _.assert( !!_.image.reader[ Self.shortName ] );
-debugger;
-// _.image.reader[ Self.shortName ] = Self;
+
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 

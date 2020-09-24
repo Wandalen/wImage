@@ -222,7 +222,7 @@ let Composes =
   ext : _.define.own([ 'jpg', 'jpeg' ]),
   inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
   outFormat : _.define.own([ 'structure.image' ]),
-  feature : _.define.own({}),
+  feature : _.define.own({ default : 1 }),
 }
 
 let Aggregates =

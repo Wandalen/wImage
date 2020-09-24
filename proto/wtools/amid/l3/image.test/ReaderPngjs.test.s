@@ -21,6 +21,31 @@ let Parent = _global_.wTests.ImageReadAbstract;
 // tests
 // --
 
+function encoder( test )
+{
+  let context = this;
+  let a = test.assetFor( 'basic' );
+
+  act();
+
+  return a.ready;
+
+  /* - */
+
+  function act( o )
+  {
+    test.case = `encoder : ${context.readerName}`;
+    a.reflect();
+
+    var encoder = _.gdf.selectSingleContext({ ext : context.ext });
+    test.il( encoder.shortName, 'pngjs' );
+
+  }
+
+}
+
+//
+
 function encode_( test )
 {
   let context = this;
@@ -815,6 +840,7 @@ var Proto =
 
   tests :
   {
+    encoder,
     encode_,
     readHeadBufferAsync_,
     readHeadStreamAsync_,
