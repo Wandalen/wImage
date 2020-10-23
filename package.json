@@ -1,6 +1,6 @@
 {
   "name" : "wimage",
-  "version" : "0.3.40",
+  "version" : "0.3.41",
   "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
