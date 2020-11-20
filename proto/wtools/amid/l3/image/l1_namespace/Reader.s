@@ -11,7 +11,7 @@ _.image.reader = _.image.reader || Object.create( null );
 // inter
 // --
 
-function reader_pre( routine, args )
+function reader_head( routine, args )
 {
   let o = _.routineOptions( routine, args );
   _.assert( arguments.length === 2 );
@@ -78,12 +78,12 @@ read_body.defaults =
 
 //
 
-let readHead = _.routineFromPreAndBody( reader_pre, read_body );
+let readHead = _.routineUnite( reader_head, read_body );
 readHead.defaults.mode = 'head';
 
 //
 
-let read = _.routineFromPreAndBody( reader_pre, read_body );
+let read = _.routineUnite( reader_head, read_body );
 read.defaults.mode = 'full';
 
 //

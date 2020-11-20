@@ -10,7 +10,7 @@ let Self = _.image;
 // inter
 // --
 
-function fileRead_pre( routine, args )
+function fileRead_head( routine, args )
 {
   let o = args[ 0 ]
   if( _.strIs( args[ 0 ] ) )
@@ -74,7 +74,7 @@ fileReadHead_body.defaults =
 _.assert( _.image.readHead.defaults.methodName === undefined );
 _.assert( _.image.readHead.defaults.sync !== undefined );
 
-let fileReadHead = _.routineFromPreAndBody( fileRead_pre, fileReadHead_body );
+let fileReadHead = _.routineUnite( fileRead_head, fileReadHead_body );
 
 //
 
@@ -117,7 +117,7 @@ _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
-let fileRead = _.routineFromPreAndBody( fileRead_pre, fileRead_body );
+let fileRead = _.routineUnite( fileRead_head, fileRead_body );
 
 // --
 // declare
