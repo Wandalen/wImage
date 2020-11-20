@@ -49,13 +49,13 @@ function bufferFromStream_( test )
     filePath : __dirname + '/_assets/basic/Pixels-2x2.png',
     encoding : 'buffer.raw',
   });
-  test.is( _.streamIs( stream ) );
+  test.true( _.streamIs( stream ) );
   let ready = bufferFromStream({ src : stream });
-  test.is( _.consequenceIs( ready ))
+  test.true( _.consequenceIs( ready ))
 
   ready.then( ( data ) =>
   {
-    test.is( _.bufferRawIs( data ) );
+    test.true( _.bufferRawIs( data ) );
     return null;
   } );
 

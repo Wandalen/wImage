@@ -61,15 +61,15 @@ function encode( test )
     callbacks = [];
     a.reflect();
     var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    test.is( o.is( data ) );
+    test.true( o.is( data ) );
 
     test.description = 'operation';
 
     var params = {}
     var encoder = _.gdf.selectSingleContext({ ext : context.ext })
     var op = encoder.encode({ data : data, params });
-    test.is( o.is( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( o.is( op.in.data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -144,9 +144,9 @@ function readHeadBufferAsync( test )
       callbacks = [];
       a.reflect();
       var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-      test.is( o.is( data ) );
+      test.true( o.is( data ) );
       var op = _.image.readHead({ data, ext : context.ext, sync : 0, onHead });
-      test.is( _.consequenceIs( op ) );
+      test.true( _.consequenceIs( op ) );
       return op;
     })
 
@@ -154,8 +154,8 @@ function readHeadBufferAsync( test )
     {
       test.description = 'operation';
 
-      test.is( o.is( op.in.data ) );
-      test.is( _.objectIs( op.params.originalStructure ) );
+      test.true( o.is( op.in.data ) );
+      test.true( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
@@ -201,7 +201,7 @@ function readHeadBufferAsync( test )
       test.identical( op, exp );
 
       test.description = 'onHead';
-      test.is( callbacks[ 0 ] === op );
+      test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
 
       return op;
@@ -243,9 +243,9 @@ function readHeadStreamAsync( test )
       callbacks = [];
       a.reflect();
       var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-      test.is( _.streamIs( data ) );
+      test.true( _.streamIs( data ) );
       var op = _.image.readHead({ data, ext : context.ext, sync : 0, onHead });
-      test.is( _.consequenceIs( op ) );
+      test.true( _.consequenceIs( op ) );
       return op;
     })
 
@@ -254,8 +254,8 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-      test.is( _.streamIs( op.in.data ) );
-      test.is( _.objectIs( op.params.originalStructure ) );
+      test.true( _.streamIs( op.in.data ) );
+      test.true( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
@@ -301,7 +301,7 @@ function readHeadStreamAsync( test )
       test.identical( op, exp );
 
       test.description = 'onHead';
-      test.is( callbacks[ 0 ] === op );
+      test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
 
       return op;
@@ -341,13 +341,13 @@ function readHeadBufferSync( test )
     callbacks = [];
     a.reflect();
     var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    test.is( o.is( data ) );
+    test.true( o.is( data ) );
     var op = _.image.readHead({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
-    test.is( o.is( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( o.is( op.in.data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -393,7 +393,7 @@ function readHeadBufferSync( test )
     test.identical( op, exp );
 
     test.description = 'onHead';
-    test.is( callbacks[ 0 ] === op );
+    test.true( callbacks[ 0 ] === op );
     test.identical( callbacks.length, 1 );
 
   }
@@ -430,13 +430,13 @@ function readHeadStreamSync( test )
     callbacks = [];
     a.reflect();
     var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    test.is( _.streamIs( data ) );
+    test.true( _.streamIs( data ) );
     var op = _.image.readHead({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
-    test.is( _.streamIs( data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( _.streamIs( data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -482,7 +482,7 @@ function readHeadStreamSync( test )
     test.identical( op, exp );
 
     test.description = 'onHead';
-    test.is( callbacks[ 0 ] === op );
+    test.true( callbacks[ 0 ] === op );
     test.identical( callbacks.length, 1 );
 
   }
@@ -521,9 +521,9 @@ function readBufferAsync( test )
       callbacks = [];
       a.reflect();
       var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-      test.is( o.is( data ) );
+      test.true( o.is( data ) );
       var op = _.image.read({ data, ext : context.ext, sync : 0, onHead });
-      test.is( _.consequenceIs( op ) );
+      test.true( _.consequenceIs( op ) );
       return op;
     })
 
@@ -531,8 +531,8 @@ function readBufferAsync( test )
     {
       test.description = 'operation';
 
-      test.is( o.is( op.in.data ) );
-      test.is( _.objectIs( op.params.originalStructure ) );
+      test.true( o.is( op.in.data ) );
+      test.true( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
@@ -578,7 +578,7 @@ function readBufferAsync( test )
       test.identical( op, exp );
 
       test.description = 'onHead';
-      test.is( callbacks[ 0 ] === op );
+      test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
 
       return op;
@@ -620,9 +620,9 @@ function readStreamAsync( test )
       callbacks = [];
       a.reflect();
       var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-      test.is( _.streamIs( data ) );
+      test.true( _.streamIs( data ) );
       var op = _.image.read({ data, ext : context.ext, sync : 0, onHead });
-      test.is( _.consequenceIs( op ) );
+      test.true( _.consequenceIs( op ) );
       return op;
     })
 
@@ -630,8 +630,8 @@ function readStreamAsync( test )
     {
       test.description = 'operation';
 
-      test.is( _.streamIs( op.in.data ) );
-      test.is( _.objectIs( op.params.originalStructure ) );
+      test.true( _.streamIs( op.in.data ) );
+      test.true( _.objectIs( op.params.originalStructure ) );
 
       var exp =
       {
@@ -677,7 +677,7 @@ function readStreamAsync( test )
       test.identical( op, exp );
 
       test.description = 'onHead';
-      test.is( callbacks[ 0 ] === op );
+      test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
 
       return op;
@@ -717,7 +717,7 @@ function readBufferSync( test )
     callbacks = [];
     a.reflect();
     var data = _.fileProvider.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    test.is( o.is( data ) );
+    test.true( o.is( data ) );
 
     debugger;
     var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
@@ -725,8 +725,8 @@ function readBufferSync( test )
 
     test.description = 'operation';
 
-    test.is( o.is( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( o.is( op.in.data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -772,7 +772,7 @@ function readBufferSync( test )
     test.identical( op, exp );
 
     test.description = 'onHead';
-    test.is( callbacks[ 0 ] === op );
+    test.true( callbacks[ 0 ] === op );
     test.identical( callbacks.length, 1 );
 
   }
@@ -809,13 +809,13 @@ function readStreamSync( test )
     callbacks = [];
     a.reflect();
     var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    test.is( _.streamIs( data ) );
+    test.true( _.streamIs( data ) );
     var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
 
     test.description = 'operation';
 
-    test.is( _.streamIs( data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( _.streamIs( data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -861,7 +861,7 @@ function readStreamSync( test )
     test.identical( op, exp );
 
     test.description = 'onHead';
-    test.is( callbacks[ 0 ] === op );
+    test.true( callbacks[ 0 ] === op );
     test.identical( callbacks.length, 1 );
 
   }
@@ -889,12 +889,12 @@ function fileReadHeadSync( test )
 
   a.reflect();
   var op = _.image.fileReadHead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 1, onHead });
-  test.is( _.mapIs( op ) );
+  test.true( _.mapIs( op ) );
 
   test.description = 'operation';
 
-  test.is( _.streamIs( op.in.data ) );
-  test.is( _.objectIs( op.params.originalStructure ) );
+  test.true( _.streamIs( op.in.data ) );
+  test.true( _.objectIs( op.params.originalStructure ) );
 
   var exp =
   {
@@ -940,7 +940,7 @@ function fileReadHeadSync( test )
   test.identical( op, exp );
 
   test.description = 'onHead';
-  test.is( callbacks[ 0 ] === op );
+  test.true( callbacks[ 0 ] === op );
   test.identical( callbacks.length, 1 );
 
   /* */
@@ -967,7 +967,7 @@ function fileReadHeadAsync( test )
     test.case = 'basic';
     a.reflect();
     var op = _.image.fileReadHead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 0, onHead });
-    test.is( _.consequenceIs( op ) );
+    test.true( _.consequenceIs( op ) );
     return op;
   })
 
@@ -975,8 +975,8 @@ function fileReadHeadAsync( test )
   {
     test.description = 'operation';
 
-    test.is( _.streamIs( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( _.streamIs( op.in.data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -1022,7 +1022,7 @@ function fileReadHeadAsync( test )
     test.identical( op, exp );
 
     test.description = 'onHead';
-    test.is( callbacks[ 0 ] === op );
+    test.true( callbacks[ 0 ] === op );
     test.identical( callbacks.length, 1 );
 
     return op;
@@ -1057,8 +1057,8 @@ function fileReadSync( test )
 
   test.description = 'operation';
 
-  test.is( _.bufferRawIs( op.in.data ) );
-  test.is( _.objectIs( op.params.originalStructure ) );
+  test.true( _.bufferRawIs( op.in.data ) );
+  test.true( _.objectIs( op.params.originalStructure ) );
 
   var exp =
   {
@@ -1114,8 +1114,8 @@ function fileReadSync( test )
 
   test.description = 'operation';
 
-  test.is( _.bufferRawIs( op.in.data ) );
-  test.is( _.objectIs( op.params.originalStructure ) );
+  test.true( _.bufferRawIs( op.in.data ) );
+  test.true( _.objectIs( op.params.originalStructure ) );
 
   var exp =
   {
@@ -1161,7 +1161,7 @@ function fileReadSync( test )
   test.identical( op, exp );
 
   test.description = 'onHead';
-  test.is( callbacks[ 0 ] === op );
+  test.true( callbacks[ 0 ] === op );
   test.identical( callbacks.length, 1 );
 
   /* */
@@ -1190,7 +1190,7 @@ function fileReadAsync( test )
 
     a.reflect();
     var op = _.image.fileRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), sync : 0, onHead });
-    test.is( _.consequenceIs( op ) );
+    test.true( _.consequenceIs( op ) );
 
     return op;
   })
@@ -1200,8 +1200,8 @@ function fileReadAsync( test )
 
     test.description = 'operation';
 
-    test.is( _.bufferRawIs( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
+    test.true( _.bufferRawIs( op.in.data ) );
+    test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
     {
@@ -1247,7 +1247,7 @@ function fileReadAsync( test )
     test.identical( op, exp );
 
     test.description = 'onHead';
-    test.is( callbacks[ 0 ] === op );
+    test.true( callbacks[ 0 ] === op );
     test.identical( callbacks.length, 1 );
 
     return op;
