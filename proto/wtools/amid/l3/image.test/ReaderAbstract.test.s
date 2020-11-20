@@ -68,15 +68,9 @@ function encode( test )
 
     var params = {}
     var encoder = _.gdf.selectSingleContext({ ext : context.ext })
-<<<<<<< HEAD
-    var op = encoder.encode({ data, params });
-    test.is( o.is( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
-=======
     var op = encoder.encode({ data : data, params });
     test.true( o.is( op.in.data ) );
     test.true( _.objectIs( op.params.originalStructure ) );
->>>>>>> 284f42256d643074e01621611794d77cfbd170c6
 
     var exp =
     {
@@ -235,12 +229,8 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-<<<<<<< HEAD
-      test.is( _.objectIs( op.params.originalStructure ) );
-=======
       test.true( _.streamIs( op.in.data ) );
       test.true( _.objectIs( op.params.originalStructure ) );
->>>>>>> 284f42256d643074e01621611794d77cfbd170c6
 
       var exp =
       {
@@ -564,12 +554,8 @@ function readStreamAsync( test )
     {
       test.description = 'operation';
 
-<<<<<<< HEAD
-      test.is( _.objectIs( op.params.originalStructure ) );
-=======
       test.true( _.streamIs( op.in.data ) );
       test.true( _.objectIs( op.params.originalStructure ) );
->>>>>>> 284f42256d643074e01621611794d77cfbd170c6
 
       var exp =
       {
@@ -791,13 +777,8 @@ function fileReadHeadSync( test )
 
   test.description = 'operation';
 
-<<<<<<< HEAD
-  // test.is( _.streamIs( op.in.data ) );
-  test.is( _.objectIs( op.params.originalStructure ) );
-=======
   test.true( _.streamIs( op.in.data ) );
   test.true( _.objectIs( op.params.originalStructure ) );
->>>>>>> 284f42256d643074e01621611794d77cfbd170c6
 
   var exp =
   {
@@ -865,13 +846,8 @@ function fileReadHeadAsync( test )
   {
     test.description = 'operation';
 
-<<<<<<< HEAD
-    // test.is( _.streamIs( op.in.data ) );
-    test.is( _.objectIs( op.params.originalStructure ) );
-=======
     test.true( _.streamIs( op.in.data ) );
     test.true( _.objectIs( op.params.originalStructure ) );
->>>>>>> 284f42256d643074e01621611794d77cfbd170c6
 
     var exp =
     {
