@@ -135,7 +135,7 @@
 //       test.identical( op.out.data, exp.data );
 
 //       test.description = 'onHead';
-//       test.is( callbacks[ 0 ] === op );
+//       test.true( callbacks[ 0 ] === op );
 //       test.identical( callbacks.length, 1 );
 
 //       return op;
@@ -185,7 +185,7 @@
 //     {
 
 //       test.description = 'operation';
-//       test.is( _.bufferNodeIs( op.in.data ) );
+//       test.true( _.bufferNodeIs( op.in.data ) );
 
 //       var exp =
 //       {
@@ -211,7 +211,7 @@
 //       test.identical( op.out.data, exp.data );
 
 //       test.description = 'onHead';
-//       test.is( callbacks[ 0 ] === op );
+//       test.true( callbacks[ 0 ] === op );
 //       test.identical( callbacks.length, 1 );
 
 //       return op;
@@ -454,7 +454,7 @@
 //     {
 //       test.description = 'operation';
 
-//       test.is( _.bufferNodeIs( op.in.data ) );
+//       test.true( _.bufferNodeIs( op.in.data ) );
 //       var exp =
 //       {
 //         'data' :
@@ -581,7 +581,7 @@
 
 //     test.description = 'operation';
 
-//     test.is( _.streamIs( data ) );
+//     test.true( _.streamIs( data ) );
 
 //     var exp =
 //     {
@@ -634,7 +634,7 @@
 
 //   test.description = 'operation';
 
-//   test.is( _.bufferNodeIs( op.in.data ) );
+//   test.true( _.bufferNodeIs( op.in.data ) );
 
 //   var exp =
 //   {
@@ -690,7 +690,7 @@
 //   {
 //     test.description = 'operation';
 
-//     test.is( _.bufferNodeIs( op.in.data ) );
+//     test.true( _.bufferNodeIs( op.in.data ) );
 
 //     var exp =
 //     {

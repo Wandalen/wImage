@@ -157,7 +157,7 @@ function readHeadBufferAsync_( test )
       test.identical( op.out.data, exp.data );
 
       test.description = 'onHead';
-      test.is( callbacks[ 0 ] === op );
+      test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
 
       return op;
@@ -207,7 +207,7 @@ function readHeadStreamAsync_( test )
     {
 
       test.description = 'operation';
-      test.is( _.bufferNodeIs( op.in.data ) );
+      test.true( _.bufferNodeIs( op.in.data ) );
 
       var exp =
       {
@@ -233,7 +233,7 @@ function readHeadStreamAsync_( test )
       test.identical( op.out.data, exp.data );
 
       test.description = 'onHead';
-      test.is( callbacks[ 0 ] === op );
+      test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
 
       return op;
@@ -476,7 +476,7 @@ function readStreamAsync_( test )
     {
       test.description = 'operation';
 
-      test.is( _.bufferNodeIs( op.in.data ) );
+      test.true( _.bufferNodeIs( op.in.data ) );
       var exp =
       {
         'data' :
@@ -603,7 +603,7 @@ function readStreamSync_( test )
 
     test.description = 'operation';
 
-    test.is( _.streamIs( data ) );
+    test.true( _.streamIs( data ) );
 
     var exp =
     {
@@ -656,7 +656,7 @@ function fileReadHeadSync_( test )
 
   test.description = 'operation';
 
-  test.is( _.bufferNodeIs( op.in.data ) );
+  test.true( _.bufferNodeIs( op.in.data ) );
 
   var exp =
   {
@@ -712,7 +712,7 @@ function fileReadHeadAsync_( test )
   {
     test.description = 'operation';
 
-    test.is( _.bufferNodeIs( op.in.data ) );
+    test.true( _.bufferNodeIs( op.in.data ) );
 
     var exp =
     {
