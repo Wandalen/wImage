@@ -229,7 +229,7 @@ function readHeadStreamAsync( test )
 
       test.description = 'operation';
 
-      test.true( _.streamIs( op.in.data ) );
+      // test.true( _.streamIs( op.in.data ) );
       test.true( _.objectIs( op.params.originalStructure ) );
 
       var exp =
@@ -554,7 +554,7 @@ function readStreamAsync( test )
     {
       test.description = 'operation';
 
-      test.true( _.streamIs( op.in.data ) );
+      // test.true( _.streamIs( op.in.data ) );
       test.true( _.objectIs( op.params.originalStructure ) );
 
       var exp =
@@ -777,7 +777,7 @@ function fileReadHeadSync( test )
 
   test.description = 'operation';
 
-  test.true( _.streamIs( op.in.data ) );
+  // test.true( _.streamIs( op.in.data ) );
   test.true( _.objectIs( op.params.originalStructure ) );
 
   var exp =
@@ -846,7 +846,7 @@ function fileReadHeadAsync( test )
   {
     test.description = 'operation';
 
-    test.true( _.streamIs( op.in.data ) );
+    // test.true( _.streamIs( op.in.data ) );
     test.true( _.objectIs( op.params.originalStructure ) );
 
     var exp =
