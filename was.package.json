@@ -29,7 +29,7 @@
     "pixel-jpg": "=0.0.1",
     "bmp-js" : "=0.1.0",
     "utif" : "=3.1.0",
-    "omggif": "1.0.10",
+    "omggif": "1.0.10"
   },
   "devDependencies" : { "wTesting" : "", "eslint" : "7.1.0", "wimage" : "file:." },
   "keywords" : [ "wTools" ]
