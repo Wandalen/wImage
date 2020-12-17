@@ -52,7 +52,7 @@ function _structureHandle( o )
   os = os._parser ? os._parser._metaData : os;
 
   o.op.params.originalStructure = os;
-
+  // console.log( 'OS: ', os )
   _.assert( !os.palette, 'not implemented' );
 
   if( os.color )
@@ -63,20 +63,20 @@ function _structureHandle( o )
     channelAdd( 'blue' );
   }
 
-  if( os.colorType === 4 )
+  if( os.colorType === 4 || os.colorType === 0 )
   {
     _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
-  if( os.alpha )
+  if( os.alpha || os.colorType === 4 || os.colorType === 6 )
   {
     channelAdd( 'alpha' );
   }
 
-  structure.bytesPerPixel = os.bpp;
-  structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-
+  structure.bytesPerPixel = Math.ceil( os.depth / 8 ) ;
+  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  structure.bitsPerPixel = os.depth;
   structure.special.interlaced = os.interlace;
   structure.hasPalette = os.palette;
 
@@ -88,9 +88,10 @@ function _structureHandle( o )
 
   /* */
 
+
   function channelAdd( name )
   {
-    structure.channelsMap[ name ] = { name, bits : os.depth, order : structure.channelsArray.length };
+    // structure.channelsMap[ name ] = { name, bits : os.depth, order : structure.channelsArray.length };
     structure.channelsArray.push( name );
   }
 
@@ -204,7 +205,6 @@ function _readGeneralStreamAsync( o )
 
   function errorHandle( err )
   {
-    debugger;
     if( o.params.headGot )
     return;
     if( done )
@@ -262,7 +262,6 @@ function _readGeneralBufferAsync( o )
 
   backend.parse( _.bufferNodeFrom( o.in.data ), ( err, os ) =>
   {
-    debugger;
     if( err )
     return errorHandle( err );
     if( o.params.mode === 'head' )
@@ -293,7 +292,6 @@ function _readHead( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _readHead, o );
-  debugger;
   if( !o.params.mode )
   o.params.mode = 'head';
   return self._readGeneral( o );
@@ -347,12 +345,11 @@ let Exts = [ 'png' ];
 
 let Composes =
 {
-
   shortName : 'pngjs',
   ext : _.define.own([ 'png' ]),
   inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
   outFormat : _.define.own([ 'structure.image' ]),
-  feature : _.define.own({}),
+  feature : _.define.own({ default : 1 }),
 
 }
 
@@ -372,10 +369,13 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsStream : 0,
-  SupportsAsync : 1,
-  SupportsSync : 1,
-  SupportsReadHead : 1
+  SupportsDimensions : 1,
+  SupportsBuffer : 1,
+  SupportsDepth : 1,
+  SupportsColor : 1,
+  SupportsSpecial : 1,
+  LimitationsRead : 0,
+  MethodsNativeCount : 3
 }
 
 let Forbids =
@@ -436,13 +436,12 @@ _.classDeclare
   extend : Extension,
 });
 
-//
 
+//
 _.assert( !_.image.reader[ Self.shortName ] );
 new Self();
 _.assert( !!_.image.reader[ Self.shortName ] );
 
-// _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 

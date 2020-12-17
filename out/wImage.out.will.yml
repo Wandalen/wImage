@@ -204,7 +204,7 @@ module:
           - ../proto/wtools/amid/l3/image/l7_namespace/Reader.s
           - ../proto/wtools/amid/l3/image.test
           - ../proto/wtools/amid/l3/image.test/BufferFromStream.test.s
-          - ../proto/wtools/amid/l3/image.test/ReaderAbstract.test.s
+          - ../proto/wtools/amid/l3/image.test/ReaderAbstractPng.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderPngDashJs.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderPngDotJs.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderPngjs.test.s

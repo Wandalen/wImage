@@ -14,7 +14,6 @@ _.image.reader = _.image.reader || Object.create( null );
 function reader_head( routine, args )
 {
   let o = _.routineOptions( routine, args );
-
   _.assert( arguments.length === 2 );
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
@@ -25,6 +24,7 @@ function reader_head( routine, args )
 
 function read_body( o )
 {
+
   let self = this;
 
   if( o.filePath && !o.ext )
@@ -48,7 +48,6 @@ function read_body( o )
   o2.format = o.inFormat;
 
   let result = o.reader[ methodName ]( o2 );
-
   if( o.sync )
   return end( result );
   result.then( end );
@@ -122,7 +121,6 @@ let Extension =
 
 _.mapExtend( Self, Extension );
 
-//
 
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = _global_.wTools;

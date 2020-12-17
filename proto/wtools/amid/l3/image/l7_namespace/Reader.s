@@ -12,7 +12,6 @@ let Self = _.image;
 
 function fileRead_head( routine, args )
 {
-  debugger;
   let o = args[ 0 ]
   if( _.strIs( args[ 0 ] ) )
   o = { filePath : o }

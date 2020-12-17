@@ -5,7 +5,7 @@
 
 /**
  * @classdesc Abstract interface to read image.
- * @class wImageReaderPngLwipjs
+ * @class wImageReaderPngDashjs
  * @namespace wTools
  * @module Tools/mid/ImageReader
  */
@@ -13,13 +13,14 @@
 let _ = _global_.wTools;
 let Backend = require( 'png-js' );
 let Parent = _.image.reader.Abstract;
+let bufferFromStream = require( './BufferFromStream.s' );
 let Self = wImageReaderPngDashJs;
 function wImageReaderPngDashJs()
 {
   return _.workpiece.construct( Self, this, arguments );
 }
 
-Self.shortName = 'Png-js';
+Self.shortName = 'PngDashJs';
 
 // --
 // implementation
@@ -29,59 +30,59 @@ function _structureHandle( o )
 {
   let self = this;
   let os = o.originalStructure;
-
   if( os === null )
   os = o.op.originalStructure;
 
-  // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
+  _.assert( _.strIs( o.mode ) );
 
-  if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.data );
+  let structure = o.op.out.data;
+
+  if( o.mode === 'full' && o.op.params.mode === 'full' )
+  structure.buffer = _.bufferRawFrom( os.buffer );
   else
-  o.op.structure.buffer = null;
+  structure.buffer = null;
 
-  if( o.op.headGot )
+  if( o.op.params.headGot )
   return o.op;
 
-  o.op.structure.dims = [ os.width, os.height ];
+  structure.dims = [ os.width, os.height ];
 
-  os = os._parser ? os._parser._metaData : os;
+  o.op.params.originalStructure = os;
 
-  o.op.originalStructure = os;
+  // _.assert( !os.palette, 'not implemented' );
 
-  _.assert( !os.palette, 'not implemented' );
-
-  if( os.color )
+  if( os.colors === 3 )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'red' );
     channelAdd( 'green' );
     channelAdd( 'blue' );
   }
 
-  if( os.colorType === 4 )
+  if( os.colors === 4 )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
-  if( os.alpha )
+  if( os.hasAlphaChannel )
   {
     channelAdd( 'alpha' );
   }
 
-  o.op.structure.bytesPerPixel = os.bpp;
-  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // structure.bytesPerPixel = Math.round( structure.bitsPerPixel / 8 );
+  structure.bitsPerPixel = os.bits;
+  structure.bytesPerPixel = Math.ceil( structure.bitsPerPixel / 8 );
+  structure.special.interlaced = os.interlaceMethod === 1 ;
+  structure.hasPalette = os.palette.length > 0;
 
-  o.op.structure.special.interlaced = os.interlace;
-  o.op.structure.hasPalette = os.palette;
+  o.op.params.headGot = true;
 
-  o.op.headGot = true;
-
-  if( o.op.onHead )
-  o.op.onHead( o.op );
+  if( o.op.params.onHead )
+  o.op.params.onHead( o.op );
 
   return o.op;
 
@@ -89,8 +90,8 @@ function _structureHandle( o )
 
   function channelAdd( name )
   {
-    o.op.structure.channelsMap[ name ] = { name, bits : os.depth, order : o.op.structure.channelsArray.length };
-    o.op.structure.channelsArray.push( name );
+    // structure.channelsMap[ name ] = { name, bits : os.bits, order : structure.channelsArray.length };
+    structure.channelsArray.push( name );
   }
 
 }
@@ -110,136 +111,130 @@ function _readGeneral( o )
 
   _.assertRoutineOptions( _readGeneral, o );
   _.assert( arguments.length === 1 );
-  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
+  _.assert( _.longHas( [ 'full', 'head' ], o.params.mode ) );
+  _.assert( o.in.format === null || _.strIs( o.in.format ) );
+  _.assert( o.out.format === null || _.strIs( o.out.format ) );
+  _.assert( o.in.data !== undefined );
 
-  o.headGot = false;
+  o.params.headGot = false;
 
-  // if( _.streamIs( o.data ) )
-  // {
-  //   if( o.sync )
-  //   return self._readGeneralStreamSync( o );
-  //   else
-  //   return self._readGeneralStreamAsync( o );
-  // }
-  // else
-  // {
-  // if( o.sync )
-  // return self._readGeneralBufferSync( o );
-  // else
-  return self._readGeneralBufferAsync( o );
+  if( _.streamIs( o.in.data ) )
+  {
+
+    if( o.in.format === null )
+    o.in.format = 'stream.png';
+
+    if( o.sync )
+    return self._readGeneralStreamSync( o );
+    else
+    return self._readGeneralStreamAsync( o );
+  }
+  else
+  {
+
+    if( o.in.format === null )
+    o.in.format = 'buffer.png';
+
+    if( o.sync )
+    return self._readGeneralBufferSync( o );
+    else
+    return self._readGeneralBufferAsync( o );
+  }
 
 }
 
 _readGeneral.defaults =
 {
   ... Parent.prototype._read.defaults,
-  mode : 'full',
+  // mode : 'full',
+}
+//
+
+function _readGeneralStreamAsync( o )
+{
+  let self = this;
+  let ready = bufferFromStream({ src : o.in.data });
+
+  ready.then( ( buffer ) =>
+  {
+    o.in.data = _.bufferNodeFrom( buffer );
+    return self._readGeneralBufferAsync( o );
+  } )
+
+  return ready;
 }
 
 //
 
-// function _readGeneralStreamSync( o )
-// {
-//   let self = this;
-//   let ready = self._readGeneralStreamAsync( o );
-//   ready.deasync();
-//   return ready.sync();
-// }
+function _readGeneralStreamSync( o )
+{
+  let self = this;
+  let ready = self._readGeneralStreamAsync( o );
+  ready.deasync();
+  return ready.sync();
+}
 
-// //
+//
 
-// function _readGeneralStreamAsync( o )
-// {
-//   let self = this;
-//   let ready = new _.Consequence();
-//   let backend = new Backend.PNG();
-//   let done;
+function _readGeneralBufferSync( o )
+{
+  let self = this;
 
-//   backend
-//   .on( 'error', ( err ) => errorHandle( err ) )
-//   .on( 'metadata', function ( os )
-//   {
-//     if( o.mode === 'head' )
-//     {
-//       o.data.close();
-//       backend._parser._paused = true;
-//       backend._parser._buffered = 0;
-//     }
-//     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-//     if( o.mode === 'head' )
-//     {
-//       done = true;
-//       ready.take( o );
-//     }
-//   })
-//   .on( 'parsed', function ( data )
-//   {
-//     if( o.mode === 'head' )
-//     return;
-//     if( done )
-//     return;
-//     _.assert( !!o.headGot );
-//     o.originalStructure.data = data;
-//     self._structureHandle({ originalStructure : o.originalStructure, op : o, mode : 'full' });
-//     ready.take( o );
-//     done = true;
-//   })
+  try
+  {
+    let os = new Backend( _.bufferNodeFrom( o.in.data ) );
 
-//   o.data.pipe( backend );
+    if( o.mode === 'head' )
+    {
+      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
+      return o;
+    }
+    else
+    {
+      let ready = self._readGeneralBufferAsync( o );
+      ready.deasync()
+      return ready.sync();
+    }
+  }
+  catch( err )
+  {
+    throw _.err( err );
+  }
 
-//   return ready;
+}
 
-//   function errorHandle( err )
-//   {
-//     if( o.headGot )
-//     return;
-//     if( done )
-//     return;
-//     err = _.err( err )
-//     done = err;
-//     ready.error( err );
-//   }
-// }
-
-// //
-
-// function _readGeneralBufferSync( o )
-// {
-//   let self = this;
-//   /* qqq : write proper code for mode : head */
-//   try
-//   {
-//     let os = Backend.PNG.sync.read( _.bufferNodeFrom( o.data ) );
-//     self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-//   }
-//   catch( err )
-//   {
-//     throw _.err( err );
-//   }
-//   return o;
-// }
-
-// //
+//
 
 function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  // let backend = new Backend( _.bufferNodeFrom( o.data ) );
   let done;
-
-
-  Backend.decode( _.bufferNodeFrom( o.data ).readUInt8(), ( err, os ) =>
+  try
   {
-    if( err )
-    console.log( 'ERROR: ', err );
-    // return errorHandle( err );
-    self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-    console.log( os )
-    ready.take( o );
-    done = true;
-  });
+    let backend = new Backend( _.bufferNodeFrom( o.in.data ) );
 
+    if( o.mode === 'head' )
+    {
+      self._structureHandle({ originalStructure : backend, op : o, mode : 'head' });
+      ready.take( o );
+      done = true;
+    }
+    else
+    {
+      backend.decode( ( buff ) =>
+      {
+        backend.buffer = buff;
+        self._structureHandle({ originalStructure : backend, op : o, mode : 'full' });
+        ready.take( o );
+        done = true;
+      });
+    }
+  }
+  catch( err )
+  {
+    errorHandle( err )
+  }
 
   return ready;
 
@@ -253,7 +248,6 @@ function _readGeneralBufferAsync( o )
     done = err;
     ready.error( err );
   }
-
 }
 
 //
@@ -263,7 +257,8 @@ function _readHead( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _readHead, o );
-  o.mode = 'head';
+  if( !o.params.mode )
+  o.params.mode = 'head';
   return self._readGeneral( o );
 }
 
@@ -279,7 +274,8 @@ function _read( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
-  o.mode = 'full';
+  if( !o.params.mode )
+  o.params.mode = 'full';
   return self._readGeneral( o );
 }
 
@@ -297,6 +293,11 @@ let Exts = [ 'png' ];
 
 let Composes =
 {
+  shortName : 'pngDashJs',
+  ext : _.define.own([ 'png' ]),
+  inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
+  outFormat : _.define.own([ 'structure.image' ]),
+  feature : _.define.own({}),
 }
 
 let Aggregates =
@@ -315,10 +316,13 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsStream : 0,
-  SupportsAsync : 1,
-  SupportsSync : 1,
-  SupportsReadHead : 0
+  SupportsDimensions : 1,
+  SupportsBuffer : 0,
+  SupportsDepth : 1,
+  SupportsColor : 0,
+  SupportsSpecial : 1,
+  LimitationsRead : 1,
+  MethodsNativeCount : 1
 }
 
 let Forbids =
@@ -341,9 +345,9 @@ let Extension =
 {
 
   _structureHandle,
-  // _readGeneralStreamSync,
-  // _readGeneralStreamAsync,
-  // _readGeneralBufferSync,
+  _readGeneralStreamSync,
+  _readGeneralStreamAsync,
+  _readGeneralBufferSync,
   _readGeneralBufferAsync,
   _readGeneral,
 
@@ -379,7 +383,11 @@ _.classDeclare
 
 //
 
-_.image.reader[ Self.shortName ] = Self;
+_.assert( !_.image.reader[ Self.shortName ] );
+new Self();
+_.assert( !!_.image.reader[ Self.shortName ] );
+
+// _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 

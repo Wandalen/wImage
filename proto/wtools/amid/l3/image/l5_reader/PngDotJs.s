@@ -1,5 +1,5 @@
 ( function _PngDotJs_s_()
-{ // read async full; sync full
+{
 
 'use strict';
 
@@ -34,34 +34,36 @@ function _structureHandle( o )
   if( os === null )
   os = o.op.originalStructure;
 
-  // logger.log( '_structureHandle', o.mode );
   _.assertRoutineOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
+  _.assert( _.strIs( o.mode ) );
 
-  if( o.mode === 'full' && o.op.mode === 'full' )
-  o.op.structure.buffer = _.bufferRawFrom( os.pixels );
+  let structure = o.op.out.data;
+
+  if( o.mode === 'full' && o.op.params.mode === 'full' )
+  structure.buffer = _.bufferRawFrom( os.pixels );
   else
-  o.op.structure.buffer = null;
+  structure.buffer = null;
 
-  if( o.op.headGot )
+  if( o.op.params.headGot )
   return o.op;
 
-  o.op.structure.dims = [ os.width, os.height ];
+  structure.dims = [ os.width, os.height ];
 
-  o.op.originalStructure = os;
+  o.op.params.originalStructure = os;
 
   _.assert( !os.palette, 'not implemented' );
 
   if( os.colors === 3 )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'red' );
     channelAdd( 'green' );
     channelAdd( 'blue' );
   }
   else if( os.colors === 4 )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'red' );
     channelAdd( 'green' );
     channelAdd( 'blue' );
@@ -70,30 +72,31 @@ function _structureHandle( o )
 
   if( os.colors === 2 )
   {
-    _.assert( o.op.structure.channelsArray.length === 0 );
+    _.assert( structure.channelsArray.length === 0 );
     channelAdd( 'gray' );
   }
 
-  o.op.structure.bitsPerPixel = _.mapVals( o.op.structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
-  o.op.structure.bytesPerPixel = Math.round( o.op.structure.bitsPerPixel / 8 );
+  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // structure.bytesPerPixel = Math.ceil( structure.bitsPerPixel / 8 );
+  structure.bitsPerPixel = os.bitDepth;
+  structure.bytesPerPixel = Math.ceil( structure.bitsPerPixel / 8 );
+  structure.special.interlaced = os.interlaceMethod !== 0;
+  structure.hasPalette = os.palette !== null;
 
-  o.op.structure.special.interlaced = os.interlaceMethod !== 0;
-  o.op.structure.hasPalette = os.palette !== null;
+  o.op.params.headGot = true;
 
-  o.op.headGot = true;
+  if( o.op.params.onHead )
+  o.op.params.onHead( o.op );
 
-  if( o.op.onHead )
-  o.op.onHead( o.op );
-
-  console.log( o.op )
+  // console.log( o.op )
   return o.op;
 
   /* */
 
   function channelAdd( name )
   {
-    o.op.structure.channelsMap[ name ] = { name, bits : os.bitDepth, order : o.op.structure.channelsArray.length };
-    o.op.structure.channelsArray.push( name );
+    // structure.channelsMap[ name ] = { name, bits : os.bitDepth, order : structure.channelsArray.length };
+    structure.channelsArray.push( name );
   }
 
 }
@@ -107,27 +110,28 @@ _structureHandle.defaults =
 
 //
 
-function _readStreamGeneral( o )
+function _readGeneralStreamAsync( o )
 {
   let self = this;
-  let ready = new _.Consequence().take( null );
-  let data = bufferFromStream({ src : o.data });
+  let ready = bufferFromStream({ src : o.in.data });
 
-  data.then( ( buffer ) =>
+  ready.then( ( buffer ) =>
   {
-    new Backend( buffer ).parse( { data : false }, ( err, os ) =>
-    {
-      if( err )
-      console.log( err );
-      // return errorHandle( err );
-      console.log( os );
-      self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      ready.take( o );
-      // done = true;
-    });
+    o.in.data = _.bufferNodeFrom( buffer );
+    return self._readGeneralBufferAsync( o );
   } )
 
-  return data;
+  return ready;
+}
+
+//
+
+function _readGeneralStreamSync( o )
+{
+  let self = this;
+  let ready = self._readGeneralStreamAsync( o );
+  ready.deasync();
+  return ready.sync();
 }
 
 //
@@ -138,37 +142,42 @@ function _readGeneral( o )
 
   _.assertRoutineOptions( _readGeneral, o );
   _.assert( arguments.length === 1 );
-  _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
+  _.assert( _.longHas( [ 'full', 'head' ], o.params.mode ) );
+  _.assert( o.in.format === null || _.strIs( o.in.format ) );
+  _.assert( o.out.format === null || _.strIs( o.out.format ) );
+  _.assert( o.in.data !== undefined );
 
-  o.headGot = false;
-  if( _.streamIs( o.data ) )
+  o.params.headGot = false;
+
+  if( _.streamIs( o.in.data ) )
   {
-    // let data = bufferFromStream({ src : o.data });
-    // data.then( ( buffer ) =>
-    // {
-    //   o.data = _.bufferNodeFrom( buffer );
-    //   if( o.sync )
-    //   return self._readGeneralBufferSync( o );
-    //   else
-    //   return self._readGeneralBufferAsync( o );
-    // } )
-    return self._readStreamGeneral( o );
+
+    if( o.in.format === null )
+    o.in.format = 'stream.png';
+
+    if( o.sync )
+    return self._readGeneralStreamSync( o );
+    else
+    return self._readGeneralStreamAsync( o );
   }
   else
   {
+
+    if( o.in.format === null )
+    o.in.format = 'buffer.png';
+
     if( o.sync )
     return self._readGeneralBufferSync( o );
     else
     return self._readGeneralBufferAsync( o );
   }
 
-  // return null;
 }
 
 _readGeneral.defaults =
 {
   ... Parent.prototype._read.defaults,
-  mode : 'full',
+  // mode : 'full',
 }
 
 //
@@ -177,50 +186,27 @@ function _readGeneralBufferAsync( o )
 {
   let self = this;
   let ready = new _.Consequence();
-  let backend = new Backend( _.bufferNodeFrom( o.data ) );
+  let backend = new Backend( _.bufferNodeFrom( o.in.data ) );
   let done;
 
   if( o.mode === 'head' )
   {
-    // let data = bufferFromStream({ src : o.data });
-    // data.then( ( buffer ) =>
-    // {
-    //   new Backend( buffer ).parse( { data : false }, ( err, os ) =>
-    //   {
-    //     if( err )
-    //     return errorHandle( err );
-    //     console.log( os );
-    //     self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-    //     ready.take( o );
-    //     done = true;
-    //     return null;
-    //   });
-    //   return null;
-    // } )
     backend.parse( { data : false }, ( err, os ) =>
     {
-      debugger
       if( err )
       console.log( 'ERROR: ', err );
-      // return errorHandle( err );
-      // console.log( os );
-      debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'head' });
-      debugger
       ready.take( o );
       done = true;
     });
   }
   else
   {
-    debugger
     backend.parse( ( err, os ) =>
     {
       if( err )
       return errorHandle( err );
-      debugger
       self._structureHandle({ originalStructure : os, op : o, mode : 'full' });
-      debugger
       ready.take( o );
       done = true;
     });
@@ -258,7 +244,8 @@ function _readHead( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _readHead, o );
-  o.mode = 'head';
+  if( !o.params.mode )
+  o.params.mode = 'head';
   return self._readGeneral( o );
 }
 
@@ -274,7 +261,8 @@ function _read( o )
   let self = this;
   _.assert( arguments.length === 1 );
   _.assertRoutineOptions( _read, o );
-  o.mode = 'full';
+  if( !o.params.mode )
+  o.params.mode = 'full';
   return self._readGeneral( o );
 }
 
@@ -294,6 +282,11 @@ let Exts = [ 'png' ];
 
 let Composes =
 {
+  shortName : 'pngDotJs',
+  ext : _.define.own([ 'png' ]),
+  inFormat : _.define.own([ 'buffer.any', 'string.any' ]),
+  outFormat : _.define.own([ 'structure.image' ]),
+  feature : _.define.own({}),
 }
 
 let Aggregates =
@@ -312,10 +305,13 @@ let Statics =
 {
   Formats,
   Exts,
-  SupportsStream : 0,
-  SupportsAsync : 1,
-  SupportsSync : 1,
-  SupportsReadHead : 1
+  SupportsDimensions : 1,
+  SupportsBuffer : 1,
+  SupportsDepth : 1,
+  SupportsColor : 1,
+  SupportsSpecial : 1,
+  LimitationsRead : 1,
+  MethodsNativeCount : 1
 }
 
 let Forbids =
@@ -339,8 +335,9 @@ let Extension =
   _structureHandle,
   _readGeneralBufferAsync,
   _readGeneralBufferSync,
+  _readGeneralStreamSync,
+  _readGeneralStreamAsync,
   _readGeneral,
-  _readStreamGeneral,
 
   _readHead,
   _read,
@@ -373,8 +370,10 @@ _.classDeclare
 });
 
 //
-
-_.image.reader[ Self.shortName ] = Self;
+_.assert( !_.image.reader[ Self.shortName ] );
+new Self();
+_.assert( !!_.image.reader[ Self.shortName ] );
+// _.image.reader[ Self.shortName ] = Self;
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 

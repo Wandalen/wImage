@@ -22,7 +22,7 @@ function onSuiteBegin( test )
   let context = this;
 
   context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
-  // context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
+  context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
 
 }
 
@@ -55,11 +55,33 @@ function bufferFromStream_( test )
 
   ready.then( ( data ) =>
   {
-    test.true( _.bufferRawIs( data ) );
+    // test.true( _.bufferRawIs( data ) );
+    test.true( _.bufferNodeIs( data ) );
     return null;
   } );
 
   return ready;
+}
+
+//
+
+function bufferFromStreamThrowing( test )
+{
+  let ready = new _.Consequence().take( null );
+
+  test.case = 'throwing';
+  var src = { src : 'stream' };
+  test.shouldThrowErrorSync( () => bufferFromStream( src ) );
+
+  // test.case = 'throwing in stream reader'
+  // var src = _.fileProvider.streamRead
+  // ({
+  //   filePath : '/WRONG',
+  //   encoding : 'buffer.raw',
+  // });
+  // test.shouldThrowErrorOfAnyKind( () => bufferFromStream({ src }) );
+
+
 }
 
 // --
@@ -87,7 +109,8 @@ var Proto =
 
   tests :
   {
-    bufferFromStream_
+    bufferFromStream_,
+    bufferFromStreamThrowing
   },
 
 }
