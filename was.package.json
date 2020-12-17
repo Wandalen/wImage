@@ -1,6 +1,6 @@
 {
   "name" : "wimage",
-  "version" : "0.3.50",
+  "version" : "0.3.51",
   "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
@@ -24,12 +24,12 @@
     "pngjs" : "=5.0.0",
     "png.js" : "=0.2.1",
     "png-js" : "=1.0.0",
-    "fast-png": "=5.0.2",
-    "jpeg-js": "=0.4.1",
-    "pixel-jpg": "=0.0.1",
+    "fast-png" : "=5.0.2",
+    "jpeg-js" : "=0.4.1",
+    "pixel-jpg" : "=0.0.1",
     "bmp-js" : "=0.1.0",
     "utif" : "=3.1.0",
-    "omggif": "1.0.10"
+    "omggif" : "1.0.10"
   },
   "devDependencies" : { "wTesting" : "", "eslint" : "7.1.0", "wimage" : "file:." },
   "keywords" : [ "wTools" ]
