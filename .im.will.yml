@@ -27,6 +27,46 @@ submodule :
     enabled : 0 # submodule
     criterion :
       external : 1
+  png-js :
+    path : npm:///png-js#1.0.0
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  fast-png :
+    path : npm:///fast-png#5.0.2
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  sharp :
+    path : npm:///sharp0.25.4,
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  node-libpng :
+    path : npm:///node-libpng#0.2.17
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  jpeg-js :
+    path : npm:///jpeg-js#0.4.1
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  bmp-js :
+    path : npm:///bmp-js#0.1.0
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  utif :
+    path : npm:///utif#3.1.0
+    enabled : 0 # submodule
+    criterion :
+      external : 1
+  omggif :
+    path : npm:///omggif#1.0.10
+    enabled : 0 # submodule
+    criterion :
+      external : 1
 
   eslint :
     path : npm:///eslint#7.1.0

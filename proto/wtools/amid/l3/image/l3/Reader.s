@@ -82,6 +82,7 @@ _read.defaults =
 
 function read( o )
 {
+
   let self = this;
   let ready = new _.Consequence().take( null );
   let result;
@@ -204,7 +205,7 @@ function onEncode( op )
 
   ready.then( ( op2 ) =>
   {
-    debugger;
+
     op.out.data = op2.out.data;
     return op;
   });
@@ -305,10 +306,10 @@ _.classDeclare
   parent : Parent,
   extend : Extension,
 });
-
 //
 
 _.image.reader[ Self.shortName ] = Self;
+
 if( typeof module !== 'undefined' )
 module[ 'exports' ] = Self;
 
