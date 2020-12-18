@@ -22,7 +22,7 @@ function onSuiteBegin( test )
   deleteDefault();
   _.image.reader[ context.readerName ].feature.default = 1;
   context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
-  context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
+  context.assetsOriginalPath = _.path.join( __dirname, '_asset' );
 
 }
 
@@ -68,7 +68,7 @@ function encode( test )
 
     var params = {}
     var encoder = _.gdf.selectSingleContext({ ext : context.ext })
-    var op = encoder.encode({ data : data, params });
+    var op = encoder.encode({ data, params });
     test.true( o.is( op.in.data ) );
     test.true( _.objectIs( op.params.originalStructure ) );
 

@@ -22,7 +22,7 @@ function onSuiteBegin( test )
   let context = this;
 
   context.suiteTempPath = _.path.tempOpen( _.path.join( __dirname, '../..' ), 'ImageRead' );
-  context.assetsOriginalPath = _.path.join( __dirname, '_assets' );
+  context.assetsOriginalPath = _.path.join( __dirname, '_asset' );
 
 }
 
@@ -46,7 +46,7 @@ function bufferFromStream_( test )
   test.case = 'test';
   let stream = _.fileProvider.streamRead
   ({
-    filePath : __dirname + '/_assets/basic/Pixels-2x2.png',
+    filePath : __dirname + '/_asset/basic/Pixels-2x2.png',
     encoding : 'buffer.raw',
   });
   test.true( _.streamIs( stream ) );
