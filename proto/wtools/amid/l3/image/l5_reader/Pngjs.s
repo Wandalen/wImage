@@ -439,7 +439,8 @@ _.classDeclare
 
 //
 _.assert( !_.image.reader[ Self.shortName ] );
-new Self();
+// new Self();
+_.image.reader[ Self.shortName ] = new Self();
 _.assert( !!_.image.reader[ Self.shortName ] );
 
 if( typeof module !== 'undefined' )
