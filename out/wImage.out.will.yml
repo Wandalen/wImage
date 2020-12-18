@@ -2,16 +2,19 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  ../.ex.will.yml: &ref_0
+  wImage.out.will.yml: &ref_0
+    hash: a0f43a63e01bb95e928874c43baed26e
+    size: 61811
+  ../.ex.will.yml: &ref_1
     hash: 6b9afa69a13b607ca9418472bff4473e
     size: 1733
-  ../.im.will.yml: &ref_1
+  ../.im.will.yml: &ref_2
     hash: 1ce85894401e28a8778ef62902b536ab
     size: 6398
-  ../.module/AssetsImagesPng/will.yml: &ref_6
+  ../.module/AssetsImagesPng/will.yml: &ref_3
     hash: 3d78fa89530a262abb542ae8f7a0f209
     size: 349
-  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_7
+  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_4
     hash: 609742a312c07a0f71a4d8c46267ea34
     size: 7739
 module:
@@ -24,19 +27,19 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      interpreters:
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
+      keywords:
         - tools
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
+      contributors:
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts: &ref_5
+      npm.scripts:
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -229,133 +232,133 @@ module:
           - ../proto/wtools/amid/l3/image.test/ReaderPngNodeLib.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderPngSharp.test.s
           - ../proto/wtools/amid/l3/image.test/ReaderUtifJs.test.s
-          - ../proto/wtools/amid/l3/image.test/_assets
-          - ../proto/wtools/amid/l3/image.test/_assets/basic
-          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.bmp
-          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.gif
-          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.jpg
-          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.png
-          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.tif
-          - ../proto/wtools/amid/l3/image.test/_assets/basic/Pixels-2x2.webp
-          - ../proto/wtools/amid/l3/image.test/_assets/png
+          - ../proto/wtools/amid/l3/image.test/_asset
+          - ../proto/wtools/amid/l3/image.test/_asset/basic
+          - ../proto/wtools/amid/l3/image.test/_asset/basic/Pixels-2x2.bmp
+          - ../proto/wtools/amid/l3/image.test/_asset/basic/Pixels-2x2.gif
+          - ../proto/wtools/amid/l3/image.test/_asset/basic/Pixels-2x2.jpg
+          - ../proto/wtools/amid/l3/image.test/_asset/basic/Pixels-2x2.png
+          - ../proto/wtools/amid/l3/image.test/_asset/basic/Pixels-2x2.tif
+          - ../proto/wtools/amid/l3/image.test/_asset/basic/Pixels-2x2.webp
+          - ../proto/wtools/amid/l3/image.test/_asset/png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2048x2048-depth8-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2048x2048-depth8-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth1-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth1-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth1-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth1-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced0-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced0-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced0-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced0-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced0-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced0-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced1-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced1-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth16-interlaced1-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth16-interlaced1-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth2-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth2-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth2-interlaced0-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth2-interlaced0-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth2-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth2-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth2-interlaced1-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth2-interlaced1-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth4-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth4-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth4-interlaced0-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth4-interlaced0-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth4-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth4-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth4-interlaced1-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth4-interlaced1-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced0-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced0-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced0-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced0-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced0-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced0-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced0-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced0-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced1-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced1-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced1-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced1-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-2x2-depth8-interlaced1-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-2x2-depth8-interlaced1-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4096x4096-depth8-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4096x4096-depth8-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth1-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth1-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth1-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth1-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced0-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced0-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced0-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced0-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced0-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced0-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced1-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced1-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth16-interlaced1-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth16-interlaced1-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth2-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth2-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth2-interlaced0-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth2-interlaced0-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth2-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth2-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth2-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth2-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth4-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth4-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth4-interlaced0-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth4-interlaced0-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth4-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth4-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth4-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth4-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced0-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced0-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced0-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced0-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced0-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced0-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced0-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced0-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced0-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced0-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced1-g.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced1-g.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced1-ga.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced1-ga.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced1-palette.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced1-palette.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced1-rgb.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-4x5-depth8-interlaced1-rgba.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-4x5-depth8-interlaced1-rgba.png
           - >-
-            ../proto/wtools/amid/l3/image.test/_assets/png/Pixels-8192x8192-depth8-interlaced1-rgb.png
+            ../proto/wtools/amid/l3/image.test/_asset/png/Pixels-8192x8192-depth8-interlaced1-rgb.png
           - ../proto/wtools/atop
     submodule:
       wTools:
@@ -973,6 +976,24 @@ module:
           content: prime
         inherit:
           - files.transpile
+      exported.proto.export:
+        opts:
+          filePath: 'reflector::exported.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
+      exported.files.proto.export:
+        opts:
+          filePath: 'reflector::exported.files.proto.export'
+        criterion:
+          generated: 1
+          content: proto
+          export: 1
+        inherit:
+          - files.reflect
     build:
       proto.export:
         steps:
@@ -1061,8 +1082,9 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      wImage.out.will.yml: *ref_0
+      ../.ex.will.yml: *ref_1
+      ../.im.will.yml: *ref_2
   ../:
     about:
       name: wImage
@@ -1072,13 +1094,21 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
+      interpreters:
+        - njs >= 10.0.0
+        - chrome >= 60.0.0
+        - firefox >= 60.0.0
+      keywords:
+        - tools
+        - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
+      contributors:
+        - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts: *ref_5
+      npm.scripts:
+        test: wtest .run proto/**
+        docgen: wdocgen .build proto
     path:
       module.willfiles:
         criterion:
@@ -1833,6 +1863,9 @@ module:
       ../.im.will.yml:
         hash: 1ce85894401e28a8778ef62902b536ab
         size: 6398
+      wImage.out.will.yml:
+        hash: a0f43a63e01bb95e928874c43baed26e
+        size: 61811
   ../.module/AssetsImagesPng/:
     about:
       name: AssetsImagesPng
@@ -1887,8 +1920,8 @@ module:
           proto: 0
           asset: 1
     consistency:
-      ../.module/AssetsImagesPng/will.yml: *ref_6
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
+      ../.module/AssetsImagesPng/will.yml: *ref_3
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_4
   ../.module/AssetsImagesPng/out/AssetsImagesPng.out:
     about:
       name: AssetsImagesPng
@@ -2083,7 +2116,5 @@ module:
           proto: 0
           asset: 1
     consistency:
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
-      ../.module/AssetsImagesPng/will.yml:
-        hash: 3d78fa89530a262abb542ae8f7a0f209
-        size: 349
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_4
+      ../.module/AssetsImagesPng/will.yml: *ref_3
