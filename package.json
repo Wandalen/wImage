@@ -1,6 +1,6 @@
 {
   "name" : "wimage",
-  "version" : "0.3.54",
+  "version" : "0.3.55",
   "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
@@ -14,7 +14,7 @@
   },
   "dependencies" :
   {
-    "node-libpng" : "=0.2.17",
+    "node-libpng" : "=0.2.18",
     "sharp" : "=0.25.4",
     "pngjs" : "=5.0.0",
     "png.js" : "=0.2.1",
