@@ -43,7 +43,7 @@ submodule :
     criterion :
       external : 1
   node-libpng :
-    path : npm:///node-libpng#0.2.17
+    path : npm:///node-libpng#0.2.18
     enabled : 0 # submodule
     criterion :
       external : 1
