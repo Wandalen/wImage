@@ -16,5 +16,3 @@ node sample/Sample.s
 npm add 'wimage@alpha'
 ```
 
-
-
