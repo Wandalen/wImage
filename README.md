@@ -8,7 +8,7 @@ Standardized abstract interface to open / read / parse image with collection of 
 git clone https://github.com/Wandalen/wImage
 cd wImage
 npm install
-node sample/Sample.s
+node sample/trivial/Sample.s
 ```
 
 ## To add to your project
