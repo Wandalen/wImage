@@ -74,7 +74,7 @@ fileReadHead_body.defaults =
 _.assert( _.image.readHead.defaults.methodName === undefined );
 _.assert( _.image.readHead.defaults.sync !== undefined );
 
-let fileReadHead = _.routineUnite( fileRead_head, fileReadHead_body );
+let fileReadHead = _.routine.uniteCloning_( fileRead_head, fileReadHead_body );
 
 //
 
@@ -117,7 +117,7 @@ _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
-let fileRead = _.routineUnite( fileRead_head, fileRead_body );
+let fileRead = _.routine.uniteCloning_( fileRead_head, fileRead_body );
 
 // --
 // declare

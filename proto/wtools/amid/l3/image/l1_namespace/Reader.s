@@ -78,12 +78,12 @@ read_body.defaults =
 
 //
 
-let readHead = _.routineUnite( reader_head, read_body );
+let readHead = _.routine.uniteCloning_( reader_head, read_body );
 readHead.defaults.mode = 'head';
 
 //
 
-let read = _.routineUnite( reader_head, read_body );
+let read = _.routine.uniteCloning_( reader_head, read_body );
 read.defaults.mode = 'full';
 
 //
