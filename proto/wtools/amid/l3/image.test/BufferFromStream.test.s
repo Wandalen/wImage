@@ -10,7 +10,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wTesting' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let bufferFromStream = require( __dirname + '/../image/l5_reader/BufferFromStream.s' );
 
 // --
@@ -88,7 +88,7 @@ function bufferFromStreamThrowing( test )
 // declare
 // --
 
-var Proto =
+const Proto =
 {
 
   name : 'bufferFromStream',
@@ -117,7 +117,7 @@ var Proto =
 
 //
 
-var Self = new wTestSuite( Proto )
+const Self = wTestSuite( Proto )
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 })()

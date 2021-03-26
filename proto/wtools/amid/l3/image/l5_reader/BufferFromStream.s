@@ -1,4 +1,4 @@
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 function bufferFromStream( o )
 {
@@ -7,7 +7,7 @@ function bufferFromStream( o )
 
   _.assert( arguments.length === 1, 'Expects single argument' );
   _.assert( _.objectIs( o ) );
-  _.assertMapHasOnly( o, bufferFromStream.defaults );
+  _.map.assertHasOnly( o, bufferFromStream.defaults );
   _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
 
   o.src

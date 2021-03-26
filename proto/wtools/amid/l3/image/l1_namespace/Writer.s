@@ -3,8 +3,8 @@
 
 'use strict';
 
-let _ = _global_.wTools;
-let Self = _.image = _.image || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.image = _.image || Object.create( null );
 _.image.writer = _.image.writer || Object.create( null );
 
 // --

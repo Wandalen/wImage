@@ -10,11 +10,11 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Backend = require( 'png-js' );
-let Parent = _.image.reader.Abstract;
+const Parent = _.image.reader.Abstract;
 let bufferFromStream = require( './BufferFromStream.s' );
-let Self = wImageReaderPngDashJs;
+const Self = wImageReaderPngDashJs;
 function wImageReaderPngDashJs()
 {
   return _.workpiece.construct( Self, this, arguments );

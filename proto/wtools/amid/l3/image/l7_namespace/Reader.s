@@ -3,8 +3,8 @@
 
 'use strict';
 
-let _ = _global_.wTools;
-let Self = _.image;
+const _ = _global_.wTools;
+const Self = _.image;
 
 // --
 // inter

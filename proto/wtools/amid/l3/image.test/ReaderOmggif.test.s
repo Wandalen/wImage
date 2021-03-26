@@ -10,8 +10,8 @@
 //   require( './ReaderAbstract.test.s' );
 // }
 
-// let _ = _global_.wTools;
-// let Parent = _global_.wTests.ImageReadAbstract;
+// const _ = _global_.wTools;
+// const Parent = _global_.wTests.ImageReadAbstract;
 
 // // --
 // // context
@@ -883,7 +883,7 @@
 // // declare
 // // --
 
-// var Proto =
+// const Proto =
 // {
 
 //   name : 'ImageReadOmggif',
@@ -920,7 +920,7 @@
 
 // //
 
-// var Self = new wTestSuite( Proto ).inherit( Parent );
+// const Self = wTestSuite( Proto ).inherit( Parent );
 // if( typeof module !== 'undefined' && !module.parent )
 // wTester.test( Self.name );
 

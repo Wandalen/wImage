@@ -10,12 +10,12 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let { decode } = require( 'fast-png' );
 let Backend = { decode };
 let bufferFromStream = require( './BufferFromStream.s' );
-let Parent = _.image.reader.Abstract;
-let Self = wImageReaderPngFast;
+const Parent = _.image.reader.Abstract;
+const Self = wImageReaderPngFast;
 function wImageReaderPngFast()
 {
 

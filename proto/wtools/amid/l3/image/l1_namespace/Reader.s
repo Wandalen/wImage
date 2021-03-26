@@ -3,8 +3,8 @@
 
 'use strict';
 
-let _ = _global_.wTools;
-let Self = _.image = _.image || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.image = _.image || Object.create( null );
 _.image.reader = _.image.reader || Object.create( null );
 
 // --
@@ -32,7 +32,7 @@ function read_body( o )
 
   if( o.reader === null )
   {
-    let o2 = _.mapOnly( o, self.readerDeduce.defaults );
+    let o2 = _.mapOnly_( null, o, self.readerDeduce.defaults );
     o2.single = 1;
     let selected = self.readerDeduce( o2 );
     _.assert( selected instanceof _.gdf.Context, `Cant deduce reader` );
@@ -40,7 +40,7 @@ function read_body( o )
   }
 
   let methodName = o.mode === 'full' ? 'read' : 'readHead';
-  let o2 = _.mapOnly( o, o.reader[ methodName ].defaults );
+  let o2 = _.mapOnly_( null, o, o.reader[ methodName ].defaults );
   o2.params = o2.params || Object.create( null );
   o2.params.onHead = o.onHead;
   // o2.params.sync = o.sync;

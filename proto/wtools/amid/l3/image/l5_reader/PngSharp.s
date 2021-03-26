@@ -10,11 +10,11 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Backend = require( 'sharp' );
-let Parent = _.image.reader.Abstract;
+const Parent = _.image.reader.Abstract;
 let bufferFromStream = require( './BufferFromStream.s' );
-let Self = wImageReaderPngSharp;
+const Self = wImageReaderPngSharp;
 function wImageReaderPngSharp()
 {
   return _.workpiece.construct( Self, this, arguments );

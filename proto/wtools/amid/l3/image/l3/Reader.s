@@ -10,9 +10,9 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
-let Parent = _.gdf.Encoder;
-let Self = wImageReaderAbstract;
+const _ = _global_.wTools;
+const Parent = _.gdf.Encoder;
+const Self = wImageReaderAbstract;
 function wImageReaderAbstract()
 {
   return _.workpiece.construct( Self, this, arguments );

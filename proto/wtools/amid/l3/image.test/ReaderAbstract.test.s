@@ -10,7 +10,7 @@ if( typeof module !== 'undefined' )
   _.include( 'wTesting' );
 }
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 
 // --
 // context
@@ -1104,7 +1104,7 @@ function deleteDefault()
 // declare
 // --
 
-var Proto =
+const Proto =
 {
 
   name : 'ImageReadAbstract',
@@ -1150,7 +1150,7 @@ var Proto =
 
 //
 
-let Self = new wTestSuite( Proto )
+const Self = wTestSuite( Proto )
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

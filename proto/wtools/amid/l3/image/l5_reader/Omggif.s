@@ -10,11 +10,11 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Backend = require( 'omggif' );
 let bufferFromStream = require( './BufferFromStream.s' );
-let Parent = _.image.reader.Abstract;
-let Self = wImageReaderOmggif;
+const Parent = _.image.reader.Abstract;
+const Self = wImageReaderOmggif;
 function wImageReaderOmggif()
 {
 

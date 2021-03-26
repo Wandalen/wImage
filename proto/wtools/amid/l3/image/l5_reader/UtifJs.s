@@ -10,11 +10,11 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Backend = require( 'utif' );
 let bufferFromStream = require( './BufferFromStream.s' );
-let Parent = _.image.reader.Abstract;
-let Self = wImageReaderUtifJs;
+const Parent = _.image.reader.Abstract;
+const Self = wImageReaderUtifJs;
 function wImageReaderUtifJs()
 {
   return _.workpiece.construct( Self, this, arguments );

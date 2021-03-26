@@ -10,11 +10,11 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Backend= require( 'bmp-js' );
 let bufferFromStream = require( './BufferFromStream.s' );
-let Parent = _.image.reader.Abstract;
-let Self = wImageReaderBmpDashJs;
+const Parent = _.image.reader.Abstract;
+const Self = wImageReaderBmpDashJs;
 function wImageReaderBmpDashJs()
 {
   return _.workpiece.construct( Self, this, arguments );

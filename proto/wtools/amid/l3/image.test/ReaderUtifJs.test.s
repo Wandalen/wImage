@@ -10,8 +10,8 @@ if( typeof module !== 'undefined' )
   require( './ReaderAbstract.test.s' );
 }
 
-let _ = _global_.wTools;
-let Parent = _global_.wTests.ImageReadAbstract;
+const _ = _global_.wTools;
+const Parent = _global_.wTests.ImageReadAbstract;
 
 // --
 // context
@@ -823,7 +823,7 @@ function fileReadAsync_( test )
 // declare
 // --
 
-var Proto =
+const Proto =
 {
 
   name : 'ImageReadUtifJs',
@@ -861,7 +861,7 @@ var Proto =
 
 //
 
-var Self = new wTestSuite( Proto ).inherit( Parent );
+const Self = wTestSuite( Proto ).inherit( Parent );
 if( typeof module !== 'undefined' && !module.parent )
 wTester.test( Self.name );
 

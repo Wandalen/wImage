@@ -3,8 +3,8 @@
 
 'use strict';
 
-let _ = _global_.wTools;
-let Self = _.image.rstructure = _.image.rstructure || Object.create( null );
+const _ = _global_.wTools;
+const Self = _.image.rstructure = _.image.rstructure || Object.create( null );
 
 // --
 // inter

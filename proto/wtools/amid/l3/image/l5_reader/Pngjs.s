@@ -10,10 +10,10 @@
  * @module Tools/mid/ImageReader
  */
 
-let _ = _global_.wTools;
+const _ = _global_.wTools;
 let Backend = require( 'pngjs' );
-let Parent = _.image.reader.Abstract;
-let Self = wImageReaderPngjs;
+const Parent = _.image.reader.Abstract;
+const Self = wImageReaderPngjs;
 function wImageReaderPngjs()
 {
   return _.workpiece.construct( Self, this, arguments );
