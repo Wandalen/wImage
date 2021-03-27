@@ -117,7 +117,7 @@ _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
-let fileRead = _.routine.uniteCloning_( fileRead_head, fileRead_body );
+const fileRead = _.routine.uniteCloning_( fileRead_head, fileRead_body );
 
 // --
 // declare
