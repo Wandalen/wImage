@@ -2,19 +2,16 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  wImage.out.will.yml: &ref_0
-    hash: 2a855ad4ef779a1bd76f024931bb602d
-    size: 61743
-  ../.ex.will.yml: &ref_1
+  ../.ex.will.yml: &ref_0
     hash: 6b9afa69a13b607ca9418472bff4473e
     size: 1733
-  ../.im.will.yml: &ref_2
-    hash: 217ef2babd6ae2ee1f5191a2691b8cb5
-    size: 6398
-  ../.module/AssetsImagesPng/will.yml: &ref_3
+  ../.im.will.yml: &ref_1
+    hash: ed776626867939ad6552653253387872
+    size: 6211
+  ../.module/AssetsImagesPng/will.yml: &ref_6
     hash: 3d78fa89530a262abb542ae8f7a0f209
     size: 349
-  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_4
+  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_7
     hash: 609742a312c07a0f71a4d8c46267ea34
     size: 7739
 module:
@@ -27,19 +24,19 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters:
+      interpreters: &ref_2
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords:
+      keywords: &ref_3
         - tools
         - wTools
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
+      contributors: &ref_4
         - Kostiantyn Wandalen <wanalen@01.school>
       npm.name: wimage
-      npm.scripts:
+      npm.scripts: &ref_5
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -70,7 +67,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ../
+        path: ..
       repository:
         path: 'git+https:///github.com/Wandalen/wImage.git'
       origins:
@@ -151,6 +148,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - ../proto/wtools/amid/l3/image/entry/Image.s
+          - ../proto/node_modules/wimage
       exported.dir.proto.export:
         criterion:
           generated: 1
@@ -979,24 +980,6 @@ module:
           content: prime
         inherit:
           - files.transpile
-      exported.proto.export:
-        opts:
-          filePath: 'reflector::exported.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
-      exported.files.proto.export:
-        opts:
-          filePath: 'reflector::exported.files.proto.export'
-        criterion:
-          generated: 1
-          content: proto
-          export: 1
-        inherit:
-          - files.reflect
     build:
       proto.export:
         steps:
@@ -1085,9 +1068,8 @@ module:
           content: proto
           export: 1
     consistency:
-      wImage.out.will.yml: *ref_0
-      ../.ex.will.yml: *ref_1
-      ../.im.will.yml: *ref_2
+      ../.ex.will.yml: *ref_0
+      ../.im.will.yml: *ref_1
   ../:
     about:
       name: wImage
@@ -1097,21 +1079,13 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters:
-        - njs >= 10.0.0
-        - chrome >= 60.0.0
-        - firefox >= 60.0.0
-      keywords:
-        - tools
-        - wTools
+      interpreters: *ref_2
+      keywords: *ref_3
       license: MIT
       author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors:
-        - Kostiantyn Wandalen <wanalen@01.school>
+      contributors: *ref_4
       npm.name: wimage
-      npm.scripts:
-        test: wtest .run proto/**
-        docgen: wdocgen .build proto
+      npm.scripts: *ref_5
     path:
       module.willfiles:
         criterion:
@@ -1140,7 +1114,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ./
+        path: .
       repository:
         path: 'git+https:///github.com/Wandalen/wImage.git'
       origins:
@@ -1221,6 +1195,10 @@ module:
           raw: compiled
           content: prime
         path: '{path::out.*=}/source/Index.s'
+      npm.proto.entry:
+        path:
+          - proto/wtools/amid/l3/image/entry/Image.s
+          - proto/node_modules/wimage
     submodule:
       wTools:
         path: 'npm:///wTools'
@@ -1865,9 +1843,8 @@ module:
         hash: 6b9afa69a13b607ca9418472bff4473e
         size: 1733
       ../.im.will.yml:
-        hash: 217ef2babd6ae2ee1f5191a2691b8cb5
-        size: 6398
-      wImage.out.will.yml: *ref_0
+        hash: ed776626867939ad6552653253387872
+        size: 6211
   ../.module/AssetsImagesPng/:
     about:
       name: AssetsImagesPng
@@ -1922,8 +1899,8 @@ module:
           proto: 0
           asset: 1
     consistency:
-      ../.module/AssetsImagesPng/will.yml: *ref_3
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_4
+      ../.module/AssetsImagesPng/will.yml: *ref_6
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
   ../.module/AssetsImagesPng/out/AssetsImagesPng.out:
     about:
       name: AssetsImagesPng
@@ -2118,5 +2095,7 @@ module:
           proto: 0
           asset: 1
     consistency:
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_4
-      ../.module/AssetsImagesPng/will.yml: *ref_3
+      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
+      ../.module/AssetsImagesPng/will.yml:
+        hash: 3d78fa89530a262abb542ae8f7a0f209
+        size: 349
