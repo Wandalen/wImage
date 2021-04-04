@@ -1875,9 +1875,7 @@ module:
       ../.im.will.yml:
         hash: ed776626867939ad6552653253387872
         size: 6211
-      wImage.out.will.yml:
-        hash: 66be2410163be1d4ce61f41e2966d518
-        size: 62113
+      wImage.out.will.yml: *ref_0
   ../.module/AssetsImagesPng/:
     about:
       name: AssetsImagesPng
