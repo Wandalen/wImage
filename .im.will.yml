@@ -134,8 +134,8 @@ path:
       raw: compiled
       content: prime
   npm.proto.entry:
-    - /pro/module/wImage/proto/wtools/amid/l3/image/entry/Image.s
-    - /pro/module/wImage/proto/node_modules/wimage
+    - proto/wtools/amid/l3/image/entry/Image.s
+    - proto/node_modules/wimage
 reflector:
   reflect.assets:
     src: 'submodule::AssetsImagesPng / exported::*=1 / reflector::exported.export'
