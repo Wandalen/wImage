@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderJpegjs.s' )
+  const _ = require( '../include/ReaderJpegjs.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

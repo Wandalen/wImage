@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/Image.s' )
+  const _ = require( '../include/Image.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

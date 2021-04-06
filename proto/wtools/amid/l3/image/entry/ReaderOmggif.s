@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderOmggif.s' )
+  const _ = require( '../include/ReaderOmggif.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

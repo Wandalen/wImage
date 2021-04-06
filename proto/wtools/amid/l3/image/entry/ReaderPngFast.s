@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderPngFast.s' )
+  const _ = require( '../include/ReaderPngFast.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

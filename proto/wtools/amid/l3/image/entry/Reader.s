@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/Reader.s' )
+  const _ = require( '../include/Reader.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

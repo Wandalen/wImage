@@ -5,7 +5,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( './Basic.s' );
+  const _ = require( './Basic.s' );
 
   require( '../l1_namespace/Writer.s' );
   // require( '../l1_namespace/ReaderStructure.s' );

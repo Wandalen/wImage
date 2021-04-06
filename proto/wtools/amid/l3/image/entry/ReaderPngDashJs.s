@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderPngDashJs.s' )
+  const _ = require( '../include/ReaderPngDashJs.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

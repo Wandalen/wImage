@@ -5,7 +5,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( './Reader.s' );
+  const _ = require( './Reader.s' );
 
   require( '../l5_reader/Omggif.s' );
 

@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderUtifJs.s' )
+  const _ = require( '../include/ReaderUtifJs.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

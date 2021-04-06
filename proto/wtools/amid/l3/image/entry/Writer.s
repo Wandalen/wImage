@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/Writer.s' )
+  const _ = require( '../include/Writer.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 

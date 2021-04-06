@@ -5,7 +5,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../../../../node_modules/Tools' );
+  const _ = require( '../../../../node_modules/Tools' );
   require( '../image/entry/ReaderPngNodeLib.s' );
   require( './ReaderAbstract.test.s' );
 }

@@ -10,7 +10,7 @@
 
 if( typeof module !== 'undefined' )
 {
-  let _ = require( '../include/ReaderBmpDashJs.s' )
+  const _ = require( '../include/ReaderBmpDashJs.s' )
   module[ 'exports' ] = _global_.wTools;
 }
 
