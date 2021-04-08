@@ -1962,7 +1962,7 @@ module:
       download:
         criterion:
           predefined: 1
-        path: ..
+        path: .
       in:
         path: .
       out:
