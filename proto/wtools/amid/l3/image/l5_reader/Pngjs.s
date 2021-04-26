@@ -33,7 +33,7 @@ function _structureHandle( o )
   if( os === null )
   os = o.op.originalStructure;
 
-  _.assertRoutineOptions( _structureHandle, arguments );
+  _.routine.assertOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
   _.assert( _.strIs( o.mode ) );
 
@@ -75,7 +75,7 @@ function _structureHandle( o )
   }
 
   structure.bytesPerPixel = Math.ceil( os.depth / 8 ) ;
-  // structure.bitsPerPixel = _.mapVals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
+  // structure.bitsPerPixel = _.props.vals( structure.channelsMap ).reduce( ( val, channel ) => val + channel.bits, 0 );
   structure.bitsPerPixel = os.depth;
   structure.special.interlaced = os.interlace;
   structure.hasPalette = os.palette;
@@ -111,7 +111,7 @@ function _readGeneral( o )
 {
   let self = this;
 
-  _.assertRoutineOptions( _readGeneral, o );
+  _.routine.assertOptions( _readGeneral, o );
   _.assert( arguments.length === 1 );
   _.assert( _.longHas( [ 'full', 'head' ], o.params.mode ) );
   _.assert( o.in.format === null || _.strIs( o.in.format ) );
@@ -291,7 +291,7 @@ function _readHead( o )
 {
   let self = this;
   _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _readHead, o );
+  _.routine.assertOptions( _readHead, o );
   if( !o.params.mode )
   o.params.mode = 'head';
   return self._readGeneral( o );
@@ -309,7 +309,7 @@ _readHead.defaults =
 // {
 //   let self = this;
 //   _.assert( arguments.length === 1 );
-//   _.assertRoutineOptions( _read, o );
+//   _.routine.assertOptions( _read, o );
 //   o.params.mode = 'full';
 //   return self._readGeneral( o );
 // }
@@ -325,7 +325,7 @@ function _read( o )
 {
   let self = this;
   _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _read, o );
+  _.routine.assertOptions( _read, o );
   if( !o.params.mode )
   o.params.mode = 'full';
   return self._readGeneral( o );

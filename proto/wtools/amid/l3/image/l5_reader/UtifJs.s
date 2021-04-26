@@ -35,7 +35,7 @@ function _structureHandle( o )
   os = o.op.originalStructure;
 
   // console.log( os )
-  _.assertRoutineOptions( _structureHandle, arguments );
+  _.routine.assertOptions( _structureHandle, arguments );
   _.assert( _.objectIs( os ) );
   _.assert( _.strIs( o.mode ) );
 
@@ -105,7 +105,7 @@ function _read( o )
 {
   let self = this;
   _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _read, o );
+  _.routine.assertOptions( _read, o );
   if( !o.params.mode )
   o.params.mode = 'full';
   return self._readGeneral( o );
@@ -122,7 +122,7 @@ function _readHead ( o )
 {
   let self = this;
   _.assert( arguments.length === 1 );
-  _.assertRoutineOptions( _readHead, o );
+  _.routine.assertOptions( _readHead, o );
   if( !o.params.mode )
   o.params.mode = 'head';
   return self._readGeneral( o );
@@ -139,7 +139,7 @@ function _readGeneral( o )
 {
   let self = this;
 
-  _.assertRoutineOptions( _readGeneral, o );
+  _.routine.assertOptions( _readGeneral, o );
   _.assert( arguments.length === 1 );
   _.assert( _.longHas( [ 'full', 'head' ], o.params.mode ) );
   _.assert( o.in.format === null || _.strIs( o.in.format ) );

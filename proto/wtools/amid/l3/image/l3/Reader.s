@@ -52,7 +52,7 @@ function readHead( o )
   let ready = new _.Consequence().take( null );
   let result;
 
-  o = _.routineOptions( read, o );
+  o = _.routine.options_( read, o );
   o.params = o.params || Object.create( null );
   if( !o.params.mode )
   o.params.mode = 'head';
@@ -87,7 +87,7 @@ function read( o )
   let ready = new _.Consequence().take( null );
   let result;
 
-  o = _.routineOptions( read, o );
+  o = _.routine.options_( read, o );
   o.params = o.params || Object.create( null );
   if( !o.params.mode )
   o.params.mode = 'full';
@@ -112,7 +112,7 @@ function _encode( o )
   let ready = new _.Consequence().take( null );
   let result;
 
-  o = _.assertRoutineOptions( _encode, o );
+  o = _.routine.assertOptions( _encode, o );
   o.out.data = _.image.rstructure.from( o.out.data );
 
   ready.then( () => self._read( o ) );
@@ -142,7 +142,7 @@ function Supports( o )
 {
   let cls = this.Self;
 
-  o = _.routineOptions( Supports, arguments );
+  o = _.routine.options_( Supports, arguments );
 
   if( !o.ext )
   if( o.filePath )

@@ -14,7 +14,7 @@ _.image.writer = _.image.writer || Object.create( null );
 function write( o )
 {
   let self = this;
-  o = _.routineOptions( write, arguments );
+  o = _.routine.options_( write, arguments );
 
   _.assert( arguments.length === 1, `Expects a single argument, but got ${arguments.length}!` );
   _.assert( _.objectIs( o ), 'Expects an object {-o-}!' );
@@ -39,7 +39,7 @@ let Extension =
 
 }
 
-_.mapExtend( Self, Extension );
+_.props.extend( Self, Extension );
 
 //
 

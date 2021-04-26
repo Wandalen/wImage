@@ -14,7 +14,7 @@ function from( o )
 {
 
   o = o || Object.create( null );
-  o = _.routineOptions( from, o );
+  o = _.routine.options_( from, o );
   _.assert( arguments.length === 0 || arguments.length === 1 );
 
   if( !o.special )
@@ -38,7 +38,7 @@ from.defaults =
 
 function validate( o )
 {
-  o = _.routineOptions( validate, arguments );
+  o = _.routine.options_( validate, arguments );
 
   _.assert( _.longIs( o.dims ), 'Expects {- o.dims -}' );
   _.assert( o.buffer === null || _.bufferAnyIs( o.buffer ), 'Expects {- o.buffer -}' );
@@ -75,7 +75,7 @@ let Extension =
 
 }
 
-_.mapExtend( Self, Extension );
+_.props.extend( Self, Extension );
 
 //
 

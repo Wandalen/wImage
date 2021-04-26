@@ -13,7 +13,7 @@ _.image.reader = _.image.reader || Object.create( null );
 
 function reader_head( routine, args )
 {
-  let o = _.routineOptions( routine, args );
+  let o = _.routine.options_( routine, args );
   _.assert( arguments.length === 2 );
   _.assert( _.longHas( [ 'full', 'head' ], o.mode ) );
 
@@ -78,12 +78,12 @@ read_body.defaults =
 
 //
 
-let readHead = _.routine.uniteCloning_( reader_head, read_body );
+let readHead = _.routine.uniteCloning_replaceByUnite( reader_head, read_body );
 readHead.defaults.mode = 'head';
 
 //
 
-let read = _.routine.uniteCloning_( reader_head, read_body );
+let read = _.routine.uniteCloning_replaceByUnite( reader_head, read_body );
 read.defaults.mode = 'full';
 
 //
@@ -91,7 +91,7 @@ read.defaults.mode = 'full';
 function readerDeduce( o )
 {
   let self = this;
-  o = _.routineOptions( readerDeduce, arguments );
+  o = _.routine.options_( readerDeduce, arguments );
   o.outFormat = 'structure.image';
   let result = _.gdf.selectSingleContext( o );
   return result;
@@ -119,7 +119,7 @@ let Extension =
 
 }
 
-_.mapExtend( Self, Extension );
+_.props.extend( Self, Extension );
 
 
 if( typeof module !== 'undefined' )

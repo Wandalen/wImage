@@ -15,7 +15,7 @@ function fileRead_head( routine, args )
   let o = args[ 0 ]
   if( _.strIs( args[ 0 ] ) )
   o = { filePath : o }
-  o = _.routineOptions( routine, o );
+  o = _.routine.options_( routine, o );
   _.assert( args.length === 1 );
   _.assert( arguments.length === 2 );
 
@@ -29,7 +29,7 @@ function fileReadHead_body( o )
   let self = this;
   let ready = new _.Consequence().take( null );
   let data;
-  o = _.assertRoutineOptions( fileReadHead_body, arguments );
+  o = _.routine.assertOptions( fileReadHead_body, arguments );
   // if( o.withStream === null )
   // {
   /*
@@ -74,7 +74,7 @@ fileReadHead_body.defaults =
 _.assert( _.image.readHead.defaults.methodName === undefined );
 _.assert( _.image.readHead.defaults.sync !== undefined );
 
-let fileReadHead = _.routine.uniteCloning_( fileRead_head, fileReadHead_body );
+let fileReadHead = _.routine.uniteCloning_replaceByUnite( fileRead_head, fileReadHead_body );
 
 //
 
@@ -83,7 +83,7 @@ function fileRead_body( o )
   let self = this;
   let ready = new _.Consequence().take( null );
 
-  o = _.assertRoutineOptions( fileRead_body, arguments );
+  o = _.routine.assertOptions( fileRead_body, arguments );
 
   ready
   .then( () =>
@@ -117,7 +117,7 @@ _.assert( _.image.read.defaults.sync !== undefined );
 
 //
 
-const fileRead = _.routine.uniteCloning_( fileRead_head, fileRead_body );
+const fileRead = _.routine.uniteCloning_replaceByUnite( fileRead_head, fileRead_body );
 
 // --
 // declare
@@ -131,7 +131,7 @@ let Extension =
 
 }
 
-_.mapExtend( Self, Extension );
+_.props.extend( Self, Extension );
 
 //
 
