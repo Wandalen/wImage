@@ -36,7 +36,7 @@ function _structureHandle( o )
   os = o.op.originalStructure;
   console.log( os )
   _.routine.assertOptions( _structureHandle, arguments );
-  _.assert( _.objectIs( os ) );
+  _.assert( _.object.isBasic( os ) );
   _.assert( _.strIs( o.mode ) );
 
   let structure = o.op.out.data;

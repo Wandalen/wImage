@@ -6,7 +6,7 @@ function bufferFromStream( o )
   let ready = new _.Consequence();
 
   _.assert( arguments.length === 1, 'Expects single argument' );
-  _.assert( _.objectIs( o ) );
+  _.assert( _.object.isBasic( o ) );
   _.map.assertHasOnly( o, bufferFromStream.defaults );
   _.assert( _.streamIs( o.src ), 'Expects stream as {-o.src-}' );
 

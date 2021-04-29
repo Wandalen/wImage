@@ -17,7 +17,7 @@ function write( o )
   o = _.routine.options_( write, arguments );
 
   _.assert( arguments.length === 1, `Expects a single argument, but got ${arguments.length}!` );
-  _.assert( _.objectIs( o ), 'Expects an object {-o-}!' );
+  _.assert( _.object.isBasic( o ), 'Expects an object {-o-}!' );
 
 
 }

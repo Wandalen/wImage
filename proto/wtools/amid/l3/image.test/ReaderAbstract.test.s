@@ -70,7 +70,7 @@ function encode( test )
     var encoder = _.gdf.selectSingleContext({ ext : context.ext })
     var op = encoder.encode({ data, params });
     test.true( o.is( op.in.data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
@@ -143,7 +143,7 @@ function readHeadBufferAsync( test )
       test.description = 'operation';
 
       test.true( o.is( op.in.data ) );
-      test.true( _.objectIs( op.params.originalStructure ) );
+      test.true( _.object.isBasic( op.params.originalStructure ) );
 
       var exp =
       {
@@ -230,7 +230,7 @@ function readHeadStreamAsync( test )
       test.description = 'operation';
 
       // test.true( _.streamIs( op.in.data ) );
-      test.true( _.objectIs( op.params.originalStructure ) );
+      test.true( _.object.isBasic( op.params.originalStructure ) );
 
       var exp =
       {
@@ -309,7 +309,7 @@ function readHeadBufferSync( test )
     test.description = 'operation';
 
     test.true( o.is( op.in.data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
@@ -385,7 +385,7 @@ function readHeadStreamSync( test )
     test.description = 'operation';
 
     test.true( _.streamIs( data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
@@ -468,7 +468,7 @@ function readBufferAsync( test )
       test.description = 'operation';
 
       test.true( o.is( op.in.data ) );
-      test.true( _.objectIs( op.params.originalStructure ) );
+      test.true( _.object.isBasic( op.params.originalStructure ) );
 
       var exp =
       {
@@ -555,7 +555,7 @@ function readStreamAsync( test )
       test.description = 'operation';
 
       // test.true( _.streamIs( op.in.data ) );
-      test.true( _.objectIs( op.params.originalStructure ) );
+      test.true( _.object.isBasic( op.params.originalStructure ) );
 
       var exp =
       {
@@ -636,7 +636,7 @@ function readBufferSync( test )
     test.description = 'operation';
 
     test.true( o.is( op.in.data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
@@ -712,7 +712,7 @@ function readStreamSync( test )
     test.description = 'operation';
 
     test.true( _.streamIs( data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
@@ -778,7 +778,7 @@ function fileReadHeadSync( test )
   test.description = 'operation';
 
   // test.true( _.streamIs( op.in.data ) );
-  test.true( _.objectIs( op.params.originalStructure ) );
+  test.true( _.object.isBasic( op.params.originalStructure ) );
 
   var exp =
   {
@@ -847,7 +847,7 @@ function fileReadHeadAsync( test )
     test.description = 'operation';
 
     // test.true( _.streamIs( op.in.data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
@@ -916,7 +916,7 @@ function fileReadSync( test )
   test.description = 'operation';
 
   test.true( _.bufferRawIs( op.in.data ) );
-  test.true( _.objectIs( op.params.originalStructure ) );
+  test.true( _.object.isBasic( op.params.originalStructure ) );
 
   var exp =
   {
@@ -960,7 +960,7 @@ function fileReadSync( test )
   test.description = 'operation';
 
   test.true( _.bufferRawIs( op.in.data ) );
-  test.true( _.objectIs( op.params.originalStructure ) );
+  test.true( _.object.isBasic( op.params.originalStructure ) );
 
   var exp =
   {
@@ -1033,7 +1033,7 @@ function fileReadAsync( test )
     test.description = 'operation';
 
     test.true( _.bufferRawIs( op.in.data ) );
-    test.true( _.objectIs( op.params.originalStructure ) );
+    test.true( _.object.isBasic( op.params.originalStructure ) );
 
     var exp =
     {
