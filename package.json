@@ -1,6 +1,6 @@
 {
   "name" : "wimage",
-  "version" : "0.3.106",
+  "version" : "0.3.107",
   "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
   "author" : "Kostiantyn Wandalen <wanalen@01.school>",
   "license" : "MIT",
@@ -25,12 +25,12 @@
     "bmp-js" : "=0.1.0",
     "utif" : "=3.1.0",
     "omggif" : "1.0.10",
-    "wTools" : "delta",
-    "wCopyable" : "delta",
-    "wFiles" : "delta",
-    "wConsequence" : "delta",
-    "wgdf" : "delta"
+    "wTools" : "stable",
+    "wCopyable" : "stable",
+    "wFiles" : "stable",
+    "wConsequence" : "stable",
+    "wgdf" : "stable"
   },
-  "devDependencies" : { "eslint" : "7.1.0", "wTesting" : "delta" },
+  "devDependencies" : { "eslint" : "7.1.0", "wTesting" : "stable" },
   "keywords" : [ "wTools" ]
 }
