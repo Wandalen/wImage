@@ -2,18 +2,9 @@ format: outwillfile-2.0
 root:
   - wImage.out
 consistency:
-  ../.ex.will.yml: &ref_0
-    hash: 6b9afa69a13b607ca9418472bff4473e
-    size: 1733
-  ../.im.will.yml: &ref_1
-    hash: a28b4ac2e5cd4cda67971b22ab362223
-    size: 6173
-  ../.module/AssetsImagesPng/will.yml: &ref_6
-    hash: 3d78fa89530a262abb542ae8f7a0f209
-    size: 349
-  ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: &ref_7
-    hash: 609742a312c07a0f71a4d8c46267ea34
-    size: 7739
+  ../will.yml: &ref_0
+    hash: db8aec46497aef7672ee326580efe8c6
+    size: 7701
 module:
   wImage.out:
     about:
@@ -24,19 +15,19 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: &ref_2
+      license: MIT
+      npm.name: wimage
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: &ref_1
+        - tools
+        - wTools
+      contributors: &ref_2
+        - Kostiantyn Wandalen <wanalen@01.school>
+      interpreters: &ref_3
         - njs >= 10.0.0
         - chrome >= 60.0.0
         - firefox >= 60.0.0
-      keywords: &ref_3
-        - tools
-        - wTools
-      license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: &ref_4
-        - Kostiantyn Wandalen <wanalen@01.school>
-      npm.name: wimage
-      npm.scripts: &ref_5
+      npm.scripts: &ref_4
         test: wtest .run proto/**
         docgen: wdocgen .build proto
     path:
@@ -51,15 +42,11 @@ module:
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
-        path:
-          - ../.ex.will.yml
-          - ../.im.will.yml
+        path: ../will.yml
       module.peer.in:
         criterion:
           predefined: 1
@@ -381,7 +368,7 @@ module:
         path: 'npm:///wConsequence'
         autoExporting: 0
         enabled: 0
-      wGdf:
+      wgdf:
         path: 'npm:///wgdf'
         autoExporting: 0
         enabled: 0
@@ -409,7 +396,7 @@ module:
         enabled: 0
         criterion:
           external: 1
-      sharp:
+      'sharp0.25.4,':
         path: 'npm:///sharp0.25.4,'
         autoExporting: 0
         enabled: 0
@@ -450,12 +437,12 @@ module:
         autoExporting: 0
         enabled: 0
         criterion:
-          debug: 1
           external: 1
+          development: 1
       AssetsImagesPng:
         path: 'git:///git@github.com:Wandalen/AssetsImagesPng.git'
         autoExporting: 0
-        enabled: 1
+        enabled: 0
         criterion:
           asset: 1
           proto: 0
@@ -1068,8 +1055,7 @@ module:
           content: proto
           export: 1
     consistency:
-      ../.ex.will.yml: *ref_0
-      ../.im.will.yml: *ref_1
+      ../will.yml: *ref_0
   ../:
     about:
       name: wImage
@@ -1079,26 +1065,22 @@ module:
         collection of plugins.
       enabled: 1
       version: 0.4.0
-      interpreters: *ref_2
-      keywords: *ref_3
       license: MIT
-      author: Kostiantyn Wandalen <wanalen@01.school>
-      contributors: *ref_4
       npm.name: wimage
-      npm.scripts: *ref_5
+      author: Kostiantyn Wandalen <wanalen@01.school>
+      keywords: *ref_1
+      contributors: *ref_2
+      interpreters: *ref_3
+      npm.scripts: *ref_4
     path:
       module.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.original.willfiles:
         criterion:
           predefined: 1
-        path:
-          - .ex.will.yml
-          - .im.will.yml
+        path: will.yml
       module.peer.willfiles:
         criterion:
           predefined: 1
@@ -1216,7 +1198,7 @@ module:
         path: 'npm:///wConsequence'
         autoExporting: 0
         enabled: 0
-      wGdf:
+      wgdf:
         path: 'npm:///wgdf'
         autoExporting: 0
         enabled: 0
@@ -1244,7 +1226,7 @@ module:
         enabled: 0
         criterion:
           external: 1
-      sharp:
+      'sharp0.25.4,':
         path: 'npm:///sharp0.25.4,'
         autoExporting: 0
         enabled: 0
@@ -1285,12 +1267,12 @@ module:
         autoExporting: 0
         enabled: 0
         criterion:
-          debug: 1
           external: 1
+          development: 1
       AssetsImagesPng:
         path: 'git:///git@github.com:Wandalen/AssetsImagesPng.git'
         autoExporting: 0
-        enabled: 1
+        enabled: 0
         criterion:
           asset: 1
           proto: 0
@@ -1839,261 +1821,6 @@ module:
           - 'build::release'
           - 'build::npm'
     consistency:
-      ../.ex.will.yml:
-        hash: 6b9afa69a13b607ca9418472bff4473e
-        size: 1733
-      ../.im.will.yml:
-        hash: a28b4ac2e5cd4cda67971b22ab362223
-        size: 6173
-  ../.module/AssetsImagesPng/:
-    about:
-      name: AssetsImagesPng
-      org: noorg
-      description: Collection of PNG images for testing purpose.
-      enabled: 1
-    path:
-      module.willfiles:
-        criterion:
-          predefined: 1
-        path: will.yml
-      module.original.willfiles:
-        criterion:
-          predefined: 1
-        path: will.yml
-      module.peer.willfiles:
-        criterion:
-          predefined: 1
-        path: out/AssetsImagesPng.out.will.yml
-      module.peer.in:
-        criterion:
-          predefined: 1
-        path: out
-      module.common:
-        criterion:
-          predefined: 1
-        path: ./
-      download:
-        criterion:
-          predefined: 1
-        path: .
-      in:
-        path: .
-      out:
-        path: out
-      data:
-        path: data
-      temp:
-        path: 'path::out'
-      export:
-        path: '{path::data}/**.png'
-    submodule: {}
-    reflector: {}
-    step: {}
-    build:
-      export:
-        steps:
-          - 'step::module.export'
-        criterion:
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-    consistency:
-      ../.module/AssetsImagesPng/will.yml: *ref_6
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
-  ../.module/AssetsImagesPng/out/AssetsImagesPng.out:
-    about:
-      name: AssetsImagesPng
-      org: noorg
-      description: Collection of PNG images for testing purpose.
-      enabled: 1
-    path:
-      module.willfiles:
-        criterion:
-          predefined: 1
-        path: AssetsImagesPng.out.will.yml
-      module.common:
-        criterion:
-          predefined: 1
-        path: AssetsImagesPng.out
-      module.original.willfiles:
-        criterion:
-          predefined: 1
-        path: ../will.yml
-      module.peer.willfiles:
-        criterion:
-          predefined: 1
-        path: ../will.yml
-      module.peer.in:
-        criterion:
-          predefined: 1
-        path: ..
-      download:
-        criterion:
-          predefined: 1
-        path: .
-      in:
-        path: .
-      out:
-        path: .
-      data:
-        path: ../data
-      temp:
-        path: 'path::out'
-      export:
-        path: '{path::data}/**.png'
-      exported.dir.export:
-        criterion:
-          generated: 1
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-        path: ../data
-      exported.files.export:
-        criterion:
-          generated: 1
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-        path:
-          - ../data/image/Pixels-2048x2048-depth8-interlaced1-rgb.png
-          - ../data/image/Pixels-2x2-depth1-interlaced0-g.png
-          - ../data/image/Pixels-2x2-depth1-interlaced1-g.png
-          - ../data/image/Pixels-2x2-depth16-interlaced0-g.png
-          - ../data/image/Pixels-2x2-depth16-interlaced0-ga.png
-          - ../data/image/Pixels-2x2-depth16-interlaced0-rgb.png
-          - ../data/image/Pixels-2x2-depth16-interlaced0-rgba.png
-          - ../data/image/Pixels-2x2-depth16-interlaced1-g.png
-          - ../data/image/Pixels-2x2-depth16-interlaced1-ga.png
-          - ../data/image/Pixels-2x2-depth16-interlaced1-rgb.png
-          - ../data/image/Pixels-2x2-depth16-interlaced1-rgba.png
-          - ../data/image/Pixels-2x2-depth2-interlaced0-g.png
-          - ../data/image/Pixels-2x2-depth2-interlaced0-palette.png
-          - ../data/image/Pixels-2x2-depth2-interlaced1-g.png
-          - ../data/image/Pixels-2x2-depth2-interlaced1-palette.png
-          - ../data/image/Pixels-2x2-depth4-interlaced0-g.png
-          - ../data/image/Pixels-2x2-depth4-interlaced0-palette.png
-          - ../data/image/Pixels-2x2-depth4-interlaced1-g.png
-          - ../data/image/Pixels-2x2-depth4-interlaced1-palette.png
-          - ../data/image/Pixels-2x2-depth8-interlaced0-g.png
-          - ../data/image/Pixels-2x2-depth8-interlaced0-ga.png
-          - ../data/image/Pixels-2x2-depth8-interlaced0-palette.png
-          - ../data/image/Pixels-2x2-depth8-interlaced0-rgb.png
-          - ../data/image/Pixels-2x2-depth8-interlaced0-rgba.png
-          - ../data/image/Pixels-2x2-depth8-interlaced1-g.png
-          - ../data/image/Pixels-2x2-depth8-interlaced1-ga.png
-          - ../data/image/Pixels-2x2-depth8-interlaced1-palette.png
-          - ../data/image/Pixels-2x2-depth8-interlaced1-rgb.png
-          - ../data/image/Pixels-2x2-depth8-interlaced1-rgba.png
-          - ../data/image/Pixels-4096x4096-depth8-interlaced1-rgb.png
-          - ../data/image/Pixels-4x5-depth1-interlaced0-g.png
-          - ../data/image/Pixels-4x5-depth1-interlaced1-g.png
-          - ../data/image/Pixels-4x5-depth16-interlaced0-g.png
-          - ../data/image/Pixels-4x5-depth16-interlaced0-ga.png
-          - ../data/image/Pixels-4x5-depth16-interlaced0-rgb.png
-          - ../data/image/Pixels-4x5-depth16-interlaced0-rgba.png
-          - ../data/image/Pixels-4x5-depth16-interlaced1-g.png
-          - ../data/image/Pixels-4x5-depth16-interlaced1-ga.png
-          - ../data/image/Pixels-4x5-depth16-interlaced1-rgb.png
-          - ../data/image/Pixels-4x5-depth16-interlaced1-rgba.png
-          - ../data/image/Pixels-4x5-depth2-interlaced0-g.png
-          - ../data/image/Pixels-4x5-depth2-interlaced0-rgb.png
-          - ../data/image/Pixels-4x5-depth2-interlaced1-g.png
-          - ../data/image/Pixels-4x5-depth2-interlaced1-rgb.png
-          - ../data/image/Pixels-4x5-depth4-interlaced0-g.png
-          - ../data/image/Pixels-4x5-depth4-interlaced0-rgb.png
-          - ../data/image/Pixels-4x5-depth4-interlaced1-g.png
-          - ../data/image/Pixels-4x5-depth4-interlaced1-rgb.png
-          - ../data/image/Pixels-4x5-depth8-interlaced0-g.png
-          - ../data/image/Pixels-4x5-depth8-interlaced0-ga.png
-          - ../data/image/Pixels-4x5-depth8-interlaced0-palette.png
-          - ../data/image/Pixels-4x5-depth8-interlaced0-rgb.png
-          - ../data/image/Pixels-4x5-depth8-interlaced0-rgba.png
-          - ../data/image/Pixels-4x5-depth8-interlaced1-g.png
-          - ../data/image/Pixels-4x5-depth8-interlaced1-ga.png
-          - ../data/image/Pixels-4x5-depth8-interlaced1-palette.png
-          - ../data/image/Pixels-4x5-depth8-interlaced1-rgb.png
-          - ../data/image/Pixels-4x5-depth8-interlaced1-rgba.png
-          - ../data/image/Pixels-8192x8192-depth8-interlaced1-rgb.png
-    submodule: {}
-    reflector:
-      exported.export:
-        src:
-          filePath:
-            '**.png': ''
-          prefixPath: ../data
-        mandatory: 1
-        dstRewritingOnlyPreserving: 1
-        linking: hardLinkMaybe
-        criterion:
-          generated: 1
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-      exported.files.export:
-        src:
-          filePath:
-            'path::exported.files.export': ''
-          basePath: .
-          prefixPath: 'path::exported.dir.export'
-          recursive: 0
-        recursive: 0
-        criterion:
-          generated: 1
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-    step:
-      exported.export:
-        opts:
-          filePath: 'reflector::exported.export'
-        criterion:
-          generated: 1
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-        inherit:
-          - files.reflect
-      exported.files.export:
-        opts:
-          filePath: 'reflector::exported.files.export'
-        criterion:
-          generated: 1
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-        inherit:
-          - files.reflect
-    build:
-      export:
-        steps:
-          - 'step::module.export'
-        criterion:
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-    exported:
-      export:
-        version: 0.0.0
-        recursive: 0
-        withIntegrated: 2
-        tar: 0
-        exportedReflector: 'reflector::exported.export'
-        exportedFilesReflector: 'reflector::exported.files.export'
-        exportedDirPath: 'path::exported.dir.export'
-        exportedFilesPath: 'path::exported.files.export'
-        criterion:
-          export: 1
-          default: 1
-          proto: 0
-          asset: 1
-    consistency:
-      ../.module/AssetsImagesPng/out/AssetsImagesPng.out.will.yml: *ref_7
-      ../.module/AssetsImagesPng/will.yml: *ref_6
+      ../will.yml:
+        hash: db8aec46497aef7672ee326580efe8c6
+        size: 7701
