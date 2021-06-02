@@ -4,7 +4,7 @@
 'use strict';
 
 const _ = _global_.wTools;
-const Self = _.image.rstructure = _.image.rstructure || Object.create( null );
+_.image.rstructure = _.image.rstructure || Object.create( null );
 
 // --
 // inter
@@ -75,7 +75,7 @@ let Extension =
 
 }
 
-_.props.extend( Self, Extension );
+/* _.props.extend */Object.assign( _.image.rstructure, Extension );
 
 //
 

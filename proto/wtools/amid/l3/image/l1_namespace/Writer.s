@@ -4,7 +4,7 @@
 'use strict';
 
 const _ = _global_.wTools;
-const Self = _.image = _.image || Object.create( null );
+_.image = _.image || Object.create( null );
 _.image.writer = _.image.writer || Object.create( null );
 
 // --
@@ -39,7 +39,7 @@ let Extension =
 
 }
 
-_.props.extend( Self, Extension );
+/* _.props.extend */Object.assign( _.image, Extension );
 
 //
 
