@@ -1,36 +1,48 @@
 {
-  "name" : "wimage",
-  "version" : "0.3.110",
-  "description" : "Standardized abstract interface to open / read / parse image with collection of plugins.",
-  "author" : "Kostiantyn Wandalen <wanalen@01.school>",
-  "license" : "MIT",
-  "main" : "proto/node_modules/wimage",
-  "files" : [ "proto/wtools/amid/l3/image", "proto/node_modules" ],
-  "scripts" : { "test" : "wtest .run 'proto/**' rapidity:-3", "docgen" : "wdocgen .build proto" },
-  "repository" : { "type" : "git", "url" : "https://github.com/Wandalen/wImage.git" },
-  "bugs" :
-  {
-    "url" : "https://github.com/Wandalen/wImage/issues"
+  "name": "wimage",
+  "version": "0.3.110",
+  "description": "Standardized abstract interface to open / read / parse image with collection of plugins.",
+  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "license": "MIT",
+  "main": "proto/node_modules/wimage",
+  "files": [
+    "proto/wtools/amid/l3/image",
+    "proto/node_modules"
+  ],
+  "scripts": {
+    "test": "wtest .run 'proto/**' rapidity:-3",
+    "docgen": "wdocgen .build proto"
   },
-  "dependencies" :
-  {
-    "node-libpng" : "=0.2.18",
-    "sharp" : "=0.25.4",
-    "pngjs" : "=5.0.0",
-    "png.js" : "=0.2.1",
-    "png-js" : "=1.0.0",
-    "fast-png" : "=5.0.2",
-    "jpeg-js" : "=0.4.1",
-    "pixel-jpg" : "=0.0.1",
-    "bmp-js" : "=0.1.0",
-    "utif" : "=3.1.0",
-    "omggif" : "1.0.10",
-    "wTools" : "gamma",
-    "wCopyable" : "gamma",
-    "wFiles" : "gamma",
-    "wConsequence" : "gamma",
-    "wgdf" : "gamma"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wandalen/wImage.git"
   },
-  "devDependencies" : { "eslint" : "7.1.0", "wTesting" : "gamma" },
-  "keywords" : [ "wTools" ]
+  "bugs": {
+    "url": "https://github.com/Wandalen/wImage/issues"
+  },
+  "dependencies": {
+    "node-libpng": "=0.2.18",
+    "sharp": "=0.25.4",
+    "pngjs": "=5.0.0",
+    "png.js": "=0.2.1",
+    "png-js": "=1.0.0",
+    "fast-png": "=5.0.2",
+    "jpeg-js": "=0.4.1",
+    "pixel-jpg": "=0.0.1",
+    "bmp-js": "=0.1.0",
+    "utif": "=3.1.0",
+    "omggif": "1.0.10",
+    "wTools": "gamma",
+    "wCopyable": "gamma",
+    "wFiles": "gamma",
+    "wConsequence": "gamma",
+    "wgdf": "gamma"
+  },
+  "devDependencies": {
+    "eslint": "7.1.0",
+    "wTesting": "gamma"
+  },
+  "keywords": [
+    "wTools"
+  ]
 }
