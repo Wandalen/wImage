@@ -135,7 +135,6 @@ function _readGeneral( o )
     if( o.in.format === null )
     o.in.format = 'buffer.png';
 
-    debugger;
     if( o.sync )
     return self._readGeneralBufferSync( o );
     else
