@@ -462,7 +462,7 @@ function readStreamAsync_( test )
       test.identical( op.out.data, exp.data );
 
       return op;
-    });
+    }).delay( 500 );
 
   }
 
@@ -547,35 +547,36 @@ function readStreamSync_( test )
 
   function act( o )
   {
-
-    /* */
-
-    test.case = `src:${o.encoding}`;
-    callbacks = [];
-    a.reflect();
-    var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
-
-    test.description = 'operation';
-
-    test.true( _.streamIs( data ) );
-
-    var exp =
+    a.ready.then( () =>
     {
-      'data' :
-      {
-        'special' : { 'interlaced' : false },
-        'channelsMap' : {},
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 1,
-        'bitsPerPixel' : 8,
-        'hasPalette' : false,
-      },
-    }
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
+      var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
 
-    test.identical( op.out.data, exp.data );
+      test.description = 'operation';
+
+      test.true( _.streamIs( data ) );
+
+      var exp =
+      {
+        'data' :
+        {
+          'special' : { 'interlaced' : false },
+          'channelsMap' : {},
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'buffer' : ( new U8x([ 0xff, 0x0, 0x0, 0xff, 0x0, 0xff, 0x0, 0xff, 0x0, 0x0, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff ]) ).buffer,
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 1,
+          'bitsPerPixel' : 8,
+          'hasPalette' : false,
+        },
+      }
+
+      return test.identical( op.out.data, exp.data );
+    }).delay( 500 );
+
 
   }
 

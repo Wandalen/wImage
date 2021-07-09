@@ -593,7 +593,7 @@ function readStreamAsync( test )
       test.identical( callbacks.length, 1 );
 
       return op;
-    });
+    }).delay( 500 );
 
   }
 
@@ -699,55 +699,55 @@ function readStreamSync( test )
 
   function act( o )
   {
-
-    /* */
-
-    test.case = `src:${o.encoding}`;
-    callbacks = [];
-    a.reflect();
-    var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    test.true( _.streamIs( data ) );
-    var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
-
-    test.description = 'operation';
-
-    test.true( _.streamIs( data ) );
-    test.true( _.object.isBasic( op.params.originalStructure ) );
-
-    var exp =
+    a.ready.then( () =>
     {
-      'in' :
-      {
-        'data' : op.in.data,
-        'filePath' : null,
-        'ext' : context.ext,
-        'format' : `stream.${context.ext}`
-      },
-      'out' :
-      {
-        'format' : 'structure.image',
-      },
-      'params' :
-      {
-        onHead,
-        'mode' : 'full',
-        'headGot' : true,
-        'originalStructure' : op.params.originalStructure,
-      },
-      'sync' : 1,
-      'err' : null,
-    }
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
+      test.true( _.streamIs( data ) );
+      var op = _.image.read({ data, ext : context.ext, sync : 1, onHead });
 
-    test.identical( op.in, exp.in );
-    test.identical( op.out.format, exp.out.format );
-    test.identical( op.params, exp.params );
-    test.identical( op.sync, exp.sync );
-    test.identical( op.error, exp.error );
+      test.description = 'operation';
 
-    test.description = 'onHead';
-    test.true( callbacks[ 0 ] === op );
-    test.identical( callbacks.length, 1 );
+      test.true( _.streamIs( data ) );
+      test.true( _.object.isBasic( op.params.originalStructure ) );
 
+      var exp =
+      {
+        'in' :
+        {
+          'data' : op.in.data,
+          'filePath' : null,
+          'ext' : context.ext,
+          'format' : `stream.${context.ext}`
+        },
+        'out' :
+        {
+          'format' : 'structure.image',
+        },
+        'params' :
+        {
+          onHead,
+          'mode' : 'full',
+          'headGot' : true,
+          'originalStructure' : op.params.originalStructure,
+        },
+        'sync' : 1,
+        'err' : null,
+      }
+
+      test.identical( op.in, exp.in );
+      test.identical( op.out.format, exp.out.format );
+      test.identical( op.params, exp.params );
+      test.identical( op.sync, exp.sync );
+      test.identical( op.error, exp.error );
+
+      test.description = 'onHead';
+      test.true( callbacks[ 0 ] === op );
+      test.identical( callbacks.length, 1 );
+      return null;
+    }).delay( 500 );
   }
 
   /* */
