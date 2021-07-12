@@ -1114,6 +1114,7 @@ const Proto =
   name : 'ImageReadAbstract',
   abstract : 1,
   silencing : 1,
+  routineTimeOut : 15000,
 
   onSuiteBegin,
   onSuiteEnd,
