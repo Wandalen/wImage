@@ -224,6 +224,7 @@ function readHeadStreamAsync_( test )
       return op;
     });
 
+    a.ready.delay( 500 );
   }
 
   /* */
@@ -464,6 +465,7 @@ function readStreamAsync_( test )
       return op;
     });
 
+    a.ready.delay( 500 );
   }
 
   /* */

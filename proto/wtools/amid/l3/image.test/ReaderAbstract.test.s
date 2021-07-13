@@ -269,6 +269,7 @@ function readHeadStreamAsync( test )
       return op;
     });
 
+    a.ready.delay( 500 );
   }
 
   /* */
@@ -593,8 +594,9 @@ function readStreamAsync( test )
       test.identical( callbacks.length, 1 );
 
       return op;
-    }).delay( 500 );
+    });
 
+    a.ready.delay( 500 );
   }
 
   /* */
@@ -747,7 +749,9 @@ function readStreamSync( test )
       test.true( callbacks[ 0 ] === op );
       test.identical( callbacks.length, 1 );
       return null;
-    }).delay( 500 );
+    });
+
+    a.ready.delay( 500 );
   }
 
   /* */
@@ -1110,6 +1114,7 @@ const Proto =
   name : 'ImageReadAbstract',
   abstract : 1,
   silencing : 1,
+  routineTimeOut : 15000,
 
   onSuiteBegin,
   onSuiteEnd,
