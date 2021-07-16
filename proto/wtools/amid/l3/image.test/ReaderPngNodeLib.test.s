@@ -331,40 +331,42 @@ function readHeadStreamSync_( test )
 
   function act( o )
   {
-
-    /* */
-
-    test.case = `src:${o.encoding}`;
-    callbacks = [];
-    a.reflect();
-    var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
-    var op = _.image.readHead({ data, ext : context.ext, sync : 1, onHead });
-
-    test.description = 'operation';
-
-    var exp =
+    a.ready.then( () =>
     {
-      'data' :
+      test.case = `src:${o.encoding}`;
+      callbacks = [];
+      a.reflect();
+      var data = _.fileProvider.streamRead({ filePath : a.abs( `Pixels-2x2.${context.ext}` ), encoding : o.encoding });
+      var op = _.image.readHead({ data, ext : context.ext, sync : 1, onHead });
+
+      test.description = 'operation';
+
+      var exp =
       {
-        'special' : { 'interlaced' : false },
-        'channelsMap' :
+        'data' :
         {
-          // 'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
-          // 'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
-          // 'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
-          // 'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          'special' : { 'interlaced' : false },
+          'channelsMap' :
+          {
+            // 'red' : { 'name' : 'red', 'bits' : 8, 'order' : 0 },
+            // 'green' : { 'name' : 'green', 'bits' : 8, 'order' : 1 },
+            // 'blue' : { 'name' : 'blue', 'bits' : 8, 'order' : 2 },
+            // 'alpha' : { 'name' : 'alpha', 'bits' : 8, 'order' : 3 },
+          },
+          'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
+          'buffer' : null,
+          'dims' : [ 2, 2 ],
+          'bytesPerPixel' : 1,
+          'bitsPerPixel' : 8,
+          'hasPalette' : false,
         },
-        'channelsArray' : [ 'red', 'green', 'blue', 'alpha' ],
-        'buffer' : null,
-        'dims' : [ 2, 2 ],
-        'bytesPerPixel' : 1,
-        'bitsPerPixel' : 8,
-        'hasPalette' : false,
-      },
-    }
+      }
 
-    test.identical( op.out.data, exp.data );
+      test.identical( op.out.data, exp.data );
+      return null;
+    });
 
+    a.ready.delay( 500 );
   }
 
   /* */
@@ -373,7 +375,6 @@ function readHeadStreamSync_( test )
   {
     callbacks.push( op );
   }
-
 }
 
 //
