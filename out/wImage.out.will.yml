@@ -3,7 +3,7 @@ root:
   - wImage.out
 consistency:
   ../will.yml: &ref_0
-    hash: db8aec46497aef7672ee326580efe8c6
+    hash: 661caa3735649835b8d738e89c376530
     size: 7701
 module:
   wImage.out:
@@ -403,7 +403,7 @@ module:
         criterion:
           external: 1
       node-libpng:
-        path: 'npm:///node-libpng#0.2.18'
+        path: 'npm:///node-libpng#0.2.20'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1233,7 +1233,7 @@ module:
         criterion:
           external: 1
       node-libpng:
-        path: 'npm:///node-libpng#0.2.18'
+        path: 'npm:///node-libpng#0.2.20'
         autoExporting: 0
         enabled: 0
         criterion:
@@ -1822,5 +1822,5 @@ module:
           - 'build::npm'
     consistency:
       ../will.yml:
-        hash: db8aec46497aef7672ee326580efe8c6
+        hash: 661caa3735649835b8d738e89c376530
         size: 7701
