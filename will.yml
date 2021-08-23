@@ -333,7 +333,7 @@ submodule:
     criterion:
       external: 1
   node-libpng:
-    path: 'npm:///node-libpng#0.2.18'
+    path: 'npm:///node-libpng#0.2.20'
     enabled: 0
     criterion:
       external: 1

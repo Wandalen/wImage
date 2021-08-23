@@ -35,7 +35,7 @@
     "png-js": "=1.0.0",
     "pixel-jpg": "=0.0.1",
     "omggif": "1.0.10",
-    "node-libpng": "=0.2.18",
+    "node-libpng": "=0.2.20",
     "jpeg-js": "=0.4.1",
     "fast-png": "=5.0.2",
     "bmp-js": "=0.1.0"
