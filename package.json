@@ -2,7 +2,7 @@
   "name": "wimage",
   "version": "0.3.146",
   "description": "Standardized abstract interface to open / read / parse image with collection of plugins.",
-  "author": "Kostiantyn Wandalen <wanalen@01.school>",
+  "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
   "license": "MIT",
   "main": "proto/node_modules/wimage",
   "files": [
