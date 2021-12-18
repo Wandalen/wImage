@@ -1,6 +1,6 @@
 {
   "name": "wimage",
-  "version": "0.3.148",
+  "version": "0.3.149",
   "description": "Standardized abstract interface to open / read / parse image with collection of plugins.",
   "author": "Kostiantyn Wandalen <wandalen@obox.systems>",
   "license": "MIT",
@@ -23,11 +23,11 @@
     "url": "https://github.com/Wandalen/wImage/issues"
   },
   "dependencies": {
-    "wTools": "delta",
-    "wgdf": "delta",
-    "wFiles": "delta",
-    "wCopyable": "delta",
-    "wConsequence": "delta",
+    "wTools": "alpha",
+    "wgdf": "alpha",
+    "wFiles": "alpha",
+    "wCopyable": "alpha",
+    "wConsequence": "alpha",
     "utif": "=3.1.0",
     "sharp": "=0.25.4",
     "pngjs": "=5.0.0",
@@ -41,7 +41,7 @@
     "bmp-js": "=0.1.0"
   },
   "devDependencies": {
-    "wTesting": "delta",
+    "wTesting": "alpha",
     "eslint": "7.32.0"
   },
   "keywords": [
