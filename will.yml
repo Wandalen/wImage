@@ -290,67 +290,67 @@ submodule:
   wCopyable:
     path: 'npm:///wCopyable'
     enabled: 0
-  wFiles:
-    path: 'npm:///wFiles'
-    enabled: 0
   wConsequence:
     path: 'npm:///wConsequence'
     enabled: 0
   wgdf:
     path: 'npm:///wgdf'
     enabled: 0
-  pngjs:
-    path: 'npm:///pngjs#5.0.0'
+  wFiles:
+    path: 'npm:///wFiles'
     enabled: 0
-    criterion:
-      external: 1
-  png.js:
-    path: 'npm:///png.js#0.2.1'
-    enabled: 0
-    criterion:
-      external: 1
-  png-js:
-    path: 'npm:///png-js#1.0.0'
+  bmp-js:
+    path: 'npm:///bmp-js!0.1.0'
     enabled: 0
     criterion:
       external: 1
   fast-png:
-    path: 'npm:///fast-png#5.0.2'
-    enabled: 0
-    criterion:
-      external: 1
-  'sharp0.25.4,':
-    path: 'npm:///sharp0.25.4,'
-    enabled: 0
-    criterion:
-      external: 1
-  node-libpng:
-    path: 'npm:///node-libpng#0.2.20'
+    path: 'npm:///fast-png!5.0.2'
     enabled: 0
     criterion:
       external: 1
   jpeg-js:
-    path: 'npm:///jpeg-js#0.4.1'
+    path: 'npm:///jpeg-js!0.4.3'
     enabled: 0
     criterion:
       external: 1
-  bmp-js:
-    path: 'npm:///bmp-js#0.1.0'
-    enabled: 0
-    criterion:
-      external: 1
-  utif:
-    path: 'npm:///utif#3.1.0'
+  node-libpng:
+    path: 'npm:///node-libpng!0.2.20'
     enabled: 0
     criterion:
       external: 1
   omggif:
-    path: 'npm:///omggif#1.0.10'
+    path: 'npm:///omggif!1.0.10'
+    enabled: 0
+    criterion:
+      external: 1
+  pngjs:
+    path: 'npm:///pngjs!5.0.0'
+    enabled: 0
+    criterion:
+      external: 1
+  png.js:
+    path: 'npm:///png.js!0.2.1'
+    enabled: 0
+    criterion:
+      external: 1
+  png-js:
+    path: 'npm:///png-js!1.0.0'
+    enabled: 0
+    criterion:
+      external: 1
+  sharp:
+    path: 'npm:///sharp!0.25.4'
+    enabled: 0
+    criterion:
+      external: 1
+  utif:
+    path: 'npm:///utif!3.1.0'
     enabled: 0
     criterion:
       external: 1
   eslint:
-    path: 'npm:///eslint#7.1.0'
+    path: 'npm:///eslint!7.32.0'
     enabled: 0
     criterion:
       external: 1
